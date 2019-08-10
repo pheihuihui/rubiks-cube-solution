@@ -1,0 +1,29 @@
+{
+  "name": "web-rubiks-cube",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pheihuihui/web-rubiks-cube.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pheihuihui/web-rubiks-cube/issues"
+  },
+  "homepage": "https://github.com/pheihuihui/web-rubiks-cube#readme",
+  "devDependencies": {
+    "lodash": "^4.17.15",
+    "three": "^0.107.0",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6"
+  }
+}
