@@ -1,12 +1,43 @@
-<!doctype html>
 <html>
 
 <head>
-    <title>起步</title>
+   <title>My first Three.js app</title>
+   <style>
+      canvas {
+         width: 100%;
+         height: 100%
+      }
+
+      button {
+         height: 50px;
+         width: 100px;
+      }
+   </style>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
 <body>
-    <script src="bundle.js"></script>
+   <script src="bundle.js"></script>
+   <div>
+      <br />
+      <button type="button" class="btn btn-primary" style="color: cadetblue" onclick="rotate()">L</button>
+      <button type="button" class="btn btn-primary" style="color: coral">L'</button>
+      <button type="button" class="btn btn-primary" style="color: cadetblue">R</button>
+      <button type="button" class="btn btn-primary" style="color: coral">R'</button>
+      <br />
+      <br />
+      <button type="button" class="btn btn-primary" style="color: cadetblue">F</button>
+      <button type="button" class="btn btn-primary" style="color: coral">F'</button>
+      <button type="button" class="btn btn-primary" style="color: cadetblue">B</button>
+      <button type="button" class="btn btn-primary" style="color: coral">B'</button>
+      <br />
+      <br />
+      <button type="button" class="btn btn-primary" style="color: cadetblue">U</button>
+      <button type="button" class="btn btn-primary" style="color: coral">U'</button>
+      <button type="button" class="btn btn-primary" style="color: cadetblue">D</button>
+      <button type="button" class="btn btn-primary" style="color: coral">D'</button>
+   </div>
 </body>
 
 </html>
