@@ -1,4 +1,4 @@
-import { Matrix3, Vector3, Color, MeshBasicMaterial, BoxGeometry, Mesh } from "three";
+import { Matrix3, Vector3, Color, MeshBasicMaterial, BoxGeometry, Mesh, ReinhardToneMapping } from "three";
 
 type FaceColor = 'yel' | 'ora' | 'blu' | 'red' | 'gre' | 'whi' | 'blk'
 export type CubePosition = {
@@ -47,12 +47,41 @@ export class CubeCell {
         return this.coordinate
     }
 
-    applyRotation(matrix: Matrix3) {
+    private _applyRotation(matrix: Matrix3) {
         let vec = new Vector3()
         vec.set(this.coordinate.x, this.coordinate.y, this.coordinate.z)
         vec.applyMatrix3(matrix)
+        this.coordinate = this.buckleCoordinate(vec)
     }
 
+    applyRotation(dir: 'Xc' | 'Xr' | 'Yc' | 'Yr' | 'Zc' | 'Zr'){
+        if(dir == 'Xc'){
+            this._applyRotation(this.x_clock)
+            return
+        }
+        if(dir == 'Xr'){
+            this._applyRotation(this.x_rever)
+            return 
+        }
+        if(dir == 'Yc'){
+            this._applyRotation(this.y_clock)
+            return
+        }
+        if(dir == 'Yr'){
+            this._applyRotation(this.y_rever)
+            return 
+        }
+        if(dir == 'Zc'){
+            this._applyRotation(this.z_clock)
+            return 
+        }
+        if(dir == 'Zr'){
+            this._applyRotation(this.z_rever)
+            return
+        }
+        return
+    }
+    
     getMesh() {
         //let cube = new Mesh(geometry, [mt_blue, mt_green, mt_orange, mt_red, mt_white, mt_yellow]);
         let geo = new BoxGeometry(1, 1, 1);
@@ -90,5 +119,26 @@ export class CubeCell {
             return new MeshBasicMaterial({ color: new Color(1, 1, 0) })
         }
         return new MeshBasicMaterial({ color: new Color(0, 0, 0) })
+    }
+
+    private buckleCoordinate(vec: Vector3): CubePosition {
+        let a = vec.x
+        let b = vec.y
+        let c = vec.z
+        let buckleNumber = (n: number) => {
+            let q = (n - 1) * (n - 1)
+            let w = n * n
+            let e = (n + 1) * (n + 1)
+            let tmp = q <= w ? q : w
+            let tmp2 = e <= tmp ? e : tmp
+            if (tmp2 == q) {
+                return 1
+            } else if (tmp2 == w) {
+                return 0
+            } else {
+                return -1
+            }
+        }
+        return { x: buckleNumber(a), y: buckleNumber(b), z: buckleNumber(c) }
     }
 }
