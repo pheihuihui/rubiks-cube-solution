@@ -62,22 +62,73 @@ export class RubiksCube {
     }
 
     getLCells() {
-        return [this._LD, this._LU, this._L_, this.BLD, this.BLU, this.BL_, this.FLD, this.FLU, this.FL_]
+        return this.getAllCells().filter(c => c.getCoordinate().x == -1)
     }
     getRCells() {
-        return [this._RD, this._RU, this._R_, this.BRD, this.BRU, this.BR_, this.FRD, this.FRU, this.FR_]
+        return this.getAllCells().filter(c => c.getCoordinate().x == 1)
     }
     getUCells() {
-        return [this.B_U, this.F_U, this.__U, this.BLU, this.BRU, this.FLU, this.FRU, this._LU, this._RU]
+        return this.getAllCells().filter(c => c.getCoordinate().y == 1)
     }
     getDCells() {
-        return [this.B_D, this.F_D, this.__D, this.BLD, this.BRD, this.FLD, this.FRD, this._LD, this._RD]
+        return this.getAllCells().filter(c => c.getCoordinate().y == -1)
     }
     getFCells() {
-        return [this.FLD, this.FLU, this.FL_, this.FRD, this.FRU, this.FR_, this.F_D, this.F_U, this.F__]
+        return this.getAllCells().filter(c => c.getCoordinate().z == 1)
     }
     getBCells() {
-        return [this.BLD, this.BLU, this.BL_, this.BRD, this.BRU, this.BR_, this.B_D, this.B_U, this.B__]
+        return this.getAllCells().filter(c => c.getCoordinate().z == -1)
+    }
+
+    rotate(dir: "L" | "L'" | "R" | "R'" | "F" | "F'" | "B" | "B'" | "U" | "U'" | "D" | "D'") {
+        if (dir == "R") {
+            this.getRCells().forEach(x => x.applyRotation('Xc'))
+            return
+        }
+        if (dir == "R'") {
+            this.getRCells().forEach(x => x.applyRotation('Xr'))
+            return
+        }
+        if (dir == "L") {
+            this.getLCells().forEach(x => x.applyRotation('Xr'))
+            return
+        }
+        if (dir == "L'") {
+            this.getLCells().forEach(x => x.applyRotation('Xc'))
+            return
+        }
+        if (dir == "F") {
+            this.getFCells().forEach(x => x.applyRotation('Zc'))
+            return
+        }
+        if (dir == "F'") {
+            this.getFCells().forEach(x => x.applyRotation('Zr'))
+            return
+        }
+        if (dir == "B") {
+            this.getBCells().forEach(x => x.applyRotation('Zr'))
+            return
+        }
+        if (dir == "B'") {
+            this.getBCells().forEach(x => x.applyRotation('Zc'))
+            return
+        }
+        if (dir == "U") {
+            this.getUCells().forEach(x => x.applyRotation('Yc'))
+            return
+        }
+        if (dir == "U'") {
+            this.getUCells().forEach(x => x.applyRotation('Yr'))
+            return
+        }
+        if (dir == "D") {
+            this.getDCells().forEach(x => x.applyRotation('Yr'))
+            return
+        }
+        if (dir == "D'") {
+            this.getDCells().forEach(x => x.applyRotation('Yc'))
+            return
+        }
     }
 
     private FLU: CubeCell

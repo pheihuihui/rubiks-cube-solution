@@ -1,6 +1,9 @@
-import { Matrix3, Vector3, Color, MeshBasicMaterial, BoxGeometry, Mesh, ReinhardToneMapping } from "three";
+import { Matrix3, Vector3, Color, MeshBasicMaterial, BoxGeometry, Mesh } from "three";
 
 type FaceColor = 'yel' | 'ora' | 'blu' | 'red' | 'gre' | 'whi' | 'blk'
+
+type Face = 'F' | 'B' | 'U' | 'D' | 'L' | 'R'
+
 export type CubePosition = {
     x: -1 | 0 | 1
     y: -1 | 0 | 1
@@ -43,6 +46,18 @@ export class CubeCell {
         return [this.color_L, this.color_R, this.color_U, this.color_D, this.color_F, this.color_B]
     }
 
+    getFaceColor(face: Face): FaceColor {
+        switch (face) {
+            case 'B': return this.color_B
+            case 'D': return this.color_D
+            case 'F': return this.color_F
+            case 'L': return this.color_L
+            case 'R': return this.color_R
+            case 'U': return this.color_U
+            default: return 'blk'
+        }
+    }
+
     getCoordinate() {
         return this.coordinate
     }
@@ -54,34 +69,64 @@ export class CubeCell {
         this.coordinate = this.buckleCoordinate(vec)
     }
 
-    applyRotation(dir: 'Xc' | 'Xr' | 'Yc' | 'Yr' | 'Zc' | 'Zr'){
-        if(dir == 'Xc'){
+    applyRotation(dir: 'Xc' | 'Xr' | 'Yc' | 'Yr' | 'Zc' | 'Zr') {
+        if (dir == 'Xc') {
             this._applyRotation(this.x_clock)
+            let tmp = this.color_B
+            this.color_B = this.color_U
+            this.color_U = this.color_F
+            this.color_F = this.color_D
+            this.color_D = tmp
             return
         }
-        if(dir == 'Xr'){
+        if (dir == 'Xr') {
             this._applyRotation(this.x_rever)
-            return 
-        }
-        if(dir == 'Yc'){
-            this._applyRotation(this.y_clock)
+            let tmp = this.color_D
+            this.color_D = this.color_F
+            this.color_F = this.color_U
+            this.color_U = this.color_B
+            this.color_B = tmp
             return
         }
-        if(dir == 'Yr'){
+        if (dir == 'Yc') {
+            this._applyRotation(this.y_clock)
+            let tmp = this.color_R
+            this.color_R = this.color_B
+            this.color_B = this.color_L
+            this.color_L = this.color_F
+            this.color_F = tmp
+            return
+        }
+        if (dir == 'Yr') {
             this._applyRotation(this.y_rever)
-            return 
+            let tmp = this.color_F
+            this.color_F = this.color_L
+            this.color_L = this.color_B
+            this.color_B = this.color_R
+            this.color_R = tmp
+            return
         }
-        if(dir == 'Zc'){
+        if (dir == 'Zc') {
             this._applyRotation(this.z_clock)
-            return 
+            let tmp = this.color_R
+            this.color_R = this.color_U
+            this.color_U = this.color_L
+            this.color_L = this.color_D
+            this.color_D = tmp
+            return
         }
-        if(dir == 'Zr'){
+        if (dir == 'Zr') {
             this._applyRotation(this.z_rever)
+            let tmp = this.color_D
+            this.color_D = this.color_L
+            this.color_L = this.color_U
+            this.color_U = this.color_R
+            this.color_R = tmp
             return
         }
         return
     }
-    
+
     getMesh() {
         //let cube = new Mesh(geometry, [mt_blue, mt_green, mt_orange, mt_red, mt_white, mt_yellow]);
         let geo = new BoxGeometry(1, 1, 1);
