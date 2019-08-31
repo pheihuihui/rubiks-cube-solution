@@ -10,7 +10,6 @@ export type CubePosition = {
     z: -1 | 0 | 1
 }
 
-
 export class CubeCell {
     constructor(l: FaceColor, r: FaceColor, u: FaceColor, d: FaceColor, f: FaceColor, b: FaceColor, coord: CubePosition) {
         this.color_B = b
@@ -127,8 +126,7 @@ export class CubeCell {
         return
     }
 
-    getMesh() {
-        //let cube = new Mesh(geometry, [mt_blue, mt_green, mt_orange, mt_red, mt_white, mt_yellow]);
+    private getSimpleMesh() {
         let geo = new BoxGeometry(1, 1, 1);
         let cube = new Mesh(geo, [
             this.getMaterial(this.color_R),
@@ -139,6 +137,14 @@ export class CubeCell {
             this.getMaterial(this.color_B)
         ])
         return cube
+    }
+
+    private getAdvancedMesh() {
+
+    }
+
+    getMesh() {
+        return this.getSimpleMesh()
     }
 
     private getMaterial(clr: FaceColor) {
