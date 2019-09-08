@@ -6,13 +6,18 @@ import { OrbitControls } from "./OrbitControls";
 type RotationDirections = "L" | "L'" | "R" | "R'" | "F" | "F'" | "B" | "B'" | "U" | "U'" | "D" | "D'"
 
 let scene = new Scene();
-let camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 5;
 
-let renderer = new WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth / 1.3, window.innerHeight / 1.3);
-document.body.appendChild(renderer.domElement);
-let clr_grey = new Color(0.5, 0.5, 0.5)
+let panel = <HTMLCanvasElement>document.getElementById('cubePanel')
+let parent = <HTMLDivElement>panel.parentElement
+let parentWidth = parent.offsetWidth
+let parentHeight = parent.offsetHeight
+let parentColor = parent.style.backgroundColor
+let renderer = new WebGLRenderer({ antialias: true, canvas: panel });
+renderer.setSize(parentWidth / 1.2, parentHeight / 1.2, true);
+let camera = new PerspectiveCamera(75, parentWidth / parentHeight, 0.1, 1000);
+camera.position.z = 5;
+//document.body.appendChild(renderer.domElement);
+let clr_grey = new Color(222 / 256, 222 / 256, 222 / 256)
 scene.background = clr_grey
 
 let cube = new RubiksCube()
