@@ -152,3 +152,8 @@ export function rotateRubiksCube(dir: RotationDirections) {
         flag_logical = true
     }, gap)
 }
+
+function updatePlaneView(){
+    let div = document.getElementById('planeview')
+    
+}
