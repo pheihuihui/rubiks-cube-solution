@@ -2,8 +2,7 @@ import { Scene, PerspectiveCamera, WebGLRenderer, Color, Mesh, AxesHelper, Matri
 import { CubePosition } from "./CubeUnit";
 import { RubiksCube } from './RubiksCube'
 import { OrbitControls } from "./OrbitControls";
-
-type RotationDirections = "L" | "L'" | "R" | "R'" | "F" | "F'" | "B" | "B'" | "U" | "U'" | "D" | "D'"
+import { RotationDirections } from './Solution'
 
 let scene = new Scene();
 
