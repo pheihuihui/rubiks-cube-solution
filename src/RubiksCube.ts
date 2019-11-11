@@ -1,4 +1,5 @@
 import { CubeCell } from "./CubeUnit";
+import { RotationDirection, RubiksCubeFace } from './Solution'
 
 export class RubiksCube {
     constructor() {
@@ -61,49 +62,41 @@ export class RubiksCube {
         ]
     }
 
+    getFaceColors(face: RubiksCubeFace) {
+        let getFilter: (fc: RubiksCubeFace) => ((cube: CubeCell) => boolean) = (fc) => {
+            switch (fc) {
+                case 'L': return c => c.getCoordinate().x == -1
+                case 'R': return c => c.getCoordinate().x == 1
+                case 'U': return c => c.getCoordinate().y == 1
+                case 'D': return c => c.getCoordinate().y == -1
+                case 'F': return c => c.getCoordinate().z == 1
+                case 'B': return c => c.getCoordinate().z == -1
+                default: return c => false
+            }
+        }
+        return this.getAllCells().filter(getFilter(face)).map(x => x.getFaceColor(face))
+    }
+
     getLCells() {
         return this.getAllCells().filter(c => c.getCoordinate().x == -1)
     }
-    getLColors() {
-        return this.getAllCells().filter(c => c.getCoordinate().x == -1).map(x => x.getFaceColor('L'))
-    }
-
     getRCells() {
         return this.getAllCells().filter(c => c.getCoordinate().x == 1)
     }
-    getRColors() {
-        return this.getAllCells().filter(c => c.getCoordinate().x == 1).map(x => x.getFaceColor('R'))
-    }
-
     getUCells() {
         return this.getAllCells().filter(c => c.getCoordinate().y == 1)
     }
-    getUColors() {
-        return this.getAllCells().filter(c => c.getCoordinate().y == 1).map(x => x.getFaceColor('U'))
-    }
-
     getDCells() {
         return this.getAllCells().filter(c => c.getCoordinate().y == -1)
     }
-    getDColors() {
-        return this.getAllCells().filter(c => c.getCoordinate().y == -1).map(x => x.getFaceColor('D'))
-    }
-
     getFCells() {
         return this.getAllCells().filter(c => c.getCoordinate().z == 1)
     }
-    getFColors() {
-        return this.getAllCells().filter(c => c.getCoordinate().z == 1).map(x => x.getFaceColor('F'))
-    }
-
     getBCells() {
         return this.getAllCells().filter(c => c.getCoordinate().z == -1)
     }
-    getBColors() {
-        return this.getAllCells().filter(c => c.getCoordinate().z == -1).map(x => x.getFaceColor('B'))
-    }
 
-    rotate(dir: "L" | "L'" | "R" | "R'" | "F" | "F'" | "B" | "B'" | "U" | "U'" | "D" | "D'") {
+    rotate(dir: RotationDirection) {
         if (dir == "R") {
             this.getRCells().forEach(x => x.applyRotation('Xc'))
             return
@@ -155,21 +148,13 @@ export class RubiksCube {
     }
 
     equalsTo(rcube: RubiksCube) {
-        if (this.getFColors().toString() != rcube.getFColors().toString()) {
-            return false
-        } else if (this.getBColors().toString() != rcube.getBColors().toString()) {
-            return false
-        } else if (this.getDColors().toString() != rcube.getDColors().toString()) {
-            return false
-        } else if (this.getUColors().toString() != rcube.getUColors().toString()) {
-            return false
-        } else if (this.getLColors().toString() != rcube.getLColors().toString()) {
-            return false
-        } else if (this.getRColors().toString() != rcube.getRColors().toString()) {
-            return false
-        } else {
-            return true
+        let faces: RubiksCubeFace[] = ['B', 'D', 'F', 'L', 'R', 'U']
+        for (const face of faces) {
+            if(this.getFaceColors(face).toString() != rcube.getFaceColors(face).toString()){
+                return false
+            }
         }
+        return true
     }
 
     private FLU: CubeCell

@@ -127,7 +127,7 @@ export class CubeCell {
     }
 
     private getSimpleMesh() {
-        let geo = new BoxGeometry(1, 1, 1);
+        let geo = new BoxGeometry(1, 1, 1, 0.5, 0.5, 0.5);        
         let cube = new Mesh(geo, [
             this.getMaterial(this.color_R),
             this.getMaterial(this.color_L),

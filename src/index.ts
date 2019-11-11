@@ -1,8 +1,9 @@
 import { Scene, PerspectiveCamera, WebGLRenderer, Color, Mesh, AxesHelper, Matrix4 } from "three";
-import { CubePosition } from "./CubeUnit";
+import { CubePosition, CubeCell } from "./CubeUnit";
 import { RubiksCube } from './RubiksCube'
 import { OrbitControls } from "./OrbitControls";
-import { RotationDirections } from './Solution'
+import { RotationDirection } from './Solution'
+import { RoundedBoxGeometry } from "./RoundedBoxGeometry";
 
 let scene = new Scene();
 
@@ -70,11 +71,11 @@ let animate = () => {
 
 animate()
 
-function rotateRubiksCube_logically(dir: RotationDirections) {
+function rotateRubiksCube_logically(dir: RotationDirection) {
     cube.rotate(dir)
 }
 
-function rotateRubiksCube_visually(dir: RotationDirections, deltaTime: number) {
+function rotateRubiksCube_visually(dir: RotationDirection, deltaTime: number) {
     let tmp = Math.PI / 2 / 60 * 1000 / deltaTime
     let rotation = new Matrix4()
     let selectedMeshes: Mesh[] = []
@@ -140,7 +141,7 @@ function rotateRubiksCube_visually(dir: RotationDirections, deltaTime: number) {
     }
 }
 
-export function rotateRubiksCube(dir: RotationDirections) {
+export function rotateRubiksCube(dir: RotationDirection) {
     flag_visual = true
     animate_visual = () => {
         rotateRubiksCube_visually(dir, gap)
@@ -156,3 +157,5 @@ function updatePlaneView(){
     let div = document.getElementById('planeview')
     
 }
+
+export let rd = new RoundedBoxGeometry()
