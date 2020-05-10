@@ -1,1 +1,1 @@
-# web-rubiks-cube
+# Rubik's Cube Solution

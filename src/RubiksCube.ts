@@ -1,5 +1,7 @@
 import { CubeCell } from "./CubeUnit";
-import { RotationDirection, RubiksCubeFace } from './Solution'
+
+export type RotationDirection = "L" | "L'" | "R" | "R'" | "F" | "F'" | "B" | "B'" | "U" | "U'" | "D" | "D'"
+export type RubiksCubeFace = "L" | "R" | "F" | "B" | "U" | "D"
 
 export class RubiksCube {
     constructor() {

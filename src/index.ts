@@ -1,14 +1,15 @@
 import { Scene, PerspectiveCamera, WebGLRenderer, Color, Mesh, AxesHelper, Matrix4 } from "three";
 import { CubePosition, CubeCell } from "./CubeUnit";
 import { RubiksCube } from './RubiksCube'
-import { OrbitControls } from "./OrbitControls";
-import { RotationDirection } from './Solution'
-import { RoundedBoxGeometry } from "./RoundedBoxGeometry";
+import { RotationDirection } from './RubiksCube'
+
+const THREE = require('three')
+const OrbitControls = require('three-orbit-controls')(THREE)
 
 let scene = new Scene();
-
-let panel = <HTMLCanvasElement>document.getElementById('cubePanel')
-let parent = <HTMLDivElement>panel.parentElement
+THREE.EventDispatcher.prototype
+let panel = document.getElementById('cubePanel') as HTMLCanvasElement
+let parent = panel.parentElement as HTMLDivElement
 let parentWidth = parent.offsetWidth
 let parentHeight = parent.offsetHeight
 let parentColor = parent.style.backgroundColor
@@ -54,7 +55,7 @@ let updateCells = () => {
 
 let axesHelper = new AxesHelper(10);
 scene.add(axesHelper);
-let controls = new OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
 
 let animate_visual = () => { }
 let animate = () => {
@@ -137,7 +138,7 @@ function rotateRubiksCube_visually(dir: RotationDirection, deltaTime: number) {
     let tranalation = new Matrix4().makeTranslation(0, 0, 0)
     let transform = rotation.multiply(tranalation)
     for (const ms of selectedMeshes) {
-        ms.applyMatrix(transform)
+        ms.applyMatrix4(transform)
     }
 }
 
@@ -153,9 +154,8 @@ export function rotateRubiksCube(dir: RotationDirection) {
     }, gap)
 }
 
-function updatePlaneView(){
+function updatePlaneView() {
     let div = document.getElementById('planeview')
-    
 }
 
-export let rd = new RoundedBoxGeometry()
+//export let rd = new RoundedBoxGeometry()

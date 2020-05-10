@@ -1,4 +1,5 @@
 import { Matrix3, Vector3, Color, MeshBasicMaterial, BoxGeometry, Mesh } from "three";
+import { RoundedBoxGeometry } from "./RoundedBoxGeometry";
 
 type FaceColor = 'yel' | 'ora' | 'blu' | 'red' | 'gre' | 'whi' | 'blk'
 
@@ -127,7 +128,7 @@ export class CubeCell {
     }
 
     private getSimpleMesh() {
-        let geo = new BoxGeometry(1, 1, 1, 0.5, 0.5, 0.5);        
+        let geo = new BoxGeometry(1, 1, 1, 0.5, 0.5, 0.5);
         let cube = new Mesh(geo, [
             this.getMaterial(this.color_R),
             this.getMaterial(this.color_L),
@@ -140,11 +141,20 @@ export class CubeCell {
     }
 
     private getAdvancedMesh() {
-
+        let geo = new RoundedBoxGeometry(1, 1, 1, 0.15, 10)
+        let cube = new Mesh(geo, [
+            this.getMaterial(this.color_R),
+            this.getMaterial(this.color_L),
+            this.getMaterial(this.color_U),
+            this.getMaterial(this.color_D),
+            this.getMaterial(this.color_F),
+            this.getMaterial(this.color_B)
+        ])
+        return cube
     }
 
     getMesh() {
-        return this.getSimpleMesh()
+        return this.getAdvancedMesh()
     }
 
     private getMaterial(clr: FaceColor) {
