@@ -88,61 +88,52 @@ export class RubiksCube {
     }
 
     private setColorsToSide(side: TRubiksCubeOrientation, colors: TFaceColor[], center: TFaceColor) {
-        let face = this.getSideWithOrder(side)
+        let face = this.getSideCellsWithOrder(side)
         for (const it of [0, 1, 2, 3]) {
-            face[it].setColors({ [side.toLowerCase()]: colors[it] })
+            this.cells[face[it]].setColors({ [side.toLowerCase()]: colors[it] })
         }
-        face[4].setColors({ [side.toLowerCase()]: center })
-        for (const it of [4, 5, 6, 7]) {
-            face[it + 1].setColors({ [side.toLowerCase()]: colors[it] })
+        this.cells[face[4]].setColors({ [side.toLowerCase()]: center })
+        for (const it of [5, 6, 7, 8]) {
+            this.cells[face[it]].setColors({ [side.toLowerCase()]: colors[it - 1] })
         }
     }
 
-    private rotatedPlane(planes: TFixedArray<string, 9>, dir: 'clock' | 'rever') {
-        let arr = [[0, 1, 2], [3, 4, 5], [6, 7, 8]].map(a => a.map(b => planes[b]))
+    private rotateFace(cells: TFixedArray<string, 9>, dir: 'clock' | 'rever') {
         if (dir == 'clock') {
-            return arr[0].map((col, i) => arr.map(row => row[i]).reverse()).reduce((pre, cur) => { let res = pre.concat(cur); return res }, [])
+            return [cells[6], cells[3], cells[0], cells[7], cells[4], cells[1], cells[8], cells[5], cells[2]]
         }
         if (dir == 'rever') {
-            return arr[0].map((col, i) => arr.map(row => row[2 - i])).reduce((pre, cur) => { let res = pre.concat(cur); return res }, [])
+            return [cells[2], cells[5], cells[8], cells[1], cells[4], cells[7], cells[0], cells[3], cells[6]]
         }
-        return planes
+        return cells
     }
 
-    private rotateNumbers(cells: TFixedArray<number, 9>, dir: 'clock' | 'rever') {
-        let arr = [[0, 1, 2], [3, 4, 5], [6, 7, 8]].map(a => a.map(b => cells[b]))
-        if (dir == 'clock') {
-            return arr[0].map((col, i) => arr.map(row => row[i]).reverse()).reduce((pre, cur) => { return pre.concat(cur) }, [])
-        } else {
-            return arr[0].map((col, i) => arr.map(row => row[2 - i])).reduce((pre, cur) => { return pre.concat(cur) }, [])
-        }
-    }
+    private _rotate(sideCells: TFixedArray<string, 9>, dirF: 'clock' | 'rever', dirC: TRotationDirection) {
+        let oldIndex = sideCells
+        let newIndex = this.rotateFace(oldIndex, dirF) as TFixedArray<string, 9>
 
-    private _rotate(sideCells: TFixedArray<CubeCell, 9>, dirF: 'clock' | 'rever', dirC: TRotationDirection) {
-        let oldIndex = [0, 1, 2, 3, 4, 5, 6, 7, 8] as TFixedArray<number, 9>
-        let newIndex = this.rotateNumbers(oldIndex, dirF) as TFixedArray<number, 9>
         [
-            sideCells[newIndex[0]],
-            sideCells[newIndex[1]],
-            sideCells[newIndex[2]],
-            sideCells[newIndex[3]],
-            sideCells[newIndex[4]],
-            sideCells[newIndex[5]],
-            sideCells[newIndex[6]],
-            sideCells[newIndex[7]],
-            sideCells[newIndex[8]]
+            this.cells[oldIndex[0]],
+            this.cells[oldIndex[1]],
+            this.cells[oldIndex[2]],
+            this.cells[oldIndex[3]],
+            this.cells[oldIndex[4]],
+            this.cells[oldIndex[5]],
+            this.cells[oldIndex[6]],
+            this.cells[oldIndex[7]],
+            this.cells[oldIndex[8]]
         ] = [
-                sideCells[0],
-                sideCells[1],
-                sideCells[2],
-                sideCells[3],
-                sideCells[4],
-                sideCells[5],
-                sideCells[6],
-                sideCells[7],
-                sideCells[8]
+                this.cells[newIndex[0]],
+                this.cells[newIndex[1]],
+                this.cells[newIndex[2]],
+                this.cells[newIndex[3]],
+                this.cells[newIndex[4]],
+                this.cells[newIndex[5]],
+                this.cells[newIndex[6]],
+                this.cells[newIndex[7]],
+                this.cells[newIndex[8]]
             ]
-        for (const it of sideCells) {
+        for (const it of sideCells.map(v => this.cells[v])) {
             it.rotate(dirC)
         }
     }
@@ -150,40 +141,40 @@ export class RubiksCube {
     rotate(dir: TRotationDirection) {
         switch (dir) {
             case "F":
-                this._rotate(this.getSideWithOrder("F") as TFixedArray<CubeCell, 9>, 'clock', dir)
+                this._rotate(this.getSideCellsWithOrder("F") as TFixedArray<string, 9>, 'clock', dir)
                 break
             case "F'":
-                this._rotate(this.getSideWithOrder("F") as TFixedArray<CubeCell, 9>, 'rever', dir)
+                this._rotate(this.getSideCellsWithOrder("F") as TFixedArray<string, 9>, 'rever', dir)
                 break
             case "B":
-                this._rotate(this.getSideWithOrder("B") as TFixedArray<CubeCell, 9>, 'clock', dir)
+                this._rotate(this.getSideCellsWithOrder("B") as TFixedArray<string, 9>, 'clock', dir)
                 break
             case "B'":
-                this._rotate(this.getSideWithOrder("B") as TFixedArray<CubeCell, 9>, 'rever', dir)
+                this._rotate(this.getSideCellsWithOrder("B") as TFixedArray<string, 9>, 'rever', dir)
                 break
             case "L":
-                this._rotate(this.getSideWithOrder("L") as TFixedArray<CubeCell, 9>, 'clock', dir)
+                this._rotate(this.getSideCellsWithOrder("L") as TFixedArray<string, 9>, 'clock', dir)
                 break
             case "L'":
-                this._rotate(this.getSideWithOrder("L") as TFixedArray<CubeCell, 9>, 'rever', dir)
+                this._rotate(this.getSideCellsWithOrder("L") as TFixedArray<string, 9>, 'rever', dir)
                 break
             case "R":
-                this._rotate(this.getSideWithOrder("R") as TFixedArray<CubeCell, 9>, 'clock', dir)
+                this._rotate(this.getSideCellsWithOrder("R") as TFixedArray<string, 9>, 'clock', dir)
                 break
             case "R'":
-                this._rotate(this.getSideWithOrder("R") as TFixedArray<CubeCell, 9>, 'rever', dir)
+                this._rotate(this.getSideCellsWithOrder("R") as TFixedArray<string, 9>, 'rever', dir)
                 break
             case "U":
-                this._rotate(this.getSideWithOrder("U") as TFixedArray<CubeCell, 9>, 'clock', dir)
+                this._rotate(this.getSideCellsWithOrder("U") as TFixedArray<string, 9>, 'clock', dir)
                 break
             case "U'":
-                this._rotate(this.getSideWithOrder("U") as TFixedArray<CubeCell, 9>, 'rever', dir)
+                this._rotate(this.getSideCellsWithOrder("U") as TFixedArray<string, 9>, 'rever', dir)
                 break
             case "D":
-                this._rotate(this.getSideWithOrder("D") as TFixedArray<CubeCell, 9>, 'clock', dir)
+                this._rotate(this.getSideCellsWithOrder("D") as TFixedArray<string, 9>, 'clock', dir)
                 break
             case "D'":
-                this._rotate(this.getSideWithOrder("D") as TFixedArray<CubeCell, 9>, 'rever', dir)
+                this._rotate(this.getSideCellsWithOrder("D") as TFixedArray<string, 9>, 'rever', dir)
                 break
             default:
                 break
@@ -197,68 +188,30 @@ export class RubiksCube {
         return newCube
     }
 
-    private getSideWithOrder(side: TRubiksCubeOrientation) {
+    private getSideCellsWithOrder(side: TRubiksCubeOrientation) {
         switch (side) {
             case 'F': {
-                let keys = Object.keys(this.cells).filter(k => k[2] == '1')
-                let arr = keys.sort((a, b) => {
-                    let coordA = getCoordFromIndex(a)
-                    let coordB = getCoordFromIndex(b)
-                    return coordA.x - coordB.x + 3 * coordA.y - 3 * coordB.y
-                })
-                return arr.map(s => this.cells[s])
+                return ['-11', '011', '111', '-01', '001', '101', '--1', '0-1', '1-1']
             }
-
 
             case 'B': {
-                let keys = Object.keys(this.cells).filter(k => k[2] == '-')
-                let arr = keys.sort((a, b) => {
-                    let coordA = getCoordFromIndex(a)
-                    let coordB = getCoordFromIndex(b)
-                    return coordB.x - coordA.x + 3 * coordA.y - 3 * coordB.y
-                })
-                return arr.map(s => this.cells[s])
+                return ['11-', '01-', '-1-', '10-', '00-', '-0-', '1--', '0--', '---']
             }
 
-
             case 'L': {
-                let keys = Object.keys(this.cells).filter(k => k[0] == '-')
-                let arr = keys.sort((a, b) => {
-                    let coordA = getCoordFromIndex(a)
-                    let coordB = getCoordFromIndex(b)
-                    return coordA.z - coordB.z + 3 * coordA.y - 3 * coordB.y
-                })
-                return arr.map(s => this.cells[s])
+                return ['-1-', '-10', '-11', '-0-', '-00', '-01', '---', '--0', '--1']
             }
 
             case 'R': {
-                let keys = Object.keys(this.cells).filter(k => k[0] == '1')
-                let arr = keys.sort((a, b) => {
-                    let coordA = getCoordFromIndex(a)
-                    let coordB = getCoordFromIndex(b)
-                    return coordB.z - coordA.z + 3 * coordA.y - 3 * coordB.y
-                })
-                return arr.map(s => this.cells[s])
+                return ['111', '110', '11-', '101', '100', '10-', '1-1', '1-0', '1--']
             }
 
             case 'U': {
-                let keys = Object.keys(this.cells).filter(k => k[1] == '1')
-                let arr = keys.sort((a, b) => {
-                    let coordA = getCoordFromIndex(a)
-                    let coordB = getCoordFromIndex(b)
-                    return coordA.x - coordB.x - 3 * coordA.z + 3 * coordB.y
-                })
-                return arr.map(s => this.cells[s])
+                return ['-1-', '01-', '11-', '-10', '010', '110', '-11', '011', '111']
             }
 
             case 'D': {
-                let keys = Object.keys(this.cells).filter(k => k[1] == '-')
-                let arr = keys.sort((a, b) => {
-                    let coordA = getCoordFromIndex(a)
-                    let coordB = getCoordFromIndex(b)
-                    return coordA.x - coordB.x + 3 * coordA.z - 3 * coordB.z
-                })
-                return arr.map(s => this.cells[s])
+                return ['--1', '0-1', '1-1', '--0', '0-0', '1-0', '---', '0--', '1--']
             }
 
             default:
@@ -267,12 +220,12 @@ export class RubiksCube {
     }
 
     getAllFaces(): TPlaneCube {
-        let _blu = this.getSideWithOrder('F').map(a => a.colorF)
-        let _ora = this.getSideWithOrder('L').map(a => a.colorL)
-        let _red = this.getSideWithOrder('R').map(a => a.colorR)
-        let _yel = this.getSideWithOrder('U').map(a => a.colorU)
-        let _gre = this.getSideWithOrder('B').map(a => a.colorB)
-        let _whi = this.getSideWithOrder('D').map(a => a.colorD)
+        let _blu = this.getSideCellsWithOrder('F').map(a => this.cells[a].colorF)
+        let _ora = this.getSideCellsWithOrder('L').map(a => this.cells[a].colorL)
+        let _red = this.getSideCellsWithOrder('R').map(a => this.cells[a].colorR)
+        let _yel = this.getSideCellsWithOrder('U').map(a => this.cells[a].colorU)
+        let _gre = this.getSideCellsWithOrder('B').map(a => this.cells[a].colorB)
+        let _whi = this.getSideCellsWithOrder('D').map(a => this.cells[a].colorD)
         for (const it of [_blu, _ora, _red, _yel, _gre, _whi]) {
             it.splice(4, 1)
         }

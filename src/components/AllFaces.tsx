@@ -24,7 +24,8 @@ const useStyle = makeStyles({
         width: 1000,
         flexWrap: 'wrap',
         background: 'darkgrey',
-        borderRadius: 40
+        borderRadius: 40,
+        border: '4px solid black'
     }
 })
 
