@@ -5,6 +5,9 @@ import { TCssFaceColor } from "./SmallFace"
 import { TPlaneFaceColor, TPlaneCube } from "../RubiksCube"
 import { makeStyles } from "@material-ui/core"
 import { cube } from ".."
+import { SolutionPanel } from "./SolutionPanel"
+import { CubeContainer } from "./CubeContainer"
+import { RestoreButton, ShuffleButton, SolutionButton } from "./Buttons"
 
 export const getCssColor = (c: TPlaneFaceColor): TCssFaceColor => {
     switch (c) {
@@ -20,7 +23,7 @@ export const getCssColor = (c: TPlaneFaceColor): TCssFaceColor => {
 const useStyle = makeStyles({
     root: {
         display: 'flex',
-        height: 720,
+        height: 1200,
         width: 1000,
         flexWrap: 'wrap',
         background: 'darkgrey',
@@ -39,16 +42,18 @@ const AllFaces = () => {
     return (
         <FacesContext.Provider value={{ cubeState: curCtxVal, updateCubeState: val => { setCurCtxVal(val) } }}>
             <div className={aclass.root}>
-                <EmptyFace />
+                <RestoreButton />
                 <BigFace faceOrien={"U"} />
-                <EmptyFace />
-                <EmptyFace />
+                <ShuffleButton />
+                <SolutionButton />
                 <BigFace faceOrien={"L"} />
                 <BigFace faceOrien={"F"} />
                 <BigFace faceOrien={"R"} />
                 <BigFace faceOrien={"B"} />
                 <EmptyFace />
                 <BigFace faceOrien={"D"} />
+                <CubeContainer />
+                <SolutionPanel />
             </div>
         </FacesContext.Provider>
     )

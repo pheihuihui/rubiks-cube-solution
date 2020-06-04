@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Grid, makeStyles } from '@material-ui/core'
 import { SmallFace } from './SmallFace'
-import { RotateButtonsPair } from './RotateButtonsPair'
+import { RotationBar } from './RotationBar'
 import { TRubiksCubeOrientation, TRotationDirection, CubeOrientationAndColors } from '../RubiksCube'
 import { getCssColor, FacesContext } from './AllFaces'
 import { cube } from '..'
@@ -48,7 +48,7 @@ export const BigFace = (props: { faceOrien: TRubiksCubeOrientation }) => {
 
     return (
         <div className={bclass.out}>
-            <RotateButtonsPair
+            <RotationBar
                 clickLeft={() => {
                     cube.rotate(props.faceOrien + "'" as TRotationDirection)
                     allFaces.updateCubeState(cube.getAllFaces())

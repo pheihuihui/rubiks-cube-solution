@@ -2,8 +2,6 @@ import RotateLeftIcon from '@material-ui/icons/RotateLeft'
 import RotateRightIcon from '@material-ui/icons/RotateRight'
 import { IconButton, makeStyles } from '@material-ui/core'
 import React from 'react'
-import { cube } from '..'
-import { TRotationDirection, TRubiksCubeOrientation } from '../RubiksCube'
 
 const useStyle = makeStyles({
     root: {
@@ -19,7 +17,7 @@ const useStyle = makeStyles({
     }
 })
 
-export const RotateButtonsPair = (props: { clickLeft: () => void, clickRight: () => void }) => {
+export const RotationBar = (props: { clickLeft: () => void, clickRight: () => void }) => {
 
     const stl = useStyle()
 

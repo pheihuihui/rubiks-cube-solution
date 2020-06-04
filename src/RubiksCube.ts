@@ -56,7 +56,7 @@ export const getCoordFromIndex = (index: string) => {
         let xx = tmp(index[0])
         let yy = tmp(index[1])
         let zz = tmp(index[2])
-        if (xx && yy && zz) {
+        if (xx != undefined && yy != undefined && zz != undefined) {
             res.x = xx
             res.y = yy
             res.z = zz
@@ -66,8 +66,18 @@ export const getCoordFromIndex = (index: string) => {
     return empty
 }
 
+declare global {
+    interface Window {
+        getCoordFromIndex: any
+    }
+}
+
 export class RubiksCube {
     private cells: TAllCells
+
+    getAllCells() {
+        return this.cells
+    }
 
     constructor(planes: TPlaneCube) {
         this.cells = {}
