@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Grid, makeStyles } from '@material-ui/core'
 import { SmallFace } from './SmallFace'
 import { RotationBar } from './RotationBar'
-import { TRubiksCubeOrientation, TRotationDirection, CubeOrientationAndColors } from '../RubiksCube'
+import { TRubiksCubeOrientation, TRotationDirection, CubeOrientationAndColors } from '../model/RubiksCube'
 import { getCssColor, FacesContext } from './AllFaces'
 import { cube } from '..'
 

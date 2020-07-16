@@ -1,5 +1,5 @@
-import { RubiksCube, restoredCubePlaneView } from './RubiksCube'
-import { declareGlobals } from "./Utilities"
+import { RubiksCube, restoredCubePlaneView } from './model/RubiksCube'
+import { declareGlobals } from "./util/Utilities"
 import ReactDOM from "react-dom";
 import { all } from "./components/AllFaces";
 

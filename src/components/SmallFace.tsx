@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Button, makeStyles, Menu, MenuItem } from '@material-ui/core'
-import { TRubiksCubeOrientation, CubeOrientationAndColors } from '../RubiksCube'
+import { TRubiksCubeOrientation, CubeOrientationAndColors } from '../model/RubiksCube'
 import { FacesContext, getCssColor } from './AllFaces'
 
 const useStyle = makeStyles({

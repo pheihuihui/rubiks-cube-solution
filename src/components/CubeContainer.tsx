@@ -1,8 +1,9 @@
 import { makeStyles } from "@material-ui/core/styles";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, MutableRefObject } from "react";
 import { WebGLRenderer, PerspectiveCamera, Scene, Color, AxesHelper } from "three";
-import { getRubiksCubeMesh } from "../Meshes";
+import { getRubiksCubeMesh, TMeshWithCoord } from "../model/Meshes";
 import { cube } from "..";
+import { div } from "../CubeCanvas";
 
 const useStyle = makeStyles({
     root: {
@@ -25,7 +26,7 @@ const useStyle = makeStyles({
     }
 })
 
-const useCanvas = (size?: { width: number, height: number }) => {
+const useThree = (size?: { width: number, height: number }) => {
 
     const canvasRef = useRef<HTMLCanvasElement>()
     const mountRef = useRef<HTMLDivElement>(null)
@@ -37,10 +38,11 @@ const useCanvas = (size?: { width: number, height: number }) => {
             canv.height = size.height
         }
         canv.style.display = 'block'
-        canvasRef.current = canv
-    })
+        mountRef.current?.appendChild(canv)
+    }, [])
 
-    return [canvasRef.current, mountRef] as const
+    // return [canvasRef.current, mountRef] as const
+    return mountRef
 }
 
 export const CubeContainer = () => {
@@ -56,9 +58,12 @@ export const CubeContainer = () => {
     const [transformTime, setTransformTime] = useState(300)
     const [size, setSize] = useState(100)
 
-    const [canvas, mntRef] = useCanvas()
+    const mntRef = useThree()
 
+    const canvas = document.createElement('canvas')
     const renderer = new WebGLRenderer({ antialias: true, canvas: canvas })
+    const ctx = renderer.getContext()
+    console.log(ctx)
     renderer.setSize(400, 450)
     const rendererRef = useRef(renderer)
 
@@ -69,31 +74,44 @@ export const CubeContainer = () => {
     const scene = new Scene()
     scene.background = new Color('silver')
 
-    const realCube = getRubiksCubeMesh(cube)
-    for (const u of realCube) {
-        scene.add(u.mesh)
-        u.mesh.position.set(u.coord.x * 1.05, u.coord.y * 1.05, u.coord.z * 1.05)
-    }
-
     const axesHelper = new AxesHelper(10)
 
-    scene.add(axesHelper)
-
-    renderer.render(scene, camera)
 
     //////////ANYSCRIPT//////////
     const controls = new OrbitControls(camera, renderer.domElement)
     //////////ANYSCRIPT//////////
 
-    function animate() {
+    const animate = () => {
         requestAnimationFrame(animate)
         renderer.render(scene, camera)
     }
 
     useEffect(() => {
-        animate()
+        scene.add(axesHelper)
+        renderer.render(scene, camera)
         mntRef.current?.appendChild(renderer.domElement)
-    })
+        return (() => {
+            mntRef.current?.removeChild(renderer.domElement)
+        })
+    }, [])
+
+    useEffect(() => {
+        const realCube = getRubiksCubeMesh(cube)
+        for (const u of realCube) {
+            scene.add(u.mesh)
+            u.mesh.position.set(u.coord.x * 1.05, u.coord.y * 1.05, u.coord.z * 1.05)
+        }
+
+        animate()
+        return (() => {
+            for (const u of scene.children) {
+                if (u.type == 'Mesh') {
+                    scene.remove(u)
+                }
+            }
+        })
+    }, [cube.getAllFaces()])
+
 
     return (
         <div className={cclass.out}>
