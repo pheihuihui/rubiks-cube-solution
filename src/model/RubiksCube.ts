@@ -1,6 +1,8 @@
 import { TFaceColor, CubeCell } from "./CubeCell"
 
-export type TRotationDirection = "L" | "L'" | "R" | "R'" | "F" | "F'" | "B" | "B'" | "U" | "U'" | "D" | "D'"
+export const RotationDirections = ["L", "L'", "R", "R'", "F", "F'", "B", "B'", "U", "U'", "D", "D'", "L2", "R2", "F2", "B2", "U2", "D2"] as const
+
+export type TRotationDirection = (typeof RotationDirections)[number]
 export type TRubiksCubeOrientation = "L" | "R" | "F" | "B" | "U" | "D"
 export type TPlaneFaceColor = Exclude<TFaceColor, 'blk'>
 export type TCellCoordinate = {
@@ -156,36 +158,66 @@ export class RubiksCube {
             case "F'":
                 this._rotate(this.getSideCellsWithOrder("F") as TFixedArray<string, 9>, 'rever', dir)
                 break
+            case "F2":
+                this._rotate(this.getSideCellsWithOrder("F") as TFixedArray<string, 9>, 'clock', "F")
+                this._rotate(this.getSideCellsWithOrder("F") as TFixedArray<string, 9>, 'clock', "F")
+                break
+
             case "B":
                 this._rotate(this.getSideCellsWithOrder("B") as TFixedArray<string, 9>, 'clock', dir)
                 break
             case "B'":
                 this._rotate(this.getSideCellsWithOrder("B") as TFixedArray<string, 9>, 'rever', dir)
                 break
+            case "B2":
+                this._rotate(this.getSideCellsWithOrder("B") as TFixedArray<string, 9>, 'clock', "B")
+                this._rotate(this.getSideCellsWithOrder("B") as TFixedArray<string, 9>, 'clock', "B")
+                break
+
             case "L":
                 this._rotate(this.getSideCellsWithOrder("L") as TFixedArray<string, 9>, 'clock', dir)
                 break
             case "L'":
                 this._rotate(this.getSideCellsWithOrder("L") as TFixedArray<string, 9>, 'rever', dir)
                 break
+            case "L2":
+                this._rotate(this.getSideCellsWithOrder("L") as TFixedArray<string, 9>, 'clock', "L")
+                this._rotate(this.getSideCellsWithOrder("L") as TFixedArray<string, 9>, 'clock', "L")
+                break
+
             case "R":
                 this._rotate(this.getSideCellsWithOrder("R") as TFixedArray<string, 9>, 'clock', dir)
                 break
             case "R'":
                 this._rotate(this.getSideCellsWithOrder("R") as TFixedArray<string, 9>, 'rever', dir)
                 break
+            case "R2":
+                this._rotate(this.getSideCellsWithOrder("R") as TFixedArray<string, 9>, 'clock', "R")
+                this._rotate(this.getSideCellsWithOrder("R") as TFixedArray<string, 9>, 'clock', "R")
+                break
+
             case "U":
                 this._rotate(this.getSideCellsWithOrder("U") as TFixedArray<string, 9>, 'clock', dir)
                 break
             case "U'":
                 this._rotate(this.getSideCellsWithOrder("U") as TFixedArray<string, 9>, 'rever', dir)
                 break
+            case "U2":
+                this._rotate(this.getSideCellsWithOrder("U") as TFixedArray<string, 9>, 'clock', "U")
+                this._rotate(this.getSideCellsWithOrder("U") as TFixedArray<string, 9>, 'clock', "U")
+                break
+
             case "D":
                 this._rotate(this.getSideCellsWithOrder("D") as TFixedArray<string, 9>, 'clock', dir)
                 break
             case "D'":
                 this._rotate(this.getSideCellsWithOrder("D") as TFixedArray<string, 9>, 'rever', dir)
                 break
+            case "D2":
+                this._rotate(this.getSideCellsWithOrder("D") as TFixedArray<string, 9>, 'clock', "D")
+                this._rotate(this.getSideCellsWithOrder("D") as TFixedArray<string, 9>, 'clock', "D")
+                break
+
             default:
                 break
         }
@@ -262,6 +294,23 @@ export class RubiksCube {
         )
     }
 
+    restore() {
+        this.cells = {}
+        for (const xx of [-1, 0, 1] as const) {
+            for (const yy of [-1, 0, 1] as const) {
+                for (const zz of [-1, 0, 1] as const) {
+                    let index = getIndexFromCoord({ x: xx, y: yy, z: zz })
+                    this.cells[index] = new CubeCell({})
+                }
+            }
+        }
+        this.setColorsToSide('B', restoredCubePlaneView['gre'], 'gre')
+        this.setColorsToSide('F', restoredCubePlaneView['blu'], 'blu')
+        this.setColorsToSide('L', restoredCubePlaneView['ora'], 'ora')
+        this.setColorsToSide('R', restoredCubePlaneView['red'], 'red')
+        this.setColorsToSide('U', restoredCubePlaneView['yel'], 'yel')
+        this.setColorsToSide('D', restoredCubePlaneView['whi'], 'whi')
+    }
 }
 
 export const restoredRubiksCube = new RubiksCube(restoredCubePlaneView)

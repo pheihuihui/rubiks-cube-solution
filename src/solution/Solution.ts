@@ -1,4 +1,4 @@
-import { RubiksCube, TRotationDirection, restoredCubePlaneView, restoredRubiksCube } from "../model/RubiksCube";
+import { RubiksCube, TRotationDirection, restoredCubePlaneView, restoredRubiksCube, RotationDirections, TPlaneFaceColor, TRubiksCubeOrientation } from "../model/RubiksCube";
 import { cube } from "..";
 import { declareGlobals } from "../util/Utilities";
 let md5 = require('md5');
@@ -25,25 +25,14 @@ export const getNext: (start: RubiksCube) => (steps: string) => RubiksCube = sta
     return res
 }
 
-const decomposeSteps: (steps: string) => string[] = steps => {
-    let res = [] as string[]
-    for (const u of steps) {
-        if (u != "'") {
-            res.push(u)
-        } else {
-            let len = res.length
-            if (res[len - 1] && res[len - 1].length == 1) {
-                res[len - 1] += "'"
-            }
-        }
-    }
-    return res
+export const decomposeSteps: (steps: string) => string[] = steps => {
+    return steps.split(' ')
 }
 
 const composeSteps: (steps: string[]) => string = steps => {
     let res = ""
     for (const u of steps) {
-        res += u
+        res += " " + u
     }
     return res
 }
@@ -74,3 +63,33 @@ declare global {
     }
 }
 
+export function scrambleCube() {
+    let len = RotationDirections.length
+    for (let _ = 0; _ < 100; _++) {
+        let index = Math.floor(Math.random() * len)
+        let cur = RotationDirections[index]
+        cube.rotate(cur)
+    }
+}
+
+export const deserializeCube: (rcube: RubiksCube) => string = rcube => {
+    let faces = rcube.getAllFaces()
+    return ['yel', 'red', 'blu', 'whi', 'ora', 'gre'].reduce((pre, cur, index) => {
+        let clrs = faces[cur as TPlaneFaceColor]
+        let str1 = [0, 1, 2, 3].map(x => clrs[x]).map(x => colorToPos(x)).join('')
+        let str2 = [4, 5, 6, 7].map(x => clrs[x]).map(x => colorToPos(x)).join('')
+        let tmp = str1.concat(colorToPos(cur as TPlaneFaceColor)).concat(str2)
+        return pre.concat(tmp)
+    }, '')
+}
+
+const colorToPos: (color: TPlaneFaceColor) => TRubiksCubeOrientation = color => {
+    switch (color) {
+        case 'blu': return 'F'
+        case 'gre': return 'B'
+        case 'ora': return 'L'
+        case 'red': return 'R'
+        case 'whi': return 'D'
+        case 'yel': return 'U'
+    }
+}

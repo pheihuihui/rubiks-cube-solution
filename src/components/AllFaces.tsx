@@ -1,13 +1,13 @@
 import { createContext, useState } from "react"
-import { BigFace, EmptyFace } from "./BigFace"
+import { CubeFace, EmptyFace } from "./CubeFace"
 import React from "react"
-import { TCssFaceColor } from "./SmallFace"
+import { TCssFaceColor } from "./CubieFace"
 import { TPlaneFaceColor, TPlaneCube } from "../model/RubiksCube"
 import { makeStyles } from "@material-ui/core"
 import { cube } from ".."
 import { SolutionPanel } from "./SolutionPanel"
-import { CubeContainer } from "./CubeContainer"
 import { RestoreButton, ShuffleButton, SolutionButton } from "./Buttons"
+import { decomposeSteps } from "../solution/Solution"
 
 export const getCssColor = (c: TPlaneFaceColor): TCssFaceColor => {
     switch (c) {
@@ -32,30 +32,91 @@ const useStyle = makeStyles({
     }
 })
 
-export const FacesContext = createContext<{ cubeState: TPlaneCube, updateCubeState: (val: TPlaneCube) => void }>({} as { cubeState: TPlaneCube, updateCubeState: (val: TPlaneCube) => void })
+export type TFacesContext = {
+    cubeState: TPlaneCube,
+    updateCubeState: (val: TPlaneCube) => void
+}
+export type TSolutionContext = {
+    solution: string,
+    updateSolution: (val: string) => void
+}
+export type TStepsContext = {
+    steps: string[],
+    totalSteps: number,
+    currentStep: number,
+    updateSteps: (val: string) => void,
+    updateCurrentStep: (val: number) => void,
+    stepForward: () => void,
+    stepBackward: () => void,
+    restoreInitial: () => void
+}
+
+export const ContextHub = createContext({} as {
+    facesContext: TFacesContext,
+    solutionContext: TSolutionContext,
+    stepsContext: TStepsContext
+})
 
 const AllFaces = () => {
 
     const [curCtxVal, setCurCtxVal] = useState(cube.getAllFaces())
+    const [sol, setSol] = useState("")
+    const [steps, setSteps] = useState(['Start', 'Finish'])
+    const [currentStep, setCurrentStep] = useState(0)
+    const [totalSteps, setTotalSteps] = useState(2)
     const aclass = useStyle()
 
     return (
-        <FacesContext.Provider value={{ cubeState: curCtxVal, updateCubeState: val => { setCurCtxVal(val) } }}>
+        <ContextHub.Provider value={{
+            facesContext: {
+                cubeState: curCtxVal,
+                updateCubeState: val => { setCurCtxVal(val) }
+            },
+            solutionContext: {
+                solution: sol,
+                updateSolution: val => { setSol(val) }
+            },
+            stepsContext: {
+                steps: steps,
+                totalSteps: steps.length,
+                updateSteps: val => {
+                    let ss = decomposeSteps(val)
+                    let aa = ['State'].concat(ss).concat(['Finish'])
+                    setSteps(aa)
+                    setTotalSteps(steps.length)
+                },
+                currentStep: currentStep,
+                updateCurrentStep: val => { setCurrentStep(val) },
+                stepForward: () => {
+                    if (currentStep < totalSteps - 1) {
+                        setCurrentStep(currentStep + 1)
+                    }
+                },
+                stepBackward: () => {
+                    if (currentStep >= 1) {
+                        setCurrentStep(currentStep - 1)
+                    }
+                },
+                restoreInitial: () => {
+                    setCurrentStep(0)
+                }
+            }
+        }}>
             <div className={aclass.root}>
                 <RestoreButton />
-                <BigFace faceOrien={"U"} />
+                <CubeFace faceOrien={"U"} />
                 <ShuffleButton />
                 <SolutionButton />
-                <BigFace faceOrien={"L"} />
-                <BigFace faceOrien={"F"} />
-                <BigFace faceOrien={"R"} />
-                <BigFace faceOrien={"B"} />
+                <CubeFace faceOrien={"L"} />
+                <CubeFace faceOrien={"F"} />
+                <CubeFace faceOrien={"R"} />
+                <CubeFace faceOrien={"B"} />
                 <EmptyFace />
-                <BigFace faceOrien={"D"} />
-                <CubeContainer />
+                <CubeFace faceOrien={"D"} />
+                {/* <CubeContainer /> */}
                 <SolutionPanel />
             </div>
-        </FacesContext.Provider>
+        </ContextHub.Provider>
     )
 }
 

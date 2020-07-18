@@ -3,7 +3,6 @@ import React, { useRef, useEffect, useState, MutableRefObject } from "react";
 import { WebGLRenderer, PerspectiveCamera, Scene, Color, AxesHelper } from "three";
 import { getRubiksCubeMesh, TMeshWithCoord } from "../model/Meshes";
 import { cube } from "..";
-import { div } from "../CubeCanvas";
 
 const useStyle = makeStyles({
     root: {
