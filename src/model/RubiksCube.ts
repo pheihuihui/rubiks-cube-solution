@@ -1,4 +1,5 @@
-import { TFaceColor, CubeCell } from "./CubeCell"
+import { TFaceColor, Cubie } from "./Cubie"
+import { EventDispatcher } from "../util/Utilities"
 
 export const RotationDirections = ["L", "L'", "R", "R'", "F", "F'", "B", "B'", "U", "U'", "D", "D'", "L2", "R2", "F2", "B2", "U2", "D2"] as const
 
@@ -17,9 +18,17 @@ export type TFaceColors<T> = {
     [C in T & string]: TFixedArray<T, 8>
 }
 export type TAllCells = {
-    [index: string]: CubeCell
+    [index: string]: Cubie
 }
 export type TPlaneCube = TFaceColors<TPlaneFaceColor>
+
+export interface IDidRotateEvent {
+    e: (dir: TRotationDirection) => void
+}
+
+export interface IDidRestoreEvent {
+    e: (event: EventListener) => void
+}
 
 export const allFaceColors: TFixedArray<TPlaneFaceColor, 6> = ['blu', 'gre', 'ora', 'red', 'whi', 'yel']
 
@@ -76,6 +85,7 @@ declare global {
 
 export class RubiksCube {
     private cells: TAllCells
+    public onDidRestoreDispatcher = new EventDispatcher<IDidRestoreEvent>()
 
     getAllCells() {
         return this.cells
@@ -87,7 +97,7 @@ export class RubiksCube {
             for (const yy of [-1, 0, 1] as const) {
                 for (const zz of [-1, 0, 1] as const) {
                     let index = getIndexFromCoord({ x: xx, y: yy, z: zz })
-                    this.cells[index] = new CubeCell({})
+                    this.cells[index] = new Cubie({})
                 }
             }
         }
@@ -294,22 +304,32 @@ export class RubiksCube {
         )
     }
 
-    restore() {
+    restore(planes?: TPlaneCube) {
         this.cells = {}
         for (const xx of [-1, 0, 1] as const) {
             for (const yy of [-1, 0, 1] as const) {
                 for (const zz of [-1, 0, 1] as const) {
                     let index = getIndexFromCoord({ x: xx, y: yy, z: zz })
-                    this.cells[index] = new CubeCell({})
+                    this.cells[index] = new Cubie({})
                 }
             }
         }
-        this.setColorsToSide('B', restoredCubePlaneView['gre'], 'gre')
-        this.setColorsToSide('F', restoredCubePlaneView['blu'], 'blu')
-        this.setColorsToSide('L', restoredCubePlaneView['ora'], 'ora')
-        this.setColorsToSide('R', restoredCubePlaneView['red'], 'red')
-        this.setColorsToSide('U', restoredCubePlaneView['yel'], 'yel')
-        this.setColorsToSide('D', restoredCubePlaneView['whi'], 'whi')
+        if (planes) {
+            this.setColorsToSide('B', planes['gre'], 'gre')
+            this.setColorsToSide('F', planes['blu'], 'blu')
+            this.setColorsToSide('L', planes['ora'], 'ora')
+            this.setColorsToSide('R', planes['red'], 'red')
+            this.setColorsToSide('U', planes['yel'], 'yel')
+            this.setColorsToSide('D', planes['whi'], 'whi')
+        } else {
+            this.setColorsToSide('B', restoredCubePlaneView['gre'], 'gre')
+            this.setColorsToSide('F', restoredCubePlaneView['blu'], 'blu')
+            this.setColorsToSide('L', restoredCubePlaneView['ora'], 'ora')
+            this.setColorsToSide('R', restoredCubePlaneView['red'], 'red')
+            this.setColorsToSide('U', restoredCubePlaneView['yel'], 'yel')
+            this.setColorsToSide('D', restoredCubePlaneView['whi'], 'whi')
+        }
+        this.onDidRestoreDispatcher.fire()
     }
 }
 

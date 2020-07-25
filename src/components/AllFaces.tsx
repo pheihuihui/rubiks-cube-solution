@@ -2,12 +2,13 @@ import { createContext, useState } from "react"
 import { CubeFace, EmptyFace } from "./CubeFace"
 import React from "react"
 import { TCssFaceColor } from "./CubieFace"
-import { TPlaneFaceColor, TPlaneCube } from "../model/RubiksCube"
+import { TPlaneFaceColor, TPlaneCube, RubiksCube, restoredCubePlaneView, TRotationDirection } from "../model/RubiksCube"
 import { makeStyles } from "@material-ui/core"
 import { cube } from ".."
 import { SolutionPanel } from "./SolutionPanel"
 import { RestoreButton, ShuffleButton, SolutionButton } from "./Buttons"
 import { decomposeSteps } from "../solution/Solution"
+import { CubeContainer } from "./CubeContainer"
 
 export const getCssColor = (c: TPlaneFaceColor): TCssFaceColor => {
     switch (c) {
@@ -29,12 +30,17 @@ const useStyle = makeStyles({
         background: 'darkgrey',
         borderRadius: 40,
         border: '4px solid black'
+    },
+    out: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })
 
 export type TFacesContext = {
     cubeState: TPlaneCube,
-    updateCubeState: (val: TPlaneCube) => void
+    updateCubeState: () => void
 }
 export type TSolutionContext = {
     solution: string,
@@ -43,80 +49,94 @@ export type TSolutionContext = {
 export type TStepsContext = {
     steps: string[],
     totalSteps: number,
-    currentStep: number,
+    currentStepIndex: number,
+    currentStep: string,
     updateSteps: (val: string) => void,
-    updateCurrentStep: (val: number) => void,
+    //updateCurrentStep: (val: number) => void,
     stepForward: () => void,
     stepBackward: () => void,
     restoreInitial: () => void
 }
+export type TCubeContext = {
+    cube: RubiksCube
+}
 
 export const ContextHub = createContext({} as {
     facesContext: TFacesContext,
-    solutionContext: TSolutionContext,
+    //solutionContext: TSolutionContext,
     stepsContext: TStepsContext
 })
 
 const AllFaces = () => {
 
     const [curCtxVal, setCurCtxVal] = useState(cube.getAllFaces())
-    const [sol, setSol] = useState("")
-    const [steps, setSteps] = useState(['Start', 'Finish'])
-    const [currentStep, setCurrentStep] = useState(0)
-    const [totalSteps, setTotalSteps] = useState(2)
+    const [initialState, setInitialState] = useState(cube.getAllFaces())
+    const [steps, setSteps] = useState([] as TRotationDirection[])
+    const [currentIndex, setCurrentIndex] = useState(0)
+    const [currentStep, setCurrentStep] = useState('')
+    const [totalSteps, setTotalSteps] = useState(0)
     const aclass = useStyle()
 
     return (
-        <ContextHub.Provider value={{
-            facesContext: {
-                cubeState: curCtxVal,
-                updateCubeState: val => { setCurCtxVal(val) }
-            },
-            solutionContext: {
-                solution: sol,
-                updateSolution: val => { setSol(val) }
-            },
-            stepsContext: {
-                steps: steps,
-                totalSteps: steps.length,
-                updateSteps: val => {
-                    let ss = decomposeSteps(val)
-                    let aa = ['State'].concat(ss).concat(['Finish'])
-                    setSteps(aa)
-                    setTotalSteps(steps.length)
+        <div className={aclass.out}>
+            <ContextHub.Provider value={{
+                facesContext: {
+                    cubeState: curCtxVal,
+                    updateCubeState: () => { setCurCtxVal(cube.getAllFaces()) }
                 },
-                currentStep: currentStep,
-                updateCurrentStep: val => { setCurrentStep(val) },
-                stepForward: () => {
-                    if (currentStep < totalSteps - 1) {
-                        setCurrentStep(currentStep + 1)
+                // solutionContext: {
+                //     solution: sol,
+                //     updateSolution: val => { setSol(val) }
+                // },
+                stepsContext: {
+                    steps: steps,
+                    totalSteps: steps.length,
+                    currentStep: steps[currentIndex],
+                    updateSteps: val => {
+                        console.log(val)
+                        let ss = decomposeSteps(val) as TRotationDirection[]
+                        setSteps(ss)
+                        setTotalSteps(ss.length)
+                        setCurrentIndex(0)
+                        setInitialState(cube.getAllFaces())
+                    },
+                    currentStepIndex: currentIndex,
+                    // updateCurrentStep: val => {
+                    //     setCurrentIndex(val)
+                    //     setCurrentStep(steps[currentIndex])
+                    // },
+                    stepForward: () => {
+                        if (currentIndex < totalSteps - 1) {
+                            setCurrentIndex(currentIndex + 1)
+                        }
+                    },
+                    stepBackward: () => {
+                        if (currentIndex >= 1) {
+                            setCurrentIndex(currentIndex - 1)
+                        }
+                    },
+                    restoreInitial: () => {
+                        setCurrentIndex(0)
+                        cube.restore(initialState)
                     }
-                },
-                stepBackward: () => {
-                    if (currentStep >= 1) {
-                        setCurrentStep(currentStep - 1)
-                    }
-                },
-                restoreInitial: () => {
-                    setCurrentStep(0)
                 }
-            }
-        }}>
-            <div className={aclass.root}>
-                <RestoreButton />
-                <CubeFace faceOrien={"U"} />
-                <ShuffleButton />
-                <SolutionButton />
-                <CubeFace faceOrien={"L"} />
-                <CubeFace faceOrien={"F"} />
-                <CubeFace faceOrien={"R"} />
-                <CubeFace faceOrien={"B"} />
-                <EmptyFace />
-                <CubeFace faceOrien={"D"} />
-                {/* <CubeContainer /> */}
-                <SolutionPanel />
-            </div>
-        </ContextHub.Provider>
+            }}>
+                <div className={aclass.root}>
+                    <RestoreButton />
+                    <CubeFace faceOrien={"U"} />
+                    <ShuffleButton />
+                    <SolutionButton />
+                    <CubeFace faceOrien={"L"} />
+                    <CubeFace faceOrien={"F"} />
+                    <CubeFace faceOrien={"R"} />
+                    <CubeFace faceOrien={"B"} />
+                    <EmptyFace />
+                    <CubeFace faceOrien={"D"} />
+                    <CubeContainer />
+                    <SolutionPanel />
+                </div>
+            </ContextHub.Provider>
+        </div>
     )
 }
 

@@ -51,11 +51,11 @@ export const CubeFace = (props: { faceOrien: TRubiksCubeOrientation }) => {
             <RotationBar
                 clickLeft={() => {
                     cube.rotate(props.faceOrien + "'" as TRotationDirection)
-                    allFaces.updateCubeState(cube.getAllFaces())
+                    allFaces.updateCubeState()
                 }}
                 clickRight={() => {
                     cube.rotate(props.faceOrien)
-                    allFaces.updateCubeState(cube.getAllFaces())
+                    allFaces.updateCubeState()
                 }}
             />
             <div className={bclass.root} style={{ border: '2px solid ' + getCssColor(curCenterColor) }}>

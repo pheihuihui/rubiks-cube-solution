@@ -1,6 +1,4 @@
-import { RubiksCube, TPlaneFaceColor, TRubiksCubeOrientation, allFaceColors, TFixedArray, TPlaneCube } from "../model/RubiksCube"
-import { TFaceColor } from "../model/CubeCell"
-import { cube } from ".."
+import { RubiksCube } from "../model/RubiksCube"
 import { deserializeCube } from "./Solution"
 
 const Cube = require('cubejs')

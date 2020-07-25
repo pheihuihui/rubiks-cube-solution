@@ -4,16 +4,20 @@ import { PlayerBar } from "./PlayerBar";
 import { ContextHub } from "./AllFaces";
 import { decomposeSteps } from "../solution/Solution";
 import { Paper } from "@material-ui/core";
+import { StepPanel } from "./StepPanel";
+import { NeumorphicStepPanel } from "./NeumorphicStepPanel";
 
 const useStyle = makeStyles({
     root: {
-        width: 700,
-        height: 200,
+        width: 1000,
+        height: 100,
         background: 'silver',
         borderRadius: 20,
         display: 'flex',
         flexWrap: 'wrap',
-        border: '2px solid black'
+        border: '2px solid black',
+        flexDirection: 'column',
+        justifyContent: 'center'
     },
     out: {
         width: 1000,
@@ -26,20 +30,22 @@ const useStyle = makeStyles({
 })
 
 export const SolutionPanel = () => {
-    const solCtx = useContext(ContextHub).solutionContext
-    const [text, setText] = useState("")
+    //const solCtx = useContext(ContextHub).solutionContext
+    const stpCtx = useContext(ContextHub).stepsContext
+    const [steps, setSteps] = useState(stpCtx.steps)
     const sclass = useStyle()
 
     useEffect(() => {
-        setText(solCtx.solution)
-    }, [solCtx])
+        setSteps(stpCtx.steps)
+    }, [stpCtx.steps])
 
     return (
         <div className={sclass.out} >
             <PlayerBar />
             <div className={sclass.root}>
                 {
-                    decomposeSteps(text).map(x => <Paper square >{x}</Paper>)
+                    //steps.map((v, i) => <StepPanel key={"key_" + i.toString()} text={v} />)
+                    steps.map((v, i) => <NeumorphicStepPanel text={v} key={"key_" + i.toString()} />)
                 }
             </div>
         </div>

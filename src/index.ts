@@ -2,8 +2,7 @@ import { RubiksCube, restoredCubePlaneView } from './model/RubiksCube'
 import { declareGlobals } from "./util/Utilities"
 import ReactDOM from "react-dom";
 import { all } from "./components/AllFaces";
-import { st } from './components/StepPanel';
-
+import { cb } from './components/CubeContainer';
 
 export const cube = new RubiksCube(restoredCubePlaneView)
 
@@ -14,7 +13,8 @@ declare global {
 }
 
 let panel = document.getElementById('displayPanel')
-ReactDOM.render(st, panel)
+ReactDOM.render(all, panel)
 
+document.body.style.backgroundColor = '#2f4384'
 
 declareGlobals()

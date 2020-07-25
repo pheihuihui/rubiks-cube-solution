@@ -16,6 +16,22 @@ const reduceGroup: (start: RubiksCube) => (finish: RubiksCube) => string = start
     return ''
 }
 
+export const getReversedDirection: (val: string) => string = val => {
+    if (val.length == 1) {
+        return (val + "'")
+    } else if (val.length == 2) {
+        if (val[1] == "2") {
+            return val
+        } else if (val[1] == "'") {
+            return val[0]
+        } else {
+            return "Wrong"
+        }
+    } else {
+        return "Wrong"
+    }
+}
+
 export const getNext: (start: RubiksCube) => (steps: string) => RubiksCube = start => steps => {
     let res = new RubiksCube(start.getAllFaces())
     let dsteps = decomposeSteps(steps)

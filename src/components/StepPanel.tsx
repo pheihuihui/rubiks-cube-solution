@@ -1,5 +1,8 @@
 import { Paper, makeStyles, Theme, createStyles, Button, IconButton } from "@material-ui/core"
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
+import { cube } from ".."
+import { TRotationDirection } from "../model/RubiksCube"
+import { ContextHub } from "./AllFaces"
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -13,14 +16,14 @@ const useStyles = makeStyles((theme: Theme) =>
             }
         },
         smallButton: {
-            width: 64,
-            height: 64,
+            width: 32,
+            height: 32,
             background: '#d9e6e8'
         },
         bigButton: {
-            width: 96,
-            height: 96,
-            background: '#d9e6e8'
+            width: 32,
+            height: 32,
+            background: '#48b4c5'
         }
     })
 )
@@ -28,20 +31,22 @@ const useStyles = makeStyles((theme: Theme) =>
 export const StepPanel = (props: { text: string }) => {
     const pclass = useStyles()
     const [buttonClass, setButtonClass] = useState(pclass.smallButton)
+    const facesContext = useContext(ContextHub).facesContext
     return (
         <div className={pclass.root}>
             {/* <Paper elevation={3} variant="outlined" square > */}
             <IconButton className={buttonClass} color="primary" onClick={() => {
-                if (buttonClass == pclass.bigButton) {
-                    setButtonClass(pclass.smallButton)
-                } else {
-                    setButtonClass(pclass.bigButton)
-                }
+                // if (buttonClass == pclass.bigButton) {
+                //     setButtonClass(pclass.smallButton)
+                // } else {
+                //     setButtonClass(pclass.bigButton)
+                // }
+                cube.rotate(props.text as TRotationDirection)
+                facesContext.updateCubeState()
             }}>
-                {props.text}
+                {props.text.slice(0, 2)}
             </IconButton>
             {/* </Paper> */}
         </div>
     )
 }
-export const st = <StepPanel text="hi" />

@@ -4,7 +4,7 @@ import RestoreIcon from '@material-ui/icons/Restore';
 import FlareIcon from '@material-ui/icons/Flare';
 import React, { useContext } from "react";
 import { IconButton, Tooltip, Fab } from "@material-ui/core";
-import { scrambleCube } from "../solution/Solution";
+import { scrambleCube, decomposeSteps } from "../solution/Solution";
 import { ContextHub } from "./AllFaces";
 import { cube } from '..'
 import { getSolution } from "../solution/tmp";
@@ -29,7 +29,7 @@ export const RestoreButton = () => {
                 <IconButton onClick={
                     () => {
                         cube.restore()
-                        allFaces.updateCubeState(cube.getAllFaces())
+                        allFaces.updateCubeState()
                     }}>
                     <RestoreIcon fontSize={'large'} />
                 </IconButton>
@@ -47,7 +47,7 @@ export const ShuffleButton = () => {
                 <IconButton onClick={
                     () => {
                         scrambleCube()
-                        allFaces.updateCubeState(cube.getAllFaces())
+                        allFaces.updateCubeState()
                     }}>
                     <ShuffleIcon fontSize={'large'} />
                 </IconButton>
@@ -58,14 +58,15 @@ export const ShuffleButton = () => {
 
 export const SolutionButton = () => {
     const bclass = useStyle()
-    const solCtx = useContext(ContextHub).solutionContext
+    const stpCtx = useContext(ContextHub).stepsContext
     return (
         <div className={bclass.out} >
             <Tooltip title="solve">
                 <IconButton onClick={
                     () => {
-                        let sol = getSolution(cube)
-                        solCtx.updateSolution(sol)
+                        let stp = getSolution(cube)
+                        stpCtx.updateSteps(stp)
+                        console.log(stpCtx.totalSteps)
                     }}>
                     <FlareIcon fontSize={'large'} />
                 </IconButton>
