@@ -11,19 +11,22 @@ export function declareGlobals() {
     window.getNext = getNext
 }
 
-export type Handler<E> = (event?: E) => void
+export type Handler<E> = {
+    name: string
+    action: (event?: E) => void
+}
 
 export class EventDispatcher<E> {
     private handlers: Handler<E>[] = []
-    fire(event?: E) {
+    excute(event?: E) {
         for (let h of this.handlers)
-            h(event);
+            h.action(event);
     }
     register(handler: Handler<E>) {
         this.handlers.push(handler);
     }
-    remove(handler: Handler<E>) {
-        let index = this.handlers.findIndex(x => x == handler)
+    remove(name: string) {
+        let index = this.handlers.findIndex(x => x.name == name)
         if (index != -1) {
             this.handlers.splice(index, 1)
         }

@@ -1,8 +1,9 @@
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useRef, useEffect, useState, MutableRefObject } from "react";
-import { WebGLRenderer, PerspectiveCamera, Scene, Color, AxesHelper } from "three";
+import { WebGLRenderer, PerspectiveCamera, Scene, Color, AxesHelper, Matrix3, Matrix4, Mesh, Group } from "three";
 import { getCubeMesh, TMeshWithCoord } from "../model/Meshes";
 import { cube } from "..";
+import { TRotationDirection } from "../model/RubiksCube";
 
 const useStyle = makeStyles({
     root: {
@@ -34,7 +35,10 @@ export const CubeContainer = () => {
     //////////ANYSCRIPT//////////
 
     let realCube = getCubeMesh(cube)
+    let animateAction = () => { }
+    let animating = false
     const mountRef = useRef<HTMLDivElement>(null)
+    const deltaTime = 1000
 
     useEffect(() => {
         const canvas = document.createElement('canvas')
@@ -54,26 +58,124 @@ export const CubeContainer = () => {
         scene.add(axesHelper)
         //const realCube = getRubiksCubeMesh(cube)
         for (const u of realCube) {
-            scene.add(u.mesh)
-            u.mesh.position.set(u.coord.x * 1.005, u.coord.y * 1.005, u.coord.z * 1.005)
+            scene.add(u.meshGroup)
+            u.meshGroup.position.set(u.coord.x * 1.005, u.coord.y * 1.005, u.coord.z * 1.005)
         }
         const animate = () => {
             requestAnimationFrame(animate)
+            if (animating) {
+                animateAction()
+            }
             renderer.render(scene, camera)
         }
         animate()
 
-        cube.onDidRestoreDispatcher.register(() => {
-            realCube = getCubeMesh(cube)
-            console.log(cube.getAllFaces())
-            for (const u of scene.children) {
-                if (u.type == 'Mesh') {
-                    scene.remove(u)
-                }
-            }
+        const restoreRealCube = () => {
             for (const u of realCube) {
-                scene.add(u.mesh)
-                u.mesh.position.set(u.coord.x * 1.005, u.coord.y * 1.005, u.coord.z * 1.005)
+                scene.remove(u.meshGroup)
+            }
+            realCube = getCubeMesh(cube)
+            for (const u of realCube) {
+                scene.add(u.meshGroup)
+                u.meshGroup.position.set(u.coord.x * 1.005, u.coord.y * 1.005, u.coord.z * 1.005)
+            }
+            console.log('restored')
+        }
+
+        cube.onDidRestoreDispatcher.register({
+            name: 'restore',
+            action: restoreRealCube
+        })
+
+        cube.onDidRotateDispatcher.register({
+            name: 'rotate',
+            action: (dir?: TRotationDirection) => {
+                if (dir) {
+                    let matx = new Matrix4()
+                    let tht = Math.PI / 2 / 60 * 1000 / deltaTime
+                    let selected = [] as Group[]
+
+                    if (dir[0] == "B") {
+                        selected = realCube.filter(x => x.coord.z == -1).map(x => x.meshGroup)
+                        if (dir == "B") {
+                            matx = matx.makeRotationZ(tht)
+                        } else if (dir == "B'") {
+                            matx = matx.makeRotationZ(-tht)
+                        } else {
+                            matx = matx.makeRotationZ(tht * 2)
+                        }
+                    }
+
+                    if (dir[0] == "F") {
+                        selected = realCube.filter(x => x.coord.z == 1).map(x => x.meshGroup)
+                        if (dir == "F") {
+                            matx = matx.makeRotationZ(-tht)
+                        } else if (dir == "F'") {
+                            matx = matx.makeRotationZ(tht)
+                        } else {
+                            matx = matx.makeRotationZ(tht * 2)
+                        }
+                    }
+
+                    if (dir[0] == "L") {
+                        selected = realCube.filter(x => x.coord.x == -1).map(x => x.meshGroup)
+                        if (dir == "L") {
+                            matx = matx.makeRotationX(tht)
+                        } else if (dir == "L'") {
+                            matx = matx.makeRotationX(-tht)
+                        } else {
+                            matx = matx.makeRotationX(tht * 2)
+                        }
+                    }
+
+                    if (dir[0] == "R") {
+                        selected = realCube.filter(x => x.coord.x == 1).map(x => x.meshGroup)
+                        if (dir == "R") {
+                            matx = matx.makeRotationX(-tht)
+                        } else if (dir == "R'") {
+                            matx = matx.makeRotationX(tht)
+                        } else {
+                            matx = matx.makeRotationX(tht * 2)
+                        }
+                    }
+
+                    if (dir[0] == "U") {
+                        selected = realCube.filter(x => x.coord.y == 1).map(x => x.meshGroup)
+                        if (dir == "U") {
+                            matx = matx.makeRotationY(-tht)
+                        } else if (dir == "U'") {
+                            matx = matx.makeRotationY(tht)
+                        } else {
+                            matx = matx.makeRotationY(tht * 2)
+                        }
+                    }
+
+                    if (dir[0] == "D") {
+                        selected = realCube.filter(x => x.coord.y == -1).map(x => x.meshGroup)
+                        if (dir == "D") {
+                            matx = matx.makeRotationY(tht)
+                        } else if (dir == "D'") {
+                            matx = matx.makeRotationY(-tht)
+                        } else {
+                            matx = matx.makeRotationY(tht * 2)
+                        }
+                    }
+
+                    let translation = new Matrix4().makeTranslation(0, 0, 0)
+                    let transform = matx.multiply(translation)
+
+                    animating = true
+                    animateAction = () => {
+                        for (const u of selected) {
+                            u.applyMatrix4(transform)
+                        }
+                    }
+                    setTimeout(() => {
+                        animating = false
+                        animateAction = () => { }
+                        restoreRealCube()
+                    }, deltaTime)
+                }
             }
         })
 
@@ -84,7 +186,8 @@ export const CubeContainer = () => {
                     scene.remove(u)
                 }
             }
-            //cube.onDidRestoreDispatcher.remove()
+            cube.onDidRestoreDispatcher.remove('restore')
+            cube.onDidRotateDispatcher.remove('rotate')
         })
     }, [])
 
@@ -95,3 +198,4 @@ export const CubeContainer = () => {
 
 
 export const cb = <CubeContainer />
+

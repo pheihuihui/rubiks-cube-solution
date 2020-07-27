@@ -6,19 +6,7 @@ import { colors } from "@material-ui/core";
 
 export type TMeshWithCoord = {
     coord: TCellCoordinate
-    mesh: Group
-}
-
-const getCubeMaterial = (cl: TFaceColor) => {
-    switch (cl) {
-        case 'blk': return new MeshBasicMaterial({ color: new Color(0, 0, 0) })
-        case 'blu': return new MeshBasicMaterial({ color: new Color(0, 0, 1) })
-        case 'gre': return new MeshBasicMaterial({ color: new Color(0, 1, 0) })
-        case 'ora': return new MeshBasicMaterial({ color: new Color(1, 0.6, 0) })
-        case 'red': return new MeshBasicMaterial({ color: new Color(1, 0, 0) })
-        case 'whi': return new MeshBasicMaterial({ color: new Color(1, 1, 1) })
-        case 'yel': return new MeshBasicMaterial({ color: new Color(1, 1, 0) })
-    }
+    meshGroup: Group
 }
 
 const color2Color = (ore: TFaceColor) => {
@@ -78,7 +66,7 @@ export const getCubeMesh = (rb: RubiksCube) => {
             let coordi = getCoordFromIndex(key)
             let tmp: TMeshWithCoord = {
                 coord: coordi,
-                mesh: getCubieMesh(element)
+                meshGroup: getCubieMesh(element)
             }
             arr.push(tmp)
         }

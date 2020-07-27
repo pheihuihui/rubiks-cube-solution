@@ -22,14 +22,6 @@ export type TAllCells = {
 }
 export type TPlaneCube = TFaceColors<TPlaneFaceColor>
 
-export interface IDidRotateEvent {
-    e: (dir: TRotationDirection) => void
-}
-
-export interface IDidRestoreEvent {
-    e: (event: EventListener) => void
-}
-
 export const allFaceColors: TFixedArray<TPlaneFaceColor, 6> = ['blu', 'gre', 'ora', 'red', 'whi', 'yel']
 
 export const restoredCubePlaneView: TPlaneCube = {
@@ -85,7 +77,8 @@ declare global {
 
 export class RubiksCube {
     private cells: TAllCells
-    public onDidRestoreDispatcher = new EventDispatcher<IDidRestoreEvent>()
+    public onDidRestoreDispatcher = new EventDispatcher<void>()
+    public onDidRotateDispatcher = new EventDispatcher<TRotationDirection>()
 
     getAllCells() {
         return this.cells
@@ -229,8 +222,10 @@ export class RubiksCube {
                 break
 
             default:
+                const checking: never = dir
                 break
         }
+        this.onDidRotateDispatcher.excute(dir)
     }
 
     rotated(dir: TRotationDirection) {
@@ -267,6 +262,7 @@ export class RubiksCube {
             }
 
             default:
+                const checking: never = side
                 return []
         }
     }
@@ -329,7 +325,7 @@ export class RubiksCube {
             this.setColorsToSide('U', restoredCubePlaneView['yel'], 'yel')
             this.setColorsToSide('D', restoredCubePlaneView['whi'], 'whi')
         }
-        this.onDidRestoreDispatcher.fire()
+        this.onDidRestoreDispatcher.excute()
     }
 }
 
