@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useRef, useEffect, useState, MutableRefObject } from "react";
-import { WebGLRenderer, PerspectiveCamera, Scene, Color, AxesHelper, Matrix3, Matrix4, Mesh, Group } from "three";
+import { WebGLRenderer, PerspectiveCamera, Scene, Color, AxesHelper, Matrix3, Matrix4, Mesh, Group, Material } from "three";
 import { getCubeMesh, TMeshWithCoord } from "../model/Meshes";
 import { cube } from "..";
 import { TRotationDirection } from "../model/RubiksCube";
@@ -13,8 +13,8 @@ const useStyle = makeStyles({
         borderRadius: 20,
         display: 'flex',
         flexWrap: 'wrap',
-        border: '2px solid black',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        boxShadow: '10px 10px 10px #225451, -10px -10px 10px #44aca5'
     },
     out: {
         width: 500,
@@ -56,7 +56,6 @@ export const CubeContainer = () => {
 
         mountRef.current?.appendChild(renderer.domElement)
         scene.add(axesHelper)
-        //const realCube = getRubiksCubeMesh(cube)
         for (const u of realCube) {
             scene.add(u.meshGroup)
             u.meshGroup.position.set(u.coord.x * 1.005, u.coord.y * 1.005, u.coord.z * 1.005)
@@ -73,13 +72,18 @@ export const CubeContainer = () => {
         const restoreRealCube = () => {
             for (const u of realCube) {
                 scene.remove(u.meshGroup)
+                for (const i of u.meshGroup.children) {
+                    if (i.type == 'Mesh') {
+                        (i as Mesh).geometry.dispose();
+                    }
+                }
             }
             realCube = getCubeMesh(cube)
             for (const u of realCube) {
                 scene.add(u.meshGroup)
                 u.meshGroup.position.set(u.coord.x * 1.005, u.coord.y * 1.005, u.coord.z * 1.005)
             }
-            console.log('restored')
+            //console.log(scene.children.length)
         }
 
         cube.onDidRestoreDispatcher.register({
@@ -98,66 +102,66 @@ export const CubeContainer = () => {
                     if (dir[0] == "B") {
                         selected = realCube.filter(x => x.coord.z == -1).map(x => x.meshGroup)
                         if (dir == "B") {
-                            matx = matx.makeRotationZ(tht)
+                            matx.makeRotationZ(tht)
                         } else if (dir == "B'") {
-                            matx = matx.makeRotationZ(-tht)
+                            matx.makeRotationZ(-tht)
                         } else {
-                            matx = matx.makeRotationZ(tht * 2)
+                            matx.makeRotationZ(tht * 2)
                         }
                     }
 
                     if (dir[0] == "F") {
                         selected = realCube.filter(x => x.coord.z == 1).map(x => x.meshGroup)
                         if (dir == "F") {
-                            matx = matx.makeRotationZ(-tht)
+                            matx.makeRotationZ(-tht)
                         } else if (dir == "F'") {
-                            matx = matx.makeRotationZ(tht)
+                            matx.makeRotationZ(tht)
                         } else {
-                            matx = matx.makeRotationZ(tht * 2)
+                            matx.makeRotationZ(tht * 2)
                         }
                     }
 
                     if (dir[0] == "L") {
                         selected = realCube.filter(x => x.coord.x == -1).map(x => x.meshGroup)
                         if (dir == "L") {
-                            matx = matx.makeRotationX(tht)
+                            matx.makeRotationX(tht)
                         } else if (dir == "L'") {
-                            matx = matx.makeRotationX(-tht)
+                            matx.makeRotationX(-tht)
                         } else {
-                            matx = matx.makeRotationX(tht * 2)
+                            matx.makeRotationX(tht * 2)
                         }
                     }
 
                     if (dir[0] == "R") {
                         selected = realCube.filter(x => x.coord.x == 1).map(x => x.meshGroup)
                         if (dir == "R") {
-                            matx = matx.makeRotationX(-tht)
+                            matx.makeRotationX(-tht)
                         } else if (dir == "R'") {
-                            matx = matx.makeRotationX(tht)
+                            matx.makeRotationX(tht)
                         } else {
-                            matx = matx.makeRotationX(tht * 2)
+                            matx.makeRotationX(tht * 2)
                         }
                     }
 
                     if (dir[0] == "U") {
                         selected = realCube.filter(x => x.coord.y == 1).map(x => x.meshGroup)
                         if (dir == "U") {
-                            matx = matx.makeRotationY(-tht)
+                            matx.makeRotationY(-tht)
                         } else if (dir == "U'") {
-                            matx = matx.makeRotationY(tht)
+                            matx.makeRotationY(tht)
                         } else {
-                            matx = matx.makeRotationY(tht * 2)
+                            matx.makeRotationY(tht * 2)
                         }
                     }
 
                     if (dir[0] == "D") {
                         selected = realCube.filter(x => x.coord.y == -1).map(x => x.meshGroup)
                         if (dir == "D") {
-                            matx = matx.makeRotationY(tht)
+                            matx.makeRotationY(tht)
                         } else if (dir == "D'") {
-                            matx = matx.makeRotationY(-tht)
+                            matx.makeRotationY(-tht)
                         } else {
-                            matx = matx.makeRotationY(tht * 2)
+                            matx.makeRotationY(tht * 2)
                         }
                     }
 

@@ -17,6 +17,9 @@ const useStyle = makeStyles({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    item: {
+        boxShadow: '6px 6px 19px #225451, -6px -6px 19px #44aca5'
     }
 })
 
@@ -26,7 +29,7 @@ export const RestoreButton = () => {
     return (
         <div className={bclass.out} >
             <Tooltip title="restore" aria-label="RestoreLable">
-                <IconButton onClick={
+                <IconButton className={bclass.item} onClick={
                     () => {
                         cube.restore()
                         allFaces.updateCubeState()
@@ -44,7 +47,7 @@ export const ShuffleButton = () => {
     return (
         <div className={bclass.out} >
             <Tooltip title="scramble" aria-label="ScrambleLable">
-                <IconButton onClick={
+                <IconButton className={bclass.item} onClick={
                     () => {
                         scrambleCube()
                         allFaces.updateCubeState()
@@ -62,7 +65,7 @@ export const SolutionButton = () => {
     return (
         <div className={bclass.out} >
             <Tooltip title="solve">
-                <IconButton onClick={
+                <IconButton className={bclass.item} onClick={
                     () => {
                         let stp = getSolution(cube)
                         stpCtx.updateSteps(stp)

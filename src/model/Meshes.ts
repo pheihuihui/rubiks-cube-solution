@@ -30,17 +30,16 @@ const getCubieMesh = (cell: Cubie) => {
             .map(x => getRoundedRectangle(x, 0.12))
 
     face_F.position.set(0, 0, 0.51)
-    face_L.position.set(- 0.51, 0, 0)
+    face_L.position.set(-0.51, 0, 0)
     face_L.rotateY(- Math.PI / 2)
     face_R.position.set(0.51, 0, 0)
     face_R.rotateY(Math.PI / 2)
     face_U.position.set(0, 0.51, 0)
     face_U.rotateX(- Math.PI / 2)
-    face_D.position.set(0, - 0.51, 0)
+    face_D.position.set(0, -0.51, 0)
     face_D.rotateX(Math.PI / 2)
-    face_B.position.set(0, 0, - 0.51)
+    face_B.position.set(0, 0, -0.51)
     face_B.rotateX(Math.PI)
-
 
     let mat = new MeshDepthMaterial()
     let rcube = new Mesh(geo, mat)

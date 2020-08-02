@@ -23,7 +23,12 @@ export class EventDispatcher<E> {
             h.action(event);
     }
     register(handler: Handler<E>) {
-        this.handlers.push(handler);
+        let nameIndex = this.handlers.findIndex(x => x.name == handler.name)
+        if (nameIndex == -1) {
+            this.handlers.push(handler);
+        } else {
+            console.log('duplicated handler name')
+        }
     }
     remove(name: string) {
         let index = this.handlers.findIndex(x => x.name == name)

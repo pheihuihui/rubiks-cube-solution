@@ -15,6 +15,6 @@ declare global {
 let panel = document.getElementById('displayPanel')
 ReactDOM.render(all, panel)
 
-document.body.style.backgroundColor = '#2f4384'
+document.body.style.backgroundColor = '#33807b'
 
 declareGlobals()

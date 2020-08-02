@@ -1,7 +1,6 @@
 import { createContext, useState } from "react"
 import { CubeFace, EmptyFace } from "./CubeFace"
 import React from "react"
-import { TCssFaceColor } from "./CubieFace"
 import { TPlaneFaceColor, TPlaneCube, RubiksCube, restoredCubePlaneView, TRotationDirection } from "../model/RubiksCube"
 import { makeStyles } from "@material-ui/core"
 import { cube } from ".."
@@ -10,31 +9,20 @@ import { RestoreButton, ShuffleButton, SolutionButton } from "./Buttons"
 import { decomposeSteps } from "../solution/Solution"
 import { CubeContainer } from "./CubeContainer"
 
-export const getCssColor = (c: TPlaneFaceColor): TCssFaceColor => {
-    switch (c) {
-        case 'blu': return 'blue' as TCssFaceColor
-        case 'gre': return 'green' as TCssFaceColor
-        case 'ora': return 'orange' as TCssFaceColor
-        case 'red': return 'red' as TCssFaceColor
-        case 'whi': return 'white' as TCssFaceColor
-        case 'yel': return 'yellow' as TCssFaceColor
-    }
-}
-
 const useStyle = makeStyles({
     root: {
         display: 'flex',
         height: 1200,
         width: 1000,
         flexWrap: 'wrap',
-        background: 'darkgrey',
-        borderRadius: 40,
-        border: '4px solid black'
+        borderRadius: 50,
+        background: '#33807b',
+        boxShadow: '24px 24px 19px #225451, -24px -24px 19px #44aca5'
     },
     out: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     }
 })
 
@@ -52,7 +40,6 @@ export type TStepsContext = {
     currentStepIndex: number,
     currentStep: string,
     updateSteps: (val: string) => void,
-    //updateCurrentStep: (val: number) => void,
     stepForward: () => void,
     stepBackward: () => void,
     restoreInitial: () => void
@@ -63,7 +50,6 @@ export type TCubeContext = {
 
 export const ContextHub = createContext({} as {
     facesContext: TFacesContext,
-    //solutionContext: TSolutionContext,
     stepsContext: TStepsContext
 })
 
@@ -84,10 +70,6 @@ const AllFaces = () => {
                     cubeState: curCtxVal,
                     updateCubeState: () => { setCurCtxVal(cube.getAllFaces()) }
                 },
-                // solutionContext: {
-                //     solution: sol,
-                //     updateSolution: val => { setSol(val) }
-                // },
                 stepsContext: {
                     steps: steps,
                     totalSteps: steps.length,
@@ -101,10 +83,6 @@ const AllFaces = () => {
                         setInitialState(cube.getAllFaces())
                     },
                     currentStepIndex: currentIndex,
-                    // updateCurrentStep: val => {
-                    //     setCurrentIndex(val)
-                    //     setCurrentStep(steps[currentIndex])
-                    // },
                     stepForward: () => {
                         if (currentIndex < totalSteps - 1) {
                             setCurrentIndex(currentIndex + 1)
@@ -133,7 +111,7 @@ const AllFaces = () => {
                     <EmptyFace />
                     <CubeFace faceOrien={"D"} />
                     <CubeContainer />
-                    <SolutionPanel />
+                    {/* <SolutionPanel /> */}
                 </div>
             </ContextHub.Provider>
         </div>

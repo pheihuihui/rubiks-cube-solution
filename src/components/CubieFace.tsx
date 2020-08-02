@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Button, makeStyles, Menu, MenuItem } from '@material-ui/core'
 import { TRubiksCubeOrientation, CubeOrientationAndColors } from '../model/RubiksCube'
-import { getCssColor, ContextHub } from './AllFaces'
+import { ContextHub } from './AllFaces'
+import { TFaceColor } from '../model/Cubie'
 
 const useStyle = makeStyles({
     root: {
@@ -10,13 +11,20 @@ const useStyle = makeStyles({
         width: 48,
         height: 48,
         borderRadius: 10,
+        boxShadow: '2px 2px 6px #6d6d6d, -2px -2px 6px #ffffff'
     }
 })
 
-export const CssFaceColors = ['yellow', 'orange', 'blue', 'red', 'white', 'green'] as const
-export type TCssFaceColor = (typeof CssFaceColors)[number]
+export const CssFaceColors: { [T in Exclude<TFaceColor, 'blk'>]: string } = {
+    yel: '#b6be46',
+    ora: '#c78d29',
+    blu: '#297dc7',
+    red: '#ce276a',
+    whi: '#ffffff',
+    gre: '#5ea66c'
+}
 
-export const CubieFace = (props: { initialColor?: TCssFaceColor | 'black', disabled?: boolean, orien: TRubiksCubeOrientation, position: number }) => {
+export const CubieFace = (props: { initialColor?: string, disabled?: boolean, orien: TRubiksCubeOrientation, position: number }) => {
 
     const [color, setColor] = useState(props.initialColor ?? 'black')
     const [anchor_colorPicker, setAnchor_colorPicker] = useState<null | HTMLElement>(null)
@@ -26,7 +34,7 @@ export const CubieFace = (props: { initialColor?: TCssFaceColor | 'black', disab
     useEffect(() => {
         if (props.position > -1) {
             let col = currentColorCtx.cubeState[center][props.position]
-            setColor(getCssColor(col))
+            setColor(CssFaceColors[col])
         }
     }, [currentColorCtx.cubeState])
 
@@ -36,7 +44,7 @@ export const CubieFace = (props: { initialColor?: TCssFaceColor | 'black', disab
         setAnchor_colorPicker(event.currentTarget)
     }
 
-    const handleColor = (c: TCssFaceColor) => {
+    const handleColor = (c: string) => {
         setColor(c)
         setAnchor_colorPicker(null)
     }
@@ -49,7 +57,7 @@ export const CubieFace = (props: { initialColor?: TCssFaceColor | 'black', disab
         <div>
             <Button disabled={props.disabled} style={{ background: color }} className={fclass.root} onClick={handlePicker}> </Button>
             <Menu id="color_picker" anchorEl={anchor_colorPicker} open={Boolean(anchor_colorPicker)} onClose={handleClose}>
-                {CssFaceColors.map(x => <MenuItem key={'face_' + x} style={{ width: 80, height: 40, background: x }} onClick={() => handleColor(x)} />)}
+                {Object.values(CssFaceColors).map(x => <MenuItem key={'face_' + x} style={{ width: 80, height: 40, background: x }} onClick={() => handleColor(x)} />)}
             </Menu>
         </div>
     )

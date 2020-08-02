@@ -53,24 +53,11 @@ const composeSteps: (steps: string[]) => string = steps => {
     return res
 }
 
-// type TGenerate = () => string[]
-
-// const generateCube: (gen: TGenerate) => RubiksCube = gen => {
-//     let start = new RubiksCube(restoredCubePlaneView)
-//     let steps = gen()
-//     for (const u of steps) {
-//         start = start.rotated(u as TRotationDirection)
-//     }
-//     return start
-// }
-
-
 export const hashCube = (rcube: RubiksCube) => {
     let faces = rcube.getAllFaces()
     let res = md5(JSON.stringify(faces)) as string
     return res
 }
-
 
 declare global {
     interface Window {

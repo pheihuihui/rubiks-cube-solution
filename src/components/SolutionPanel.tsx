@@ -5,7 +5,6 @@ import { ContextHub } from "./AllFaces";
 import { decomposeSteps } from "../solution/Solution";
 import { Paper } from "@material-ui/core";
 import { StepPanel } from "./StepPanel";
-import { NeumorphicStepPanel } from "./NeumorphicStepPanel";
 
 const useStyle = makeStyles({
     root: {
@@ -44,8 +43,7 @@ export const SolutionPanel = () => {
             <PlayerBar />
             <div className={sclass.root}>
                 {
-                    //steps.map((v, i) => <StepPanel key={"key_" + i.toString()} text={v} />)
-                    steps.map((v, i) => <NeumorphicStepPanel text={v} key={"key_" + i.toString()} />)
+                    steps.map((v, i) => <StepPanel text={v} key={"key_" + i.toString()} />)
                 }
             </div>
         </div>

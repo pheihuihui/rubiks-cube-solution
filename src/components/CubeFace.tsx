@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { Grid, makeStyles } from '@material-ui/core'
-import { CubieFace } from './CubieFace'
+import { CubieFace, CssFaceColors } from './CubieFace'
 import { RotationBar } from './RotationBar'
 import { TRubiksCubeOrientation, TRotationDirection, CubeOrientationAndColors } from '../model/RubiksCube'
-import { getCssColor, ContextHub } from './AllFaces'
+import { ContextHub } from './AllFaces'
 import { cube } from '..'
 
 const useStyle = makeStyles({
@@ -14,13 +14,16 @@ const useStyle = makeStyles({
         borderRadius: 20,
         display: 'flex',
         flexWrap: 'wrap',
+        backgroundColor: 'silver',
+        boxShadow: '10px 10px 10px #225451, -10px -10px 10px #44aca5'
     },
     container: {
         justifyContent: 'center',
         padding: '16px'
     },
     item: {
-        padding: '4px'
+        padding: '4px',
+        backgroundColor: 'silver'
     },
     buttons: {
         position: 'absolute',
@@ -43,7 +46,7 @@ export const CubeFace = (props: { faceOrien: TRubiksCubeOrientation }) => {
 
     const curCenterColor = CubeOrientationAndColors[props.faceOrien]
     const allFaces = useContext(ContextHub).facesContext
-    const cssColors = allFaces.cubeState[curCenterColor].map(x => getCssColor(x))
+    const cssColors = allFaces.cubeState[curCenterColor].map(x => CssFaceColors[x])
     const bclass = useStyle()
 
     return (
@@ -58,7 +61,7 @@ export const CubeFace = (props: { faceOrien: TRubiksCubeOrientation }) => {
                     allFaces.updateCubeState()
                 }}
             />
-            <div className={bclass.root} style={{ border: '2px solid ' + getCssColor(curCenterColor) }}>
+            <div className={bclass.root}>
 
                 <Grid container className={bclass.container}>
 
@@ -69,7 +72,7 @@ export const CubeFace = (props: { faceOrien: TRubiksCubeOrientation }) => {
                     )}
 
                     <Grid item className={bclass.item}>
-                        <CubieFace initialColor={getCssColor(curCenterColor)} disabled orien={props.faceOrien} position={-1} />
+                        <CubieFace initialColor={CssFaceColors[curCenterColor]} disabled orien={props.faceOrien} position={-1} />
                     </Grid>
 
                     {[4, 5, 6, 7].map(x =>

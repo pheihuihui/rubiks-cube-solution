@@ -20,7 +20,7 @@ const useStyle = makeStyles({
         position: 'relative',
         bottom: '-15px',
         borderRadius: 20,
-        border: '1px solid black'
+        boxShadow: '10px 10px 10px #225451, -10px -10px 10px #44aca5'
     }
 })
 
