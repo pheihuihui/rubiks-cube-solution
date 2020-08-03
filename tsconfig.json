@@ -63,8 +63,6 @@
   "exclude": [
     "./webpack.config.js",
     "./dist",
-    "./node_modules",
-    "./__test__",
-    "./jest.config.js"
+    "./node_modules"
   ]
 }

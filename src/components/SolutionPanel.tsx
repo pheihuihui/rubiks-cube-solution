@@ -2,8 +2,6 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import React, { useState, useContext, useEffect } from "react";
 import { PlayerBar } from "./PlayerBar";
 import { ContextHub } from "./AllFaces";
-import { decomposeSteps } from "../solution/Solution";
-import { Paper } from "@material-ui/core";
 import { StepPanel } from "./StepPanel";
 
 const useStyle = makeStyles({
@@ -29,7 +27,6 @@ const useStyle = makeStyles({
 })
 
 export const SolutionPanel = () => {
-    //const solCtx = useContext(ContextHub).solutionContext
     const stpCtx = useContext(ContextHub).stepsContext
     const [steps, setSteps] = useState(stpCtx.steps)
     const sclass = useStyle()

@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { Button, makeStyles, Menu, MenuItem } from '@material-ui/core'
 import { TRubiksCubeOrientation, CubeOrientationAndColors } from '../model/RubiksCube'
 import { ContextHub } from './AllFaces'
-import { TFaceColor } from '../model/Cubie'
+import { CssFaceColors } from '../util/Utilities'
 
 const useStyle = makeStyles({
     root: {
@@ -14,15 +14,6 @@ const useStyle = makeStyles({
         boxShadow: '2px 2px 6px #6d6d6d, -2px -2px 6px #ffffff'
     }
 })
-
-export const CssFaceColors: { [T in Exclude<TFaceColor, 'blk'>]: string } = {
-    yel: '#b6be46',
-    ora: '#c78d29',
-    blu: '#297dc7',
-    red: '#ce276a',
-    whi: '#ffffff',
-    gre: '#5ea66c'
-}
 
 export const CubieFace = (props: { initialColor?: string, disabled?: boolean, orien: TRubiksCubeOrientation, position: number }) => {
 

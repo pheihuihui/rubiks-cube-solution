@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import ShuffleIcon from '@material-ui/icons/Shuffle';
 import RestoreIcon from '@material-ui/icons/Restore';
 import FlareIcon from '@material-ui/icons/Flare';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import React, { useContext } from "react";
 import { IconButton, Tooltip, Fab } from "@material-ui/core";
 import { scrambleCube, decomposeSteps } from "../solution/Solution";
@@ -11,8 +12,8 @@ import { getSolution } from "../solution/tmp";
 
 const useStyle = makeStyles({
     out: {
-        width: 250,
-        height: 220,
+        width: 125,
+        height: 125,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -72,6 +73,19 @@ export const SolutionButton = () => {
                         console.log(stpCtx.totalSteps)
                     }}>
                     <FlareIcon fontSize={'large'} />
+                </IconButton>
+            </Tooltip>
+        </div>
+    )
+}
+
+export const ValidateButton = () => {
+    const bclass = useStyle()
+    return (
+        <div className={bclass.out} >
+            <Tooltip title="validate">
+                <IconButton className={bclass.item}>
+                    <CheckCircleIcon fontSize={'large'} />
                 </IconButton>
             </Tooltip>
         </div>

@@ -1,6 +1,7 @@
 import { RubiksCube, getCoordFromIndex, restoredRubiksCube } from "../model/RubiksCube"
 import { cube } from ".."
 import { hashCube, getNext } from "../solution/Solution"
+import { TFaceColor } from "../model/Cubie"
 
 export function declareGlobals() {
     window.RubiksCube = RubiksCube
@@ -36,4 +37,13 @@ export class EventDispatcher<E> {
             this.handlers.splice(index, 1)
         }
     }
+}
+
+export const CssFaceColors: { [T in Exclude<TFaceColor, 'blk'>]: string } = {
+    yel: '#b6be46',
+    ora: '#c78d29',
+    blu: '#297dc7',
+    red: '#ce276a',
+    whi: '#ffffff',
+    gre: '#5ea66c'
 }

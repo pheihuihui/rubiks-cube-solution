@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
 import { Grid, makeStyles } from '@material-ui/core'
-import { CubieFace, CssFaceColors } from './CubieFace'
+import { CubieFace } from './CubieFace'
 import { RotationBar } from './RotationBar'
 import { TRubiksCubeOrientation, TRotationDirection, CubeOrientationAndColors } from '../model/RubiksCube'
 import { ContextHub } from './AllFaces'
 import { cube } from '..'
+import { CssFaceColors } from '../util/Utilities'
 
 const useStyle = makeStyles({
     root: {

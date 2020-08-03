@@ -7,20 +7,9 @@ import { TRotationDirection } from "../model/RubiksCube";
 
 const useStyle = makeStyles({
     root: {
-        width: 450,
-        height: 450,
-        background: 'silver',
-        borderRadius: 20,
+        width: 750,
+        height: 750,
         display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        boxShadow: '10px 10px 10px #225451, -10px -10px 10px #44aca5'
-    },
-    out: {
-        width: 500,
-        height: 500,
-        display: 'flex',
-        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center'
     }
@@ -43,8 +32,8 @@ export const CubeContainer = () => {
     useEffect(() => {
         const canvas = document.createElement('canvas')
         const renderer = new WebGLRenderer({ antialias: true, canvas: canvas })
-        renderer.setSize(400, 450)
-        const camera = new PerspectiveCamera(75, 4 / 4.5, 1, 1000)
+        renderer.setSize(750 * 3.9 / 4.5, 750)
+        const camera = new PerspectiveCamera(75, 3.9 / 4.5, 1, 1000)
         camera.position.z = 5
         const scene = new Scene()
         scene.background = new Color('silver')

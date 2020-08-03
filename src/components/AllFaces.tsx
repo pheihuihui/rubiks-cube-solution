@@ -1,28 +1,60 @@
 import { createContext, useState } from "react"
 import { CubeFace, EmptyFace } from "./CubeFace"
 import React from "react"
-import { TPlaneFaceColor, TPlaneCube, RubiksCube, restoredCubePlaneView, TRotationDirection } from "../model/RubiksCube"
+import { TPlaneCube, RubiksCube, TRotationDirection } from "../model/RubiksCube"
 import { makeStyles } from "@material-ui/core"
 import { cube } from ".."
 import { SolutionPanel } from "./SolutionPanel"
-import { RestoreButton, ShuffleButton, SolutionButton } from "./Buttons"
+import { RestoreButton, ShuffleButton, SolutionButton, ValidateButton } from "./Buttons"
 import { decomposeSteps } from "../solution/Solution"
 import { CubeContainer } from "./CubeContainer"
 
 const useStyle = makeStyles({
     root: {
         display: 'flex',
-        height: 1200,
+        width: 1900,
+        flexWrap: 'wrap'
+    },
+    planeStyle: {
+        display: 'flex',
+        height: 750,
         width: 1000,
         flexWrap: 'wrap',
         borderRadius: 50,
+        margin: 30,
         background: '#33807b',
         boxShadow: '24px 24px 19px #225451, -24px -24px 19px #44aca5'
     },
-    out: {
+    cubeStyle: {
+        height: 750,
+        width: 750,
+        borderRadius: 50,
+        margin: 30,
+        background: 'silver',
+        boxShadow: '24px 24px 19px #225451, -24px -24px 19px #44aca5',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
+    },
+    buttonStyle: {
+        height: 250,
+        width: 250,
+        borderRadius: 50,
+        margin: 30,
+        background: '#33807b',
+        boxShadow: '24px 24px 19px #225451, -24px -24px 19px #44aca5',
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    solutionStyle: {
+        height: 250,
+        width: 1500,
+        borderRadius: 50,
+        margin: 30,
+        background: '#33807b',
+        boxShadow: '24px 24px 19px #225451, -24px -24px 19px #44aca5'
     }
 })
 
@@ -64,7 +96,7 @@ const AllFaces = () => {
     const aclass = useStyle()
 
     return (
-        <div className={aclass.out}>
+        <div className={aclass.root}>
             <ContextHub.Provider value={{
                 facesContext: {
                     cubeState: curCtxVal,
@@ -99,19 +131,29 @@ const AllFaces = () => {
                     }
                 }
             }}>
-                <div className={aclass.root}>
-                    <RestoreButton />
+                <div className={aclass.planeStyle}>
+                    <EmptyFace />
                     <CubeFace faceOrien={"U"} />
-                    <ShuffleButton />
-                    <SolutionButton />
+                    <EmptyFace />
+                    <EmptyFace />
                     <CubeFace faceOrien={"L"} />
                     <CubeFace faceOrien={"F"} />
                     <CubeFace faceOrien={"R"} />
                     <CubeFace faceOrien={"B"} />
                     <EmptyFace />
                     <CubeFace faceOrien={"D"} />
+                </div>
+                <div className={aclass.cubeStyle}>
                     <CubeContainer />
-                    {/* <SolutionPanel /> */}
+                </div>
+                <div className={aclass.buttonStyle}>
+                    <RestoreButton />
+                    <ShuffleButton />
+                    <ValidateButton />
+                    <SolutionButton />
+                </div>
+                <div className={aclass.solutionStyle}>
+                    <SolutionPanel />
                 </div>
             </ContextHub.Provider>
         </div>

@@ -13,7 +13,7 @@ const useStyle = makeStyles({
         position: 'relative',
         bottom: '-15px',
         borderRadius: 20,
-        boxShadow: '2px 2px 2px #225451, -2px -2px 2px #44aca5'
+        boxShadow: '2px 2px 2px #6d6d6d, -2px -2px 2px #44aca5'
     }
 })
 

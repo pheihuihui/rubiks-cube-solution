@@ -13,6 +13,9 @@ declare global {
 }
 
 let panel = document.getElementById('displayPanel')
+panel?.style.setProperty('display', 'flex')
+panel?.style.setProperty('align-items', 'center')
+panel?.style.setProperty('justify-content', 'center')
 ReactDOM.render(all, panel)
 
 document.body.style.backgroundColor = '#33807b'
