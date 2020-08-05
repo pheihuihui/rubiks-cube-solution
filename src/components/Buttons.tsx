@@ -9,6 +9,7 @@ import { scrambleCube, decomposeSteps } from "../solution/Solution";
 import { ContextHub } from "./AllFaces";
 import { cube } from '..'
 import { getSolution } from "../solution/tmp";
+import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 
 const useStyle = makeStyles({
     out: {
@@ -21,6 +22,15 @@ const useStyle = makeStyles({
     },
     item: {
         boxShadow: '6px 6px 19px #225451, -6px -6px 19px #44aca5'
+    },
+    buttonStyle: {
+        width: 100,
+        height: 100,
+        boxShadow: '6px 6px 19px #225451, -6px -6px 19px #44aca5'
+    },
+    iconStyle: {
+        width: 70,
+        height: 70
     }
 })
 
@@ -89,5 +99,14 @@ export const ValidateButton = () => {
                 </IconButton>
             </Tooltip>
         </div>
+    )
+}
+
+export const PlayButton = () => {
+    const pstyle = useStyle()
+    return (
+        <IconButton className={pstyle.buttonStyle}>
+            <PlayArrowIcon className={pstyle.iconStyle} />
+        </IconButton>
     )
 }

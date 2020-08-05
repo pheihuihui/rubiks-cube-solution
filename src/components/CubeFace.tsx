@@ -20,16 +20,16 @@ const useStyle = makeStyles({
     },
     container: {
         justifyContent: 'center',
-        padding: '16px'
+        padding: 16
     },
     item: {
-        padding: '4px',
+        padding: 4,
         backgroundColor: 'silver'
     },
     buttons: {
         position: 'absolute',
-        height: '20px',
-        width: '100px',
+        height: 20,
+        width: 100,
         marginLeft: 'auto',
         marginRight: 'auto'
     },

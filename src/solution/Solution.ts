@@ -12,6 +12,11 @@ const getSolution: (rcube: RubiksCube) => Record<string, Array<TRotationDirectio
     }
 }
 
+export const testSolution = {
+    'Phase1': ["B'", "F", "U'", "R", "L", "R", "D'", "U2"] as TRotationDirection[],
+    'Phase2': ["B'", "F2", "F", "L2", "L", "B'", "B", "D'", "B2", "R", "L2"] as TRotationDirection[]
+}
+
 const reduceGroup: (start: RubiksCube) => (finish: RubiksCube) => string = start => finish => {
     return ''
 }

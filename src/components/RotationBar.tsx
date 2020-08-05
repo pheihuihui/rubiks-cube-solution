@@ -5,8 +5,8 @@ import React from 'react'
 
 const useStyle = makeStyles({
     root: {
-        height: '30px',
-        width: '120px',
+        height: 30,
+        width: 120,
         display: 'flex',
         justifyContent: 'center',
         background: 'silver',
