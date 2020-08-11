@@ -27,7 +27,7 @@ const getCubieMesh = (cell: Cubie) => {
     let [face_F, face_L, face_R, face_U, face_D, face_B]
         = [cell.colorF, cell.colorL, cell.colorR, cell.colorU, cell.colorD, cell.colorB]
             .map(x => color2Color(x))
-            .map(x => getRoundedRectangle(x, 0.12))
+            .map(x => getRoundedRectangle(x, 0.11))
 
     face_F.position.set(0, 0, 0.51)
     face_L.position.set(-0.51, 0, 0)

@@ -3,7 +3,7 @@ import ShuffleIcon from '@material-ui/icons/Shuffle';
 import RestoreIcon from '@material-ui/icons/Restore';
 import FlareIcon from '@material-ui/icons/Flare';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { IconButton, Tooltip, Fab } from "@material-ui/core";
 import { scrambleCube, decomposeSteps } from "../solution/Solution";
 import { ContextHub } from "./AllFaces";
@@ -104,8 +104,21 @@ export const ValidateButton = () => {
 
 export const PlayButton = () => {
     const pstyle = useStyle()
+    const stepsCtx = useContext(ContextHub).stepsContext
+    const facesCtx = useContext(ContextHub).facesContext
+    const [steps, setSteps] = useState([...stepsCtx.steps.Phase1, ...stepsCtx.steps.Phase2])
+    useEffect(() => {
+        setSteps([...stepsCtx.steps.Phase1, ...stepsCtx.steps.Phase2])
+    }, [stepsCtx.steps])
     return (
-        <IconButton className={pstyle.buttonStyle}>
+        <IconButton className={pstyle.buttonStyle} onClick={() => {
+            steps.forEach((v, i) => {
+                setTimeout(() => {
+                    cube.rotate(v)
+                    facesCtx.updateCubeState()
+                }, i * 1500)
+            })
+        }}>
             <PlayArrowIcon className={pstyle.iconStyle} />
         </IconButton>
     )

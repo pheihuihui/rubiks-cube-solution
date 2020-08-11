@@ -72,10 +72,10 @@ declare global {
 }
 
 export function scrambleCube() {
-    let len = RotationDirections.length
+    let len = RotationDirections.length + 1
     for (let _ = 0; _ < 100; _++) {
         let index = Math.floor(Math.random() * len)
-        let cur = RotationDirections[index]
+        let cur = RotationDirections.concat('none' as TRotationDirection)[index]
         cube.rotate(cur)
     }
 }

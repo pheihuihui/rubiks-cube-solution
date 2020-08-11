@@ -8,7 +8,7 @@ import { TRotationDirection } from "../model/RubiksCube";
 
 const useStyle = makeStyles({
     root: {
-        width: 1200,
+        width: 1400,
         height: 220,
         display: 'flex',
         alignItems: 'center'
@@ -21,7 +21,7 @@ const useStyle = makeStyles({
         justifyContent: 'center'
     },
     line: {
-        width: 1000,
+        width: 1200,
         height: 100,
         display: 'flex',
         alignItems: 'center'
@@ -48,16 +48,16 @@ export const SolutionPanel = () => {
                 <div className={sclass.line}>
                     <div className={sclass.text}>{"G0 -> G1:   "}</div>
                     {
-                        [steps.Phase0 as TRotationDirection].concat(steps.Phase1).map((v, i) =>
-                            <StepPanel text={v as string} key={"key_" + i.toString()} />
+                        [steps.Phase0 as TRotationDirection, ...steps.Phase1].map((v, i) =>
+                            <StepPanel text={v as string} index={i - 1} key={"key_" + i.toString()} />
                         )
                     }
                 </div>
                 <div className={sclass.line}>
                     <div className={sclass.text}>{"G1 -> G2:   "}</div>
                     {
-                        steps.Phase2.concat([steps.Phase3 as TRotationDirection]).map((v, i) =>
-                            <StepPanel text={v as string} key={"key_" + i.toString()} />
+                        [...steps.Phase2, steps.Phase3 as TRotationDirection].map((v, i) =>
+                            <StepPanel text={v as string} index={i + steps.Phase1.length} key={"key_" + i.toString()} />
                         )
                     }
                 </div>
