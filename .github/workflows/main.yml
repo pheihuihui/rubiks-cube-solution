@@ -10,7 +10,7 @@ jobs:
       MY_SECRET   : ${{ secrets.CUBE_SECRET_NAME }}
       USER_NAME   : pheihuihui
       USER_EMAIL  : pheihuihui@fake.com
-      PUBLISH_DIR : publish
+      PUBLISH_DIR : dist
     runs-on: ubuntu-latest
     strategy:
       matrix:
