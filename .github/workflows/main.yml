@@ -30,4 +30,4 @@ jobs:
       with:
         GITHUB_TOKEN: ${{ secrets.CUBE_SECRET_NAME }}
         BRANCH: gh-pages
-        FOLDER: ./out
+        FOLDER: out
