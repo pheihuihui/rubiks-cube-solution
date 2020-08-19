@@ -7,8 +7,10 @@ jobs:
   build:
     name: Build and deploy gh-pages
     env:
+      MY_SECRET   : ${{ secrets.CUBE_SECRET_NAME }}
       USER_NAME   : pheihuihui
       USER_EMAIL  : pheihuihui@fake.com
+      PUBLISH_DIR : publish
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -24,10 +26,17 @@ jobs:
         npm install
     - name: npm run build
       run: |
-        npm run build && ls
-    - name: deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
-      with:
-        GITHUB_TOKEN: ${{ secrets.CUBE_SECRET_NAME }}
-        BRANCH: gh-pages
-        FOLDER: website/build
+        webpack
+    - name: Commit files
+      run: |
+        cd $PUBLISH_DIR
+        git init
+        git config --local user.name $USER_NAME
+        git config --local user.email $USER_EMAIL
+        git status
+        git remote add origin https://$MY_SECRET@github.com/rubiks-cube-solution.git
+        git checkout -b gh-pages
+        git add --all
+        git commit -m "deploy to Github pages"
+        git push origin gh-pages -f
+        echo deploy gh-pages complete.
