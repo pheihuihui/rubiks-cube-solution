@@ -24,7 +24,7 @@ jobs:
         npm install
     - name: npm run build
       run: |
-        webpack
+        npm run build && ls
     - name: deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
