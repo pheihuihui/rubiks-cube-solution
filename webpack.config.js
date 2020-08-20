@@ -6,7 +6,7 @@ module.exports = {
   devtool: 'inline-source-map',
   mode: 'development',
   optimization: {
-    minimize: false
+    minimize: true
   },
   module: {
     rules: [
@@ -28,7 +28,7 @@ module.exports = {
   },
   plugins: [
     new CopyPlugin([
-      { from: './src/pages/main.html', to: './' },
+      { from: './src/pages/index.html', to: './' },
     ]),
   ]
 };
