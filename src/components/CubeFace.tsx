@@ -6,49 +6,52 @@ import { TRubiksCubeOrientation, TRotationDirection, CubeOrientationAndColors } 
 import { ContextHub } from './AllFaces'
 import { cube } from '..'
 import { CssFaceColors } from '../util/Utilities'
+import { useWindowScale } from '../util/hooks'
+import { Theme } from '@material-ui/core/styles/createMuiTheme'
 
-const useStyle = makeStyles({
-    root: {
-        width: 200,
-        height: 200,
+const useStyle = makeStyles<Theme, { scale: number }>({
+    root: props => ({
+        width: 200 * props.scale,
+        height: 200 * props.scale,
         background: 'silver',
-        borderRadius: 20,
+        borderRadius: 20 * props.scale,
         display: 'flex',
         flexWrap: 'wrap',
         backgroundColor: 'silver',
         boxShadow: '10px 10px 10px #225451, -10px -10px 10px #44aca5'
-    },
-    container: {
+    }),
+    container: props => ({
         justifyContent: 'center',
-        padding: 16
-    },
-    item: {
-        padding: 4,
+        padding: 16 * props.scale
+    }),
+    item: props => ({
+        padding: 4 * props.scale,
         backgroundColor: 'silver'
-    },
-    buttons: {
+    }),
+    buttons: props => ({
         position: 'absolute',
-        height: 20,
-        width: 100,
+        height: 20 * props.scale,
+        width: 100 * props.scale,
         marginLeft: 'auto',
         marginRight: 'auto'
-    },
-    out: {
-        width: 250,
-        height: 220,
+    }),
+    out: props => ({
+        width: 250 * props.scale,
+        height: 220 * props.scale,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    })
 })
 
 export const CubeFace = (props: { faceOrien: TRubiksCubeOrientation }) => {
 
+    const sc = useWindowScale()
     const curCenterColor = CubeOrientationAndColors[props.faceOrien]
     const allFaces = useContext(ContextHub).facesContext
     const cssColors = allFaces.cubeState[curCenterColor].map(x => CssFaceColors[x])
-    const bclass = useStyle()
+    const bclass = useStyle({ scale: sc })
 
     return (
         <div className={bclass.out}>
@@ -89,6 +92,7 @@ export const CubeFace = (props: { faceOrien: TRubiksCubeOrientation }) => {
 }
 
 export const EmptyFace = () => {
-    const bclass = useStyle()
+    const sc = useWindowScale()
+    const bclass = useStyle({ scale: sc })
     return <div className={bclass.out} />
 }

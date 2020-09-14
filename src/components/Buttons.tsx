@@ -10,33 +10,36 @@ import { ContextHub } from "./AllFaces";
 import { cube } from '..'
 import { getSolution } from "../solution/tmp";
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
+import { Theme } from "@material-ui/core/styles/createMuiTheme";
+import { useWindowScale } from "../util/hooks";
 
-const useStyle = makeStyles({
-    out: {
-        width: 125,
-        height: 125,
+const useStyle = makeStyles<Theme, { scale: number }>({
+    out: props => ({
+        width: 125 * props.scale,
+        height: 125 * props.scale,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center'
-    },
-    item: {
+    }),
+    item: props => ({
         boxShadow: '6px 6px 19px #225451, -6px -6px 19px #44aca5'
-    },
-    buttonStyle: {
-        width: 100,
-        height: 100,
+    }),
+    buttonStyle: props => ({
+        width: 100 * props.scale,
+        height: 100 * props.scale,
         boxShadow: '6px 6px 19px #225451, -6px -6px 19px #44aca5'
-    },
-    iconStyle: {
-        width: 70,
-        height: 70
-    }
+    }),
+    iconStyle: props => ({
+        width: 70 * props.scale,
+        height: 70 * props.scale
+    })
 })
 
 export const RestoreButton = () => {
+    const sc = useWindowScale()
     const allFaces = useContext(ContextHub).facesContext
-    const bclass = useStyle()
+    const bclass = useStyle({ scale: sc })
     return (
         <div className={bclass.out} >
             <Tooltip title="restore" aria-label="RestoreLable">
@@ -53,8 +56,9 @@ export const RestoreButton = () => {
 }
 
 export const ShuffleButton = () => {
+    const sc = useWindowScale()
     const allFaces = useContext(ContextHub).facesContext
-    const bclass = useStyle()
+    const bclass = useStyle({ scale: sc })
     return (
         <div className={bclass.out} >
             <Tooltip title="scramble" aria-label="ScrambleLable">
@@ -71,7 +75,8 @@ export const ShuffleButton = () => {
 }
 
 export const SolutionButton = () => {
-    const bclass = useStyle()
+    const sc = useWindowScale()
+    const bclass = useStyle({ scale: sc })
     const stpCtx = useContext(ContextHub).stepsContext
     return (
         <div className={bclass.out} >
@@ -90,7 +95,8 @@ export const SolutionButton = () => {
 }
 
 export const ValidateButton = () => {
-    const bclass = useStyle()
+    const sc = useWindowScale()
+    const bclass = useStyle({ scale: sc })
     return (
         <div className={bclass.out} >
             <Tooltip title="validate">
@@ -103,7 +109,8 @@ export const ValidateButton = () => {
 }
 
 export const PlayButton = () => {
-    const pstyle = useStyle()
+    const sc = useWindowScale()
+    const pstyle = useStyle({ scale: sc })
     const stepsCtx = useContext(ContextHub).stepsContext
     const facesCtx = useContext(ContextHub).facesContext
     const [steps, setSteps] = useState([...stepsCtx.steps.Phase1, ...stepsCtx.steps.Phase2])

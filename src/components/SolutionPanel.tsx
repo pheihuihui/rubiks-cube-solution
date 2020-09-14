@@ -5,36 +5,39 @@ import { StepPanel } from "./StepPanel";
 import { PlayButton } from "./Buttons";
 import { testSolution } from "../solution/Solution";
 import { TRotationDirection } from "../model/RubiksCube";
+import { Theme } from "@material-ui/core";
+import { useWindowScale } from "../util/hooks";
 
-const useStyle = makeStyles({
-    root: {
-        width: 1400,
-        height: 220,
+const useStyle = makeStyles<Theme, { scale: number }>({
+    root: props => ({
+        width: 1400 * props.scale,
+        height: 220 * props.scale,
         display: 'flex',
         alignItems: 'center'
-    },
-    inner: {
-        height: 200,
+    }),
+    inner: props => ({
+        height: 200 * props.scale,
         display: 'flex',
         alignItems: 'column',
         flexWrap: 'wrap',
         justifyContent: 'center'
-    },
-    line: {
-        width: 1200,
-        height: 100,
+    }),
+    line: props => ({
+        width: 1200 * props.scale,
+        height: 100 * props.scale,
         display: 'flex',
         alignItems: 'center'
-    },
+    }),
     text: {
         fontFamily: 'Georgia'
     }
 })
 
 export const SolutionPanel = () => {
+    const sc = useWindowScale()
     const stpCtx = useContext(ContextHub).stepsContext
     const [steps, setSteps] = useState(stpCtx.steps)
-    const sclass = useStyle()
+    const sclass = useStyle({ scale: sc })
 
     useEffect(() => {
         setSteps(stpCtx.steps)

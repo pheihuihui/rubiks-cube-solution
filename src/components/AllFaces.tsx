@@ -2,64 +2,64 @@ import { createContext, useState } from "react"
 import { CubeFace, EmptyFace } from "./CubeFace"
 import React from "react"
 import { TPlaneCube, RubiksCube, TRotationDirection } from "../model/RubiksCube"
-import { makeStyles } from "@material-ui/core"
+import { makeStyles, Theme } from "@material-ui/core"
 import { cube } from ".."
 import { SolutionPanel } from "./SolutionPanel"
 import { RestoreButton, ShuffleButton, SolutionButton, ValidateButton } from "./Buttons"
-import { decomposeSteps } from "../solution/Solution"
 import { CubeContainer } from "./CubeContainer"
+import { useWindowScale } from "../util/hooks"
 
-const useStyle = makeStyles({
-    root: {
+const useStyle = makeStyles<Theme, { scale: number }>({
+    root: props => ({
         display: 'flex',
-        width: 1900,
+        width: 1900 * props.scale,
         flexWrap: 'wrap'
-    },
-    planeStyle: {
+    }),
+    planeStyle: props => ({
         display: 'flex',
-        height: 750,
-        width: 1000,
+        height: 750 * props.scale,
+        width: 1000 * props.scale,
         flexWrap: 'wrap',
-        borderRadius: 50,
-        margin: 30,
+        borderRadius: 50 * props.scale,
+        margin: 30 * props.scale,
         background: '#33807b',
         boxShadow: '18px 18px 19px #225451, -18px -18px 19px #44aca5'
-    },
-    cubeStyle: {
-        height: 750,
-        width: 750,
-        borderRadius: 50,
-        margin: 30,
+    }),
+    cubeStyle: props => ({
+        height: 750 * props.scale,
+        width: 750 * props.scale,
+        borderRadius: 50 * props.scale,
+        margin: 30 * props.scale,
         background: 'silver',
         boxShadow: '18px 18px 19px #225451, -18px -18px 19px #44aca5',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
-    },
-    buttonStyle: {
-        height: 250,
-        width: 250,
-        borderRadius: 50,
-        margin: 30,
+    }),
+    buttonStyle: props => ({
+        height: 250 * props.scale,
+        width: 250 * props.scale,
+        borderRadius: 50 * props.scale,
+        margin: 30 * props.scale,
         background: '#33807b',
         boxShadow: '18px 18px 19px #225451, -18px -18px 19px #44aca5',
         display: 'flex',
         flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'center'
-    },
-    solutionStyle: {
-        height: 250,
-        width: 1500,
-        borderRadius: 50,
-        margin: 30,
+    }),
+    solutionStyle: props => ({
+        height: 250 * props.scale,
+        width: 1500 * props.scale,
+        borderRadius: 50 * props.scale,
+        margin: 30 * props.scale,
         background: '#33807b',
         boxShadow: '18px 18px 19px #225451, -18px -18px 19px #44aca5',
         flexDirection: 'column',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    })
 })
 
 export type TFacesContext = {
@@ -99,6 +99,7 @@ export const ContextHub = createContext({} as {
 
 const AllFaces = () => {
 
+    const scale = useWindowScale()
     const [curCtxVal, setCurCtxVal] = useState(cube.getAllFaces())
     const [initialState, setInitialState] = useState(cube.getAllFaces())
     const [steps, setSteps] = useState({
@@ -109,8 +110,9 @@ const AllFaces = () => {
     } as TSteps & TBeginAndFinish)
     const [currentIndex, setCurrentIndex] = useState(0)
     //const [currentStep, setCurrentStep] = useState('')
-    const [totalSteps, setTotalSteps] = useState(0)
-    const aclass = useStyle()
+    const [, setTotalSteps] = useState(0)
+    const aclass = useStyle({ scale: scale })
+    console.log(aclass.root)
     const nThStep = (n: number) => {
         let p1 = steps.Phase1.length
         let p2 = steps.Phase2.length

@@ -4,19 +4,22 @@ import { WebGLRenderer, PerspectiveCamera, Scene, Color, AxesHelper, Matrix3, Ma
 import { getCubeMesh, TMeshWithCoord } from "../model/Meshes";
 import { cube } from "..";
 import { TRotationDirection } from "../model/RubiksCube";
+import { useWindowScale } from "../util/hooks";
+import { Theme } from "@material-ui/core/styles/createMuiTheme";
 
-const useStyle = makeStyles({
-    root: {
-        width: 750,
-        height: 750,
+const useStyle = makeStyles<Theme, { scale: number }>({
+    root: props => ({
+        width: 750 * props.scale,
+        height: 750 * props.scale,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    })
 })
 
 export const CubeContainer = () => {
-    const cclass = useStyle()
+    const sc = useWindowScale()
+    const cclass = useStyle({ scale: sc })
 
     //////////ANYSCRIPT//////////
     const THREE = require('three')
