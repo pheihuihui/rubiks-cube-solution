@@ -99,7 +99,7 @@ export const ContextHub = createContext({} as {
 
 const AllFaces = () => {
 
-    const scale = useWindowScale()
+    const sc = useWindowScale()
     const [curCtxVal, setCurCtxVal] = useState(cube.getAllFaces())
     const [initialState, setInitialState] = useState(cube.getAllFaces())
     const [steps, setSteps] = useState({
@@ -111,7 +111,7 @@ const AllFaces = () => {
     const [currentIndex, setCurrentIndex] = useState(0)
     //const [currentStep, setCurrentStep] = useState('')
     const [, setTotalSteps] = useState(0)
-    const aclass = useStyle({ scale: scale })
+    const aclass = useStyle({ scale: sc })
     console.log(aclass.root)
     const nThStep = (n: number) => {
         let p1 = steps.Phase1.length

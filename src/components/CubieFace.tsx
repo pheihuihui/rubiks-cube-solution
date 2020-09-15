@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { Button, makeStyles, Menu, MenuItem } from '@material-ui/core'
 import { TRubiksCubeOrientation, CubeOrientationAndColors } from '../model/RubiksCube'
 import { ContextHub } from './AllFaces'
-import { CssFaceColors } from '../util/Utilities'
+import { cssFaceColors } from '..'
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
 import { useWindowScale } from '../util/hooks'
 
@@ -28,7 +28,7 @@ export const CubieFace = (props: { initialColor?: string, disabled?: boolean, or
     useEffect(() => {
         if (props.position > -1) {
             let col = currentColorCtx.cubeState[center][props.position]
-            setColor(CssFaceColors[col])
+            setColor(cssFaceColors[col])
         }
     }, [currentColorCtx.cubeState])
 
@@ -51,7 +51,7 @@ export const CubieFace = (props: { initialColor?: string, disabled?: boolean, or
         <div>
             <Button disabled={props.disabled} style={{ background: color }} className={fclass.root} onClick={handlePicker}> </Button>
             <Menu id="color_picker" anchorEl={anchor_colorPicker} open={Boolean(anchor_colorPicker)} onClose={handleClose}>
-                {Object.values(CssFaceColors).map(x => <MenuItem key={'face_' + x} style={{ width: 80, height: 40, background: x }} onClick={() => handleColor(x)} />)}
+                {Object.values(cssFaceColors).map(x => <MenuItem key={'face_' + x} style={{ width: 80, height: 40, background: x }} onClick={() => handleColor(x)} />)}
             </Menu>
         </div>
     )

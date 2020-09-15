@@ -1,7 +1,6 @@
 import { RubiksCube, getCoordFromIndex, restoredRubiksCube } from "../model/RubiksCube"
 import { cube } from ".."
 import { hashCube, getNext } from "../solution/Solution"
-import { TFaceColor } from "../model/Cubie"
 
 export function declareGlobals() {
     window.RubiksCube = RubiksCube
@@ -39,11 +38,29 @@ export class EventDispatcher<E> {
     }
 }
 
-export const CssFaceColors: { [T in Exclude<TFaceColor, 'blk'>]: string } = {
-    yel: '#b6be46',
-    ora: '#c78d29',
-    blu: '#297dc7',
-    red: '#ce276a',
-    whi: '#ffffff',
-    gre: '#5ea66c'
+export const getBoxShadow = (scale: number, distance: number, baseColor: [number, number, number], reversed?: boolean) => {
+    let num = Math.floor(scale * distance)
+    let dark = getColorString(baseColor.map(x => darker(x)) as [number, number, number])
+    let light = getColorString(baseColor.map(x => lighter(x)) as [number, number, number])
+    if (reversed) {
+        return `${num}px ${num}px ${num}px ${dark}, -${num}px -${num}px -${num}px ${light}`
+    } else {
+        return `-${num}px -${num}px -${num}px ${light}, ${num}px ${num}px ${num}px ${dark}`
+    }
+}
+
+const lighter = (RGB: number) => {
+    let res = Math.floor(RGB * 1.5)
+    return res > 255 ? 255 : res
+}
+
+const darker = (RGB: number) => {
+    return Math.floor(RGB / 1.5)
+}
+
+export const getColorString = (hexes: [number, number, number]) => {
+    let R = Number(hexes[0]).toString(16)
+    let G = Number(hexes[1]).toString(16)
+    let B = Number(hexes[2]).toString(16)
+    return '#' + R + G + B
 }

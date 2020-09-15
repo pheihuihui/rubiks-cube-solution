@@ -4,8 +4,7 @@ import { CubieFace } from './CubieFace'
 import { RotationBar } from './RotationBar'
 import { TRubiksCubeOrientation, TRotationDirection, CubeOrientationAndColors } from '../model/RubiksCube'
 import { ContextHub } from './AllFaces'
-import { cube } from '..'
-import { CssFaceColors } from '../util/Utilities'
+import { cssFaceColors, cube } from '..'
 import { useWindowScale } from '../util/hooks'
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
 
@@ -50,7 +49,7 @@ export const CubeFace = (props: { faceOrien: TRubiksCubeOrientation }) => {
     const sc = useWindowScale()
     const curCenterColor = CubeOrientationAndColors[props.faceOrien]
     const allFaces = useContext(ContextHub).facesContext
-    const cssColors = allFaces.cubeState[curCenterColor].map(x => CssFaceColors[x])
+    const cssColors = allFaces.cubeState[curCenterColor].map(x => cssFaceColors[x])
     const bclass = useStyle({ scale: sc })
 
     return (
@@ -76,7 +75,7 @@ export const CubeFace = (props: { faceOrien: TRubiksCubeOrientation }) => {
                     )}
 
                     <Grid item className={bclass.item}>
-                        <CubieFace initialColor={CssFaceColors[curCenterColor]} disabled orien={props.faceOrien} position={-1} />
+                        <CubieFace initialColor={cssFaceColors[curCenterColor]} disabled orien={props.faceOrien} position={-1} />
                     </Grid>
 
                     {[4, 5, 6, 7].map(x =>
