@@ -2,7 +2,7 @@ import { Cubie, TFaceColor } from "./Cubie";
 import { MeshBasicMaterial, Color, Mesh, MeshDepthMaterial, Group, Shape, ShapeBufferGeometry } from "three";
 import { RubiksCube, TCellCoordinate, getCoordFromIndex } from "./RubiksCube";
 import { RoundedBoxGeometry } from "./RoundedBoxGeometry";
-import { CssFaceColors } from "../util/Utilities";
+import { cssFaceColors } from "..";
 
 export type TMeshWithCoord = {
     coord: TCellCoordinate
@@ -11,12 +11,12 @@ export type TMeshWithCoord = {
 
 const color2Color = (ore: TFaceColor) => {
     switch (ore) {
-        case 'blu': return new Color(CssFaceColors.blu)
-        case 'ora': return new Color(CssFaceColors.ora)
-        case 'red': return new Color(CssFaceColors.red)
-        case 'yel': return new Color(CssFaceColors.yel)
-        case 'whi': return new Color(CssFaceColors.whi)
-        case 'gre': return new Color(CssFaceColors.gre)
+        case 'blu': return new Color(cssFaceColors.blu)
+        case 'ora': return new Color(cssFaceColors.ora)
+        case 'red': return new Color(cssFaceColors.red)
+        case 'yel': return new Color(cssFaceColors.yel)
+        case 'whi': return new Color(cssFaceColors.whi)
+        case 'gre': return new Color(cssFaceColors.gre)
         case 'blk': return new Color(0, 0, 0)
     }
 }

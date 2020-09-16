@@ -112,7 +112,6 @@ const AllFaces = () => {
     //const [currentStep, setCurrentStep] = useState('')
     const [, setTotalSteps] = useState(0)
     const aclass = useStyle({ scale: sc })
-    console.log(aclass.root)
     const nThStep = (n: number) => {
         let p1 = steps.Phase1.length
         let p2 = steps.Phase2.length

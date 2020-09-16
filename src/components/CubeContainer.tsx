@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useRef, useEffect, useState, MutableRefObject } from "react";
 import { WebGLRenderer, PerspectiveCamera, Scene, Color, AxesHelper, Matrix3, Matrix4, Mesh, Group, Material } from "three";
-import { getCubeMesh, TMeshWithCoord } from "../model/Meshes";
+import { getCubeMesh } from "../model/Meshes";
 import { cube } from "..";
 import { TRotationDirection } from "../model/RubiksCube";
 import { useWindowScale } from "../util/hooks";
@@ -19,6 +19,7 @@ const useStyle = makeStyles<Theme, { scale: number }>({
 
 export const CubeContainer = () => {
     const sc = useWindowScale()
+    console.log(sc)
     const cclass = useStyle({ scale: sc })
 
     //////////ANYSCRIPT//////////
@@ -35,7 +36,7 @@ export const CubeContainer = () => {
     useEffect(() => {
         const canvas = document.createElement('canvas')
         const renderer = new WebGLRenderer({ antialias: true, canvas: canvas })
-        renderer.setSize(750 * 3.9 / 4.5, 750)
+        renderer.setSize(750 * 3.9 * sc / 4.5, 750 * sc)
         const camera = new PerspectiveCamera(75, 3.9 / 4.5, 1, 1000)
         camera.position.z = 5
         const scene = new Scene()
@@ -52,7 +53,7 @@ export const CubeContainer = () => {
             scene.add(u.meshGroup)
             u.meshGroup.position.set(u.coord.x * 1.005, u.coord.y * 1.005, u.coord.z * 1.005)
         }
-        const animate = () => {
+        function animate() {
             requestAnimationFrame(animate)
             if (animating) {
                 animateAction()
@@ -61,7 +62,7 @@ export const CubeContainer = () => {
         }
         animate()
 
-        const restoreRealCube = () => {
+        function disposeRealCube() {
             for (const u of realCube) {
                 scene.remove(u.meshGroup)
                 for (const i of u.meshGroup.children) {
@@ -70,12 +71,15 @@ export const CubeContainer = () => {
                     }
                 }
             }
+        }
+
+        function restoreRealCube() {
+            disposeRealCube()
             realCube = getCubeMesh(cube)
             for (const u of realCube) {
                 scene.add(u.meshGroup)
                 u.meshGroup.position.set(u.coord.x * 1.005, u.coord.y * 1.005, u.coord.z * 1.005)
             }
-            //console.log(scene.children.length)
         }
 
         cube.onDidRestoreDispatcher.register({
@@ -177,15 +181,11 @@ export const CubeContainer = () => {
 
         return (() => {
             mountRef.current?.removeChild(renderer.domElement)
-            for (const u of scene.children) {
-                if (u.type == 'Mesh') {
-                    scene.remove(u)
-                }
-            }
+            disposeRealCube()
             cube.onDidRestoreDispatcher.remove('restore')
             cube.onDidRotateDispatcher.remove('rotate')
         })
-    }, [])
+    }, [sc])
 
 
     return <div className={cclass.root} ref={mountRef} />
