@@ -3,7 +3,6 @@ import React, { useState, useContext, useEffect } from "react";
 import { ContextHub } from "./AllFaces";
 import { StepPanel } from "./StepPanel";
 import { PlayButton } from "./Buttons";
-import { testSolution } from "../solution/Solution";
 import { TRotationDirection } from "../model/RubiksCube";
 import { Theme } from "@material-ui/core";
 import { useWindowScale } from "../util/hooks";

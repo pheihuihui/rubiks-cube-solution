@@ -1,26 +1,34 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core';
 import { ContextHub } from './AllFaces';
-import { cube } from '..';
+import { cube, globalColors } from '..';
+import { useWindowScale } from '../util/hooks';
 
-const useStyle = makeStyles({
-    up: {
-        width: 60,
-        height: 40,
+const useStyle = makeStyles<Theme, { scale: number }>({
+    up: props => ({
+        width: 50 * props.scale,
+        height: 30 * props.scale,
         borderRadius: 8,
-        backgroundColor: 'grey'
-    },
-    down: {
-        width: 60,
-        height: 40,
-        borderRadius: 8,
-        backgroundColor: 'blue'
-    }
+        backgroundColor: globalColors.documentBodyBackgroudColor.toString(),
+        margin: 5,
+        border: 0,
+        boxShadow: '4px 4px 8px #143331, -4px -4px 8px #52cdc5'
+    }),
+    down: props => ({
+        width: 50 * props.scale,
+        height: 30 * props.scale,
+        borderRadius: 8 * props.scale,
+        backgroundColor: globalColors.documentBodyBackgroudColor.toString(),
+        margin: 5,
+        border: 0,
+        boxShadow: 'inset 4px 4px 8px #143331, inset -4px -4px 8px #52cdc5'
+    })
 })
 
 export const StepPanel = (props: { text: string, index: number }) => {
-    const sUp = useStyle().up
-    const sDown = useStyle().down
+    const sc = useWindowScale()
+    const sUp = useStyle({ scale: sc }).up
+    const sDown = useStyle({ scale: sc }).down
     const index = props.index
     const stepsCtx = useContext(ContextHub).stepsContext
     const facesCtx = useContext(ContextHub).facesContext

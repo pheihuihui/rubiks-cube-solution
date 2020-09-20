@@ -1,5 +1,5 @@
 import { RubiksCube, restoredCubePlaneView } from './model/RubiksCube'
-import { declareGlobals } from "./util/Utilities"
+import { declareGlobals, fromRGB } from "./util/Utilities"
 import ReactDOM from "react-dom";
 import { all } from "./components/AllFaces";
 import { TFaceColor } from './model/Cubie';
@@ -7,7 +7,7 @@ import { TFaceColor } from './model/Cubie';
 export const cube = new RubiksCube(restoredCubePlaneView)
 
 export const globalColors = {
-    documentBodyBackgroudColor: [0x33, 0x80, 0x7b]
+    documentBodyBackgroudColor: fromRGB([0x33, 0x80, 0x7b])
 }
 
 export const cssFaceColors: { [T in Exclude<TFaceColor, 'blk'>]: string } = {

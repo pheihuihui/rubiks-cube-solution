@@ -45,7 +45,7 @@ export const getBoxShadow = (scale: number, distance: number, baseColor: [number
     if (reversed) {
         return `${num}px ${num}px ${num}px ${dark}, -${num}px -${num}px -${num}px ${light}`
     } else {
-        return `-${num}px -${num}px -${num}px ${light}, ${num}px ${num}px ${num}px ${dark}`
+        return `insert ${num}px ${num}px ${num}px ${dark}, insert -${num}px -${num}px -${num}px ${light}`
     }
 }
 
@@ -58,9 +58,17 @@ const darker = (RGB: number) => {
     return Math.floor(RGB / 1.5)
 }
 
-export const getColorString = (hexes: [number, number, number]) => {
+const getColorString = (hexes: [number, number, number]) => {
     let R = Number(hexes[0]).toString(16)
     let G = Number(hexes[1]).toString(16)
     let B = Number(hexes[2]).toString(16)
     return '#' + R + G + B
+}
+
+export const fromRGB = (rgb: [number, number, number]) => {
+    return {
+        toString: () => {
+            return getColorString(rgb)
+        }
+    }
 }
