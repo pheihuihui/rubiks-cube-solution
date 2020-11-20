@@ -27,8 +27,9 @@ module.exports = {
     publicPath: 'dist/'
   },
   plugins: [
-    new CopyPlugin([
-      { from: './src/pages/index.html', to: './' },
-    ]),
+    new CopyPlugin([{
+      from: './src/pages/index.html',
+      to: './'
+    }]),
   ]
 };

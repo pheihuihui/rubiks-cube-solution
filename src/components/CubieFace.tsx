@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Button, makeStyles, Menu, MenuItem } from '@material-ui/core'
-import { TRubiksCubeOrientation, CubeOrientationAndColors } from '../model/RubiksCube'
+import { TRubiksCubeOrientation, cubeOrientationAndColors } from '../model/RubiksCube'
 import { ContextHub } from './AllFaces'
 import { cssFaceColors } from '..'
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
@@ -23,7 +23,7 @@ export const CubieFace = (props: { initialColor?: string, disabled?: boolean, or
     const [color, setColor] = useState(props.initialColor ?? 'black')
     const [anchor_colorPicker, setAnchor_colorPicker] = useState<null | HTMLElement>(null)
     const currentColorCtx = useContext(ContextHub).facesContext
-    const center = CubeOrientationAndColors[props.orien]
+    const center = cubeOrientationAndColors[props.orien]
 
     useEffect(() => {
         if (props.position > -1) {

@@ -1,9 +1,9 @@
 import { TFaceColor, Cubie } from "./Cubie"
-import { EventDispatcher } from "../util/Utilities"
+import { EventDispatcher } from "../util/utilities"
 
-export const RotationDirections = ["L", "L'", "R", "R'", "F", "F'", "B", "B'", "U", "U'", "D", "D'", "L2", "R2", "F2", "B2", "U2", "D2"] as const
+export const rotationDirections = ["L", "L'", "R", "R'", "F", "F'", "B", "B'", "U", "U'", "D", "D'", "L2", "R2", "F2", "B2", "U2", "D2"] as const
 
-export type TRotationDirection = (typeof RotationDirections)[number]
+export type TRotationDirection = (typeof rotationDirections)[number]
 export type TRubiksCubeOrientation = "L" | "R" | "F" | "B" | "U" | "D"
 export type TPlaneFaceColor = Exclude<TFaceColor, 'blk'>
 export type TCellCoordinate = {
@@ -33,7 +33,7 @@ export const restoredCubePlaneView: TPlaneCube = {
     yel: Array(8).fill('yel') as TFixedArray<TPlaneFaceColor, 8>
 }
 
-export const CubeOrientationAndColors: { [oren: string]: TPlaneFaceColor } = {
+export const cubeOrientationAndColors: { [oren: string]: TPlaneFaceColor } = {
     'L': 'ora',
     'R': 'red',
     'U': 'yel',

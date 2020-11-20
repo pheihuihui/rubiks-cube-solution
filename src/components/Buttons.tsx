@@ -4,8 +4,8 @@ import RestoreIcon from '@material-ui/icons/Restore';
 import FlareIcon from '@material-ui/icons/Flare';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import React, { useContext, useState, useEffect } from "react";
-import { IconButton, Tooltip, Fab } from "@material-ui/core";
-import { scrambleCube, decomposeSteps } from "../solution/Solution";
+import { IconButton, Tooltip } from "@material-ui/core";
+import { scrambleCube } from "../solution/Solution";
 import { ContextHub } from "./AllFaces";
 import { cube } from '..'
 import { getSolution } from "../solution/tmp";
@@ -23,7 +23,9 @@ const useStyle = makeStyles<Theme, { scale: number }>({
         justifyContent: 'center'
     }),
     item: props => ({
-        boxShadow: '6px 6px 19px #225451, -6px -6px 19px #44aca5'
+        boxShadow: '6px 6px 19px #225451, -6px -6px 19px #44aca5',
+        width: 60 * props.scale + 10,
+        height: 60 * props.scale + 10
     }),
     buttonStyle: props => ({
         width: 100 * props.scale,

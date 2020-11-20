@@ -1,5 +1,5 @@
 import { RubiksCube, restoredCubePlaneView } from './model/RubiksCube'
-import { declareGlobals, fromRGB } from "./util/Utilities"
+import { declareGlobals, fromRGB } from "./util/utilities"
 import ReactDOM from "react-dom";
 import { all } from "./components/AllFaces";
 import { TFaceColor } from './model/Cubie';
@@ -26,9 +26,6 @@ declare global {
 }
 
 let panel = document.getElementById('displayPanel')
-panel?.style.setProperty('display', 'flex')
-panel?.style.setProperty('align-items', 'center')
-panel?.style.setProperty('justify-content', 'center')
 ReactDOM.render(all, panel)
 
 document.body.style.backgroundColor = '#33807b'

@@ -16,18 +16,33 @@ const useStyle = makeStyles<Theme, { scale: number }>({
         bottom: - 15 * props.scale,
         borderRadius: 20 * props.scale,
         boxShadow: '2px 2px 2px #6d6d6d, -2px -2px 2px #44aca5'
+    }),
+    iconItem: props => ({
+        height: 30 * props.scale,
+        width: 30 * props.scale,
+        paddingBottom: 20 - props.scale * 20
+    }),
+    buttonItemL: props => ({
+        height: 30 * props.scale,
+        width: 30 * props.scale,
+        paddingRight: 20 * props.scale,
+    }),
+    buttonItemR: props => ({
+        height: 30 * props.scale,
+        width: 30 * props.scale,
+        paddingLeft: 20 * props.scale,
     })
 })
 
 export const RotationBar = (props: { clickLeft: () => void, clickRight: () => void }) => {
 
     const sc = useWindowScale()
-    const stl = useStyle({ scale: sc })
+    const sty = useStyle({ scale: sc })
 
     return (
-        <div className={stl.root}>
-            <IconButton style={{ color: 'black' }} onClick={() => props.clickLeft()}><RotateLeftIcon /></IconButton>
-            <IconButton style={{ color: 'black' }} onClick={() => props.clickRight()}><RotateRightIcon /></IconButton>
+        <div className={sty.root}>
+            <IconButton className={sty.buttonItemL} style={{ color: 'black' }} onClick={() => props.clickLeft()}><RotateLeftIcon className={sty.iconItem} /></IconButton>
+            <IconButton className={sty.buttonItemR} style={{ color: 'black' }} onClick={() => props.clickRight()}><RotateRightIcon className={sty.iconItem} /></IconButton>
         </div>
     )
 }

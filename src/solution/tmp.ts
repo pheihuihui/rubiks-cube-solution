@@ -1,5 +1,5 @@
 import { RubiksCube, TRotationDirection } from "../model/RubiksCube"
-import { deserializeCube, testSolution } from "./Solution"
+import { deserializeCube } from "./Solution"
 
 const Cube = require('cubejs')
 

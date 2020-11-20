@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Grid, makeStyles } from '@material-ui/core'
 import { CubieFace } from './CubieFace'
 import { RotationBar } from './RotationBar'
-import { TRubiksCubeOrientation, TRotationDirection, CubeOrientationAndColors } from '../model/RubiksCube'
+import { TRubiksCubeOrientation, TRotationDirection, cubeOrientationAndColors } from '../model/RubiksCube'
 import { ContextHub } from './AllFaces'
 import { cssFaceColors, cube } from '..'
 import { useWindowScale } from '../util/hooks'
@@ -47,7 +47,7 @@ const useStyle = makeStyles<Theme, { scale: number }>({
 export const CubeFace = (props: { faceOrien: TRubiksCubeOrientation }) => {
 
     const sc = useWindowScale()
-    const curCenterColor = CubeOrientationAndColors[props.faceOrien]
+    const curCenterColor = cubeOrientationAndColors[props.faceOrien]
     const allFaces = useContext(ContextHub).facesContext
     const cssColors = allFaces.cubeState[curCenterColor].map(x => cssFaceColors[x])
     const bclass = useStyle({ scale: sc })

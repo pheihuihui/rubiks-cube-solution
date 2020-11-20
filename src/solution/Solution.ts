@@ -1,6 +1,6 @@
-import { RubiksCube, TRotationDirection, restoredCubePlaneView, restoredRubiksCube, RotationDirections, TPlaneFaceColor, TRubiksCubeOrientation } from "../model/RubiksCube";
+import { RubiksCube, TRotationDirection, restoredCubePlaneView, restoredRubiksCube, rotationDirections, TPlaneFaceColor, TRubiksCubeOrientation } from "../model/RubiksCube";
 import { cube } from "..";
-import { declareGlobals } from "../util/Utilities";
+import { declareGlobals } from "../util/utilities";
 let md5 = require('md5');
 
 const getSolution: (rcube: RubiksCube) => Record<string, Array<TRotationDirection>> = r => {
@@ -72,10 +72,10 @@ declare global {
 }
 
 export function scrambleCube() {
-    let len = RotationDirections.length + 1
+    let len = rotationDirections.length + 1
     for (let _ = 0; _ < 100; _++) {
         let index = Math.floor(Math.random() * len)
-        let cur = RotationDirections.concat('none' as TRotationDirection)[index]
+        let cur = rotationDirections.concat('none' as TRotationDirection)[index]
         cube.rotate(cur)
     }
 }

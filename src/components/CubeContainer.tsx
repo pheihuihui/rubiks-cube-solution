@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
-import React, { useRef, useEffect, useState, MutableRefObject } from "react";
-import { WebGLRenderer, PerspectiveCamera, Scene, Color, AxesHelper, Matrix3, Matrix4, Mesh, Group, Material } from "three";
+import React, { useRef, useEffect } from "react";
+import { WebGLRenderer, PerspectiveCamera, Scene, Color, AxesHelper, Matrix4, Mesh, Group } from "three";
 import { getCubeMesh } from "../model/Meshes";
 import { cube } from "..";
 import { TRotationDirection } from "../model/RubiksCube";
