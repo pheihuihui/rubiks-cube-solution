@@ -2453,6 +2453,8 @@ object-assign
 
 /*! export css [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/@material-ui/system/esm/css.js .default */
 
+/*! export cssFaceColors [provided] [no usage info] [missing usage info prevents renaming] */
+
 /*! export cubeOrientationAndColors [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export cyan [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/@material-ui/core/esm/colors/cyan.js .default */
@@ -2588,6 +2590,8 @@ object-assign
 /*! export forwardRef [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export forwardRef [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .forwardRef */
+
+/*! export fromPlaneView [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export fromRGB [provided] [no usage info] [missing usage info prevents renaming] */
 
