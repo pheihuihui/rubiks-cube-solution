@@ -222,7 +222,7 @@ export class RubiksCube {
                 break
 
             default:
-                const checking: never = dir
+                const _: never = dir
                 break
         }
         this.onDidRotateDispatcher.excute(dir)

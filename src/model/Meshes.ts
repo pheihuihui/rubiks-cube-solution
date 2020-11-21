@@ -2,7 +2,7 @@ import { Cubie, TFaceColor } from "./Cubie";
 import { MeshBasicMaterial, Color, Mesh, MeshDepthMaterial, Group, Shape, ShapeBufferGeometry } from "three";
 import { RubiksCube, TCellCoordinate, getCoordFromIndex } from "./RubiksCube";
 import { RoundedBoxGeometry } from "./RoundedBoxGeometry";
-import { cssFaceColors } from "..";
+import { cssFaceColors } from "../util/utilities";
 
 export type TMeshWithCoord = {
     coord: TCellCoordinate

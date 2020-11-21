@@ -2,9 +2,10 @@ import React, { useState, useContext, useEffect } from 'react'
 import { Button, makeStyles, Menu, MenuItem } from '@material-ui/core'
 import { TRubiksCubeOrientation, cubeOrientationAndColors } from '../model/RubiksCube'
 import { ContextHub } from './AllFaces'
-import { cssFaceColors } from '..'
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
 import { useWindowScale } from '../util/hooks'
+import { cssFaceColors } from '../util/utilities'
+import { currentPlaneView } from '..'
 
 const useStyle = makeStyles<Theme, { scale: number }>({
     root: props => ({
@@ -40,6 +41,7 @@ export const CubieFace = (props: { initialColor?: string, disabled?: boolean, or
 
     const handleColor = (c: string) => {
         setColor(c)
+        currentPlaneView.updateCurrent(props.orien, props.position, c)
         setAnchor_colorPicker(null)
     }
 

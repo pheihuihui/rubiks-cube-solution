@@ -3,7 +3,7 @@ import { CubeFace, EmptyFace } from "./CubeFace"
 import React from "react"
 import { TPlaneCube, RubiksCube, TRotationDirection } from "../model/RubiksCube"
 import { makeStyles, Theme } from "@material-ui/core"
-import { cube } from ".."
+import { cube, currentPlaneView } from ".."
 import { SolutionPanel } from "./SolutionPanel"
 import { RestoreButton, ShuffleButton, SolutionButton, ValidateButton } from "./Buttons"
 import { CubeContainer } from "./CubeContainer"
@@ -131,7 +131,11 @@ const AllFaces = () => {
             <ContextHub.Provider value={{
                 facesContext: {
                     cubeState: curCtxVal,
-                    updateCubeState: () => { setCurCtxVal(cube.getAllFaces()) }
+                    updateCubeState: () => {
+                        let tmp = cube.getAllFaces()
+                        setCurCtxVal(tmp)
+                        currentPlaneView.refresh(tmp)
+                    }
                 },
                 stepsContext: {
                     steps: steps,

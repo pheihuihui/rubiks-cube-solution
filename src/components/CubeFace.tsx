@@ -4,9 +4,10 @@ import { CubieFace } from './CubieFace'
 import { RotationBar } from './RotationBar'
 import { TRubiksCubeOrientation, TRotationDirection, cubeOrientationAndColors } from '../model/RubiksCube'
 import { ContextHub } from './AllFaces'
-import { cssFaceColors, cube } from '..'
 import { useWindowScale } from '../util/hooks'
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
+import { cssFaceColors } from '../util/utilities'
+import { cube } from '..'
 
 const useStyle = makeStyles<Theme, { scale: number }>({
     root: props => ({

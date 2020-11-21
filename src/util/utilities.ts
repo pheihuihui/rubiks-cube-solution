@@ -1,6 +1,7 @@
-import { RubiksCube, getCoordFromIndex, restoredRubiksCube } from "../model/RubiksCube"
+import { RubiksCube, getCoordFromIndex, restoredRubiksCube, TFaceColors, TPlaneCube, TFixedArray, TPlaneFaceColor, TRubiksCubeOrientation, cubeOrientationAndColors } from "../model/RubiksCube"
 import { cube } from ".."
 import { hashCube, getNext } from "../solution/Solution"
+import { TFaceColor } from "../model/Cubie"
 
 export function declareGlobals() {
     window.RubiksCube = RubiksCube
@@ -71,4 +72,47 @@ export const fromRGB = (rgb: [number, number, number]) => {
             return getColorString(rgb)
         }
     }
+}
+
+export const fromPlaneView = (plane: TPlaneCube) => {
+    let _plane = plane
+    return {
+        toString: () => {
+            let res = ""
+            for (const key in cubeOrientationAndColors) {
+                if (Object.prototype.hasOwnProperty.call(cubeOrientationAndColors, key)) {
+                    const element = cubeOrientationAndColors[key];
+                    let arr = _plane[element]
+                    res += `${key}: ${arr.toString()};\n`
+                }
+            }
+            return res
+        },
+        getCurrent: () => _plane,
+        refresh: (newplane: TPlaneCube) => {
+            _plane = newplane
+        },
+        updateCurrent: (ora: TRubiksCubeOrientation, index: number, newColor: string) => {
+            let faceColor = cubeOrientationAndColors[ora]
+            let newFaceColor = 'blk'
+            for (const key in cssFaceColors) {
+                if (Object.prototype.hasOwnProperty.call(cssFaceColors, key)) {
+                    const element = cssFaceColors[key as Exclude<TFaceColor, 'blk'>];
+                    if (element == newColor) {
+                        newFaceColor = key
+                    }
+                }
+            }
+            _plane[faceColor][index] = newFaceColor as Exclude<TFaceColor, 'blk'>
+        }
+    }
+}
+
+export const cssFaceColors: { [T in Exclude<TFaceColor, 'blk'>]: string } = {
+    yel: '#b6be46',
+    ora: '#c78d29',
+    blu: '#297dc7',
+    red: '#ce276a',
+    whi: '#ffffff',
+    gre: '#5ea66c'
 }
