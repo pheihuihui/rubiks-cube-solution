@@ -28,7 +28,7 @@ jobs:
       run: |
         webpack
     - name: deploy
-      uses: JamesIves/github-pages-deploy-action@3.5.9
+      uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
         GITHUB_TOKEN: ${{ secrets.CUBE_SECRET_NAME }}
         BRANCH: gh-pages
