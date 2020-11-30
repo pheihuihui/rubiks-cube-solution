@@ -1,24 +1,9 @@
-import { RubiksCube, TRotationDirection, restoredCubePlaneView, restoredRubiksCube, rotationDirections, TPlaneFaceColor, TRubiksCubeOrientation } from "../model/RubiksCube";
-import { cube } from "..";
-import { declareGlobals } from "../util/utilities";
-let md5 = require('md5');
-
-const getSolution: (rcube: RubiksCube) => Record<string, Array<TRotationDirection>> = r => {
-    return {
-        'G0 -> G1': ["B'", "R'", "U", "F", "U'", "R", "L"],
-        'G1 -> G2': ["B'", "B", "U'", "R", "L"],
-        'G2 -> G3': ["B'", "F", "U'", "R", "L", "R"],
-        'G3 -> G4': ["B'", "F", "F", "L'", "L", "B'", "B", "D'"]
-    }
-}
+import { RubiksCube, TRotationDirection, restoredCubePlaneView, restoredRubiksCube, rotationDirections, TPlaneFaceColor, TRubiksCubeOrientation } from "../model/RubiksCube"
+import { cube } from ".."
 
 export const testSolution = {
     'Phase1': ["B'", "F", "U'", "R", "L", "R", "D'", "U2"] as TRotationDirection[],
     'Phase2': ["B'", "F2", "F", "L2", "L", "B'", "B", "D'", "B2", "R", "L2"] as TRotationDirection[]
-}
-
-const reduceGroup: (start: RubiksCube) => (finish: RubiksCube) => string = start => finish => {
-    return ''
 }
 
 export const getReversedDirection: (val: string) => string = val => {
@@ -58,19 +43,6 @@ const composeSteps: (steps: string[]) => string = steps => {
     return res
 }
 
-export const hashCube = (rcube: RubiksCube) => {
-    let faces = rcube.getAllFaces()
-    let res = md5(JSON.stringify(faces)) as string
-    return res
-}
-
-declare global {
-    interface Window {
-        hashCube: any
-        getNext: any
-    }
-}
-
 export function scrambleCube() {
     let len = rotationDirections.length + 1
     for (let _ = 0; _ < 100; _++) {
@@ -99,5 +71,12 @@ const colorToPos: (color: TPlaneFaceColor) => TRubiksCubeOrientation = color => 
         case 'red': return 'R'
         case 'whi': return 'D'
         case 'yel': return 'U'
+    }
+}
+
+
+declare global {
+    interface Window {
+        getNext: any
     }
 }

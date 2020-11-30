@@ -40,7 +40,6 @@ export const SolutionPanel = () => {
 
     useEffect(() => {
         setSteps(stpCtx.steps)
-        console.log(stpCtx.steps)
     }, [stpCtx.steps])
 
     return (

@@ -19,7 +19,6 @@ const useStyle = makeStyles<Theme, { scale: number }>({
 
 export const CubeContainer = () => {
     const sc = useWindowScale()
-    console.log(sc)
     const cclass = useStyle({ scale: sc })
 
     //////////ANYSCRIPT//////////

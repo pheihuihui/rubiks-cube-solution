@@ -7,11 +7,13 @@ import React, { useContext, useState, useEffect } from "react";
 import { IconButton, Tooltip } from "@material-ui/core";
 import { scrambleCube } from "../solution/Solution";
 import { ContextHub } from "./AllFaces";
-import { cube } from '..'
+import { cube, currentPlaneView } from '..'
 import { getSolution } from "../solution/tmp";
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { useWindowScale } from "../util/hooks";
+import { fromPlaneView } from "../util/utilities";
+import { getCorners } from "../solution/Validation";
 
 const useStyle = makeStyles<Theme, { scale: number }>({
     out: props => ({
@@ -87,7 +89,6 @@ export const SolutionButton = () => {
                     () => {
                         let stp = getSolution(cube)
                         stpCtx.updateSteps(stp)
-                        console.log(stpCtx.totalSteps)
                     }}>
                     <FlareIcon fontSize={'large'} />
                 </IconButton>
@@ -102,7 +103,18 @@ export const ValidateButton = () => {
     return (
         <div className={bclass.out} >
             <Tooltip title="validate">
-                <IconButton className={bclass.item}>
+                <IconButton className={bclass.item} onClick={() => {
+                    cube.restore(currentPlaneView.getCurrent())
+                    let _sum = 0
+                    let corners = getCorners(currentPlaneView.getCurrent())
+                    for (const key in corners) {
+                        if (Object.prototype.hasOwnProperty.call(corners, key)) {
+                            const element = corners[key];
+                            _sum += element.power
+                        }
+                    }
+                    console.log(_sum)
+                }}>
                     <CheckCircleIcon fontSize={'large'} />
                 </IconButton>
             </Tooltip>

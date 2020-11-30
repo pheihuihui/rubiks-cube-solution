@@ -1,13 +1,12 @@
 import { RubiksCube, getCoordFromIndex, restoredRubiksCube, TFaceColors, TPlaneCube, TFixedArray, TPlaneFaceColor, TRubiksCubeOrientation, cubeOrientationAndColors } from "../model/RubiksCube"
 import { cube } from ".."
-import { hashCube, getNext } from "../solution/Solution"
+import { getNext } from "../solution/Solution"
 import { TFaceColor } from "../model/Cubie"
 
 export function declareGlobals() {
     window.RubiksCube = RubiksCube
     window.cube = cube
     window.getCoordFromIndex = getCoordFromIndex
-    window.hashCube = hashCube
     window.restoredRubiksCube = restoredRubiksCube
     window.getNext = getNext
 }

@@ -9,7 +9,7 @@ export const getSolution = (rcube: RubiksCube) => {
     Cube.initSolver()
     let solstr = cc.solve() as string
     let sol = solstr.split(' ') as TRotationDirection[]
-    console.log(sol)
+    // console.log(sol)
     let p1 = sol.splice(0, 8)
     let p2 = sol
     return {

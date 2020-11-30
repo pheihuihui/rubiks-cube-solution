@@ -41,7 +41,6 @@ export const StepPanel = (props: { text: string, index: number }) => {
         } else {
             setStyle(sUp)
         }
-        console.log(stepsCtx.currentStepIndex)
     }, [stepsCtx.currentStepIndex])
 
     return (
