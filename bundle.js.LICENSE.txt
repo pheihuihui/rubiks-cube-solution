@@ -4,13 +4,6 @@ object-assign
 @license MIT
 */
 
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
 /*!   export amber [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/@material-ui/core/esm/colors/amber.js .default */
 
 /*!   export blue [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/@material-ui/core/esm/colors/blue.js .default */
@@ -238,6 +231,8 @@ object-assign
 /*! ../model/RubiksCube */
 
 /*! ../solution/Solution */
+
+/*! ../solution/Validation */
 
 /*! ../solution/tmp */
 
@@ -937,7 +932,7 @@ object-assign
 
 /*! @material-ui/utils */
 
-/*! CommonJS bailout: exports.decomposeSteps(...) prevents optimization as exports is passed as call context at 43:17-39 */
+/*! CommonJS bailout: exports.decomposeSteps(...) prevents optimization as exports is passed as call context at 31:17-39 */
 
 /*! CommonJS bailout: exports.getIndexFromCoord(...) prevents optimization as exports is passed as call context at 258:32-57 */
 
@@ -969,13 +964,9 @@ object-assign
 
 /*! CommonJS bailout: module.exports is used directly at 1075:4-18 */
 
-/*! CommonJS bailout: module.exports is used directly at 10:0-14 */
-
 /*! CommonJS bailout: module.exports is used directly at 12:0-14 */
 
 /*! CommonJS bailout: module.exports is used directly at 14:2-16 */
-
-/*! CommonJS bailout: module.exports is used directly at 150:2-16 */
 
 /*! CommonJS bailout: module.exports is used directly at 16:0-14 */
 
@@ -987,15 +978,11 @@ object-assign
 
 /*! CommonJS bailout: module.exports is used directly at 2:2-16 */
 
-/*! CommonJS bailout: module.exports is used directly at 33:0-14 */
-
 /*! CommonJS bailout: module.exports is used directly at 38:0-14 */
 
 /*! CommonJS bailout: module.exports is used directly at 65:0-14 */
 
 /*! CommonJS bailout: module.exports is used directly at 7:0-14 */
-
-/*! CommonJS bailout: module.exports is used directly at 95:2-16 */
 
 /*! CommonJS bailout: this is used directly at 1080:8-12 */
 
@@ -1009,11 +996,7 @@ object-assign
 
 /*! CommonJS bailout: this is used directly at 9:26-30 */
 
-/*! charenc */
-
 /*! clsx */
-
-/*! crypt */
 
 /*! css-vendor */
 
@@ -2607,6 +2590,8 @@ object-assign
 
 /*! export getCoordFromIndex [provided] [no usage info] [missing usage info prevents renaming] */
 
+/*! export getCorners [provided] [no usage info] [missing usage info prevents renaming] */
+
 /*! export getCubeMesh [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export getDisplayName [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/@material-ui/utils/esm/getDisplayName.js .default */
@@ -2702,8 +2687,6 @@ object-assign
 /*! export hasCSSTOMSupport [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export hasValue [provided] [no usage info] [missing usage info prevents renaming] */
-
-/*! export hashCube [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export height [provided] [no usage info] [missing usage info prevents renaming] */
 
@@ -3257,8 +3240,6 @@ object-assign
 
 /*! hyphenate-style-name */
 
-/*! is-buffer */
-
 /*! is-in-browser */
 
 /*! jss */
@@ -3276,8 +3257,6 @@ object-assign
 /*! jss-plugin-rule-value-function */
 
 /*! jss-plugin-vendor-prefixer */
-
-/*! md5 */
 
 /*! namespace exports */
 
@@ -3316,8 +3295,6 @@ object-assign
 /*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 
 /*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
-
-/*! runtime requirements: __webpack_require__, module */
 
 /*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 
@@ -3368,10 +3345,6 @@ object-assign
   \*******************************/
 
 /*!*********************************!*\
-  !*** ./node_modules/md5/md5.js ***!
-  \*********************************/
-
-/*!*********************************!*\
   !*** ./src/model/RubiksCube.ts ***!
   \*********************************/
 
@@ -3383,9 +3356,9 @@ object-assign
   !*** ./src/components/Buttons.tsx ***!
   \************************************/
 
-/*!*************************************!*\
-  !*** ./node_modules/crypt/crypt.js ***!
-  \*************************************/
+/*!************************************!*\
+  !*** ./src/solution/Validation.ts ***!
+  \************************************/
 
 /*!*************************************!*\
   !*** ./node_modules/react/index.js ***!
@@ -3420,15 +3393,7 @@ object-assign
   \****************************************/
 
 /*!*****************************************!*\
-  !*** ./node_modules/charenc/charenc.js ***!
-  \*****************************************/
-
-/*!*****************************************!*\
   !*** ./node_modules/cubejs/lib/cube.js ***!
-  \*****************************************/
-
-/*!*****************************************!*\
-  !*** ./node_modules/is-buffer/index.js ***!
   \*****************************************/
 
 /*!*****************************************!*\
