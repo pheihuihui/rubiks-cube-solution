@@ -226,6 +226,8 @@ object-assign
 
 /*! ../mergeClasses */
 
+/*! ../model/Cubie */
+
 /*! ../model/Meshes */
 
 /*! ../model/RubiksCube */
@@ -790,6 +792,8 @@ object-assign
 
 /*! ./sizing */
 
+/*! ./solution/Solution */
+
 /*! ./spacing */
 
 /*! ./style */
@@ -932,11 +936,17 @@ object-assign
 
 /*! @material-ui/utils */
 
-/*! CommonJS bailout: exports.decomposeSteps(...) prevents optimization as exports is passed as call context at 31:17-39 */
+/*! CommonJS bailout: exports.decomposeSteps(...) prevents optimization as exports is passed as call context at 32:17-39 */
 
-/*! CommonJS bailout: exports.getIndexFromCoord(...) prevents optimization as exports is passed as call context at 258:32-57 */
+/*! CommonJS bailout: exports.getCorners(...) prevents optimization as exports is passed as call context at 104:18-36 */
 
-/*! CommonJS bailout: exports.getIndexFromCoord(...) prevents optimization as exports is passed as call context at 63:32-57 */
+/*! CommonJS bailout: exports.getCorners(...) prevents optimization as exports is passed as call context at 144:18-36 */
+
+/*! CommonJS bailout: exports.getIndexFromCoord(...) prevents optimization as exports is passed as call context at 257:32-57 */
+
+/*! CommonJS bailout: exports.getIndexFromCoord(...) prevents optimization as exports is passed as call context at 62:32-57 */
+
+/*! CommonJS bailout: exports.getPermutationGroups(...) prevents optimization as exports is passed as call context at 157:11-39 */
 
 /*! CommonJS bailout: exports.unstable_now(...) prevents optimization as exports is passed as call context at 132:13-33 */
 
@@ -2450,8 +2460,6 @@ object-assign
 
 /*! export debounce [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/@material-ui/core/esm/utils/debounce.js .default */
 
-/*! export declareGlobals [provided] [no usage info] [missing usage info prevents renaming] */
-
 /*! export decomposeColor [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export decomposeColor [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/@material-ui/core/esm/styles/colorManipulator.js .decomposeColor */
@@ -2618,6 +2626,8 @@ object-assign
 
 /*! export getOffsetTop [provided] [no usage info] [missing usage info prevents renaming] */
 
+/*! export getPermutationGroups [provided] [no usage info] [missing usage info prevents renaming] */
+
 /*! export getReversedDirection [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export getSolution [provided] [no usage info] [missing usage info prevents renaming] */
@@ -2765,6 +2775,8 @@ object-assign
 /*! export isProfiler [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export isProfiler [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-is/cjs/react-is.development.js .isProfiler */
+
+/*! export isSolvable [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export isStrictMode [provided] [no usage info] [missing usage info prevents renaming] */
 
