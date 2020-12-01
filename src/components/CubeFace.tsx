@@ -2,12 +2,13 @@ import React, { useContext } from 'react'
 import { Grid, makeStyles } from '@material-ui/core'
 import { CubieFace } from './CubieFace'
 import { RotationBar } from './RotationBar'
-import { TRubiksCubeOrientation, TRotationDirection, cubeOrientationAndColors } from '../model/RubiksCube'
+import { TRubiksCubeOrientation, cubeOrientationAndColors } from '../model/RubiksCube'
 import { ContextHub } from './AllFaces'
 import { useWindowScale } from '../util/hooks'
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
 import { cssFaceColors } from '../util/utilities'
 import { cube } from '..'
+import { TRotationDirection } from '../model/Cubie'
 
 const useStyle = makeStyles<Theme, { scale: number }>({
     root: props => ({

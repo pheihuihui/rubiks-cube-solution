@@ -3,9 +3,9 @@ import React, { useState, useContext, useEffect } from "react";
 import { ContextHub } from "./AllFaces";
 import { StepPanel } from "./StepPanel";
 import { PlayButton } from "./Buttons";
-import { TRotationDirection } from "../model/RubiksCube";
 import { Theme } from "@material-ui/core";
 import { useWindowScale } from "../util/hooks";
+import { TRotationDirection } from "../model/Cubie";
 
 const useStyle = makeStyles<Theme, { scale: number }>({
     root: props => ({

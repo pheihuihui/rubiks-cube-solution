@@ -12,8 +12,7 @@ import { getSolution } from "../solution/tmp";
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { useWindowScale } from "../util/hooks";
-import { fromPlaneView } from "../util/utilities";
-import { getCorners } from "../solution/Validation";
+import { getCorners, isSolvable } from "../solution/Validation";
 
 const useStyle = makeStyles<Theme, { scale: number }>({
     out: props => ({
@@ -104,16 +103,10 @@ export const ValidateButton = () => {
         <div className={bclass.out} >
             <Tooltip title="validate">
                 <IconButton className={bclass.item} onClick={() => {
-                    cube.restore(currentPlaneView.getCurrent())
-                    let _sum = 0
-                    let corners = getCorners(currentPlaneView.getCurrent())
-                    for (const key in corners) {
-                        if (Object.prototype.hasOwnProperty.call(corners, key)) {
-                            const element = corners[key];
-                            _sum += element.power
-                        }
-                    }
-                    console.log(_sum)
+                    let pln = currentPlaneView.getCurrent()
+                    cube.restore(pln)
+                    let solvable = isSolvable(pln)
+                    console.log(solvable)
                 }}>
                     <CheckCircleIcon fontSize={'large'} />
                 </IconButton>

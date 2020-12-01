@@ -1,4 +1,5 @@
-import { TRotationDirection } from "./RubiksCube"
+export const rotationDirections = ["L", "L'", "R", "R'", "F", "F'", "B", "B'", "U", "U'", "D", "D'", "L2", "R2", "F2", "B2", "U2", "D2"] as const
+export type TRotationDirection = (typeof rotationDirections)[number]
 
 export type TFaceColor = 'yel' | 'ora' | 'blu' | 'red' | 'gre' | 'whi' | 'blk'
 

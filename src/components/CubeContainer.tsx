@@ -3,9 +3,9 @@ import React, { useRef, useEffect } from "react";
 import { WebGLRenderer, PerspectiveCamera, Scene, Color, AxesHelper, Matrix4, Mesh, Group } from "three";
 import { getCubeMesh } from "../model/Meshes";
 import { cube } from "..";
-import { TRotationDirection } from "../model/RubiksCube";
 import { useWindowScale } from "../util/hooks";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
+import { TRotationDirection } from "../model/Cubie";
 
 const useStyle = makeStyles<Theme, { scale: number }>({
     root: props => ({

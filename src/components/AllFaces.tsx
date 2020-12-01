@@ -1,13 +1,14 @@
 import { createContext, useState } from "react"
 import { CubeFace, EmptyFace } from "./CubeFace"
 import React from "react"
-import { TPlaneCube, RubiksCube, TRotationDirection } from "../model/RubiksCube"
+import { TPlaneCube, RubiksCube } from "../model/RubiksCube"
 import { makeStyles, Theme } from "@material-ui/core"
 import { cube, currentPlaneView } from ".."
 import { SolutionPanel } from "./SolutionPanel"
 import { RestoreButton, ShuffleButton, SolutionButton, ValidateButton } from "./Buttons"
 import { CubeContainer } from "./CubeContainer"
 import { useWindowScale } from "../util/hooks"
+import { TRotationDirection } from "../model/Cubie"
 
 const useStyle = makeStyles<Theme, { scale: number }>({
     root: props => ({

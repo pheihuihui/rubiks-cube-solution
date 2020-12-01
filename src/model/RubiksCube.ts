@@ -1,9 +1,6 @@
-import { TFaceColor, Cubie } from "./Cubie"
+import { TFaceColor, Cubie, TRotationDirection } from "./Cubie"
 import { EventDispatcher } from "../util/utilities"
 
-export const rotationDirections = ["L", "L'", "R", "R'", "F", "F'", "B", "B'", "U", "U'", "D", "D'", "L2", "R2", "F2", "B2", "U2", "D2"] as const
-
-export type TRotationDirection = (typeof rotationDirections)[number]
 export type TRubiksCubeOrientation = "L" | "R" | "F" | "B" | "U" | "D"
 export type TPlaneFaceColor = Exclude<TFaceColor, 'blk'>
 export type TCellCoordinate = {

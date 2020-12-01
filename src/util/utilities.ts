@@ -1,15 +1,5 @@
-import { RubiksCube, getCoordFromIndex, restoredRubiksCube, TFaceColors, TPlaneCube, TFixedArray, TPlaneFaceColor, TRubiksCubeOrientation, cubeOrientationAndColors } from "../model/RubiksCube"
-import { cube } from ".."
-import { getNext } from "../solution/Solution"
+import { TPlaneCube, TRubiksCubeOrientation, cubeOrientationAndColors } from "../model/RubiksCube"
 import { TFaceColor } from "../model/Cubie"
-
-export function declareGlobals() {
-    window.RubiksCube = RubiksCube
-    window.cube = cube
-    window.getCoordFromIndex = getCoordFromIndex
-    window.restoredRubiksCube = restoredRubiksCube
-    window.getNext = getNext
-}
 
 export type Handler<E> = {
     name: string

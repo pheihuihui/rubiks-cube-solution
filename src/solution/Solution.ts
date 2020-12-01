@@ -1,5 +1,6 @@
-import { RubiksCube, TRotationDirection, restoredCubePlaneView, restoredRubiksCube, rotationDirections, TPlaneFaceColor, TRubiksCubeOrientation } from "../model/RubiksCube"
+import { RubiksCube, TPlaneFaceColor, TRubiksCubeOrientation } from "../model/RubiksCube"
 import { cube } from ".."
+import { rotationDirections, TRotationDirection } from "../model/Cubie"
 
 export const testSolution = {
     'Phase1': ["B'", "F", "U'", "R", "L", "R", "D'", "U2"] as TRotationDirection[],
