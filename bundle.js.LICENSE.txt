@@ -792,8 +792,6 @@ object-assign
 
 /*! ./sizing */
 
-/*! ./solution/Solution */
-
 /*! ./spacing */
 
 /*! ./style */
@@ -942,9 +940,9 @@ object-assign
 
 /*! CommonJS bailout: exports.getCorners(...) prevents optimization as exports is passed as call context at 144:18-36 */
 
-/*! CommonJS bailout: exports.getIndexFromCoord(...) prevents optimization as exports is passed as call context at 257:32-57 */
+/*! CommonJS bailout: exports.getIndexFromCoord(...) prevents optimization as exports is passed as call context at 264:32-57 */
 
-/*! CommonJS bailout: exports.getIndexFromCoord(...) prevents optimization as exports is passed as call context at 62:32-57 */
+/*! CommonJS bailout: exports.getIndexFromCoord(...) prevents optimization as exports is passed as call context at 69:32-57 */
 
 /*! CommonJS bailout: exports.getPermutationGroups(...) prevents optimization as exports is passed as call context at 157:11-39 */
 
@@ -999,6 +997,8 @@ object-assign
 /*! CommonJS bailout: this is used directly at 14:20-24 */
 
 /*! CommonJS bailout: this is used directly at 21:23-27 */
+
+/*! CommonJS bailout: this is used directly at 2:18-22 */
 
 /*! CommonJS bailout: this is used directly at 2:23-27 */
 
@@ -1960,8 +1960,6 @@ object-assign
 
 /*! export RoundedBoxGeometry [provided] [no usage info] [missing usage info prevents renaming] */
 
-/*! export RubiksCube [provided] [no usage info] [missing usage info prevents renaming] */
-
 /*! export RuleList [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export SRGB8_ALPHA8_ASTC_10x10_Format [provided] [no usage info] [missing usage info prevents renaming] */
@@ -2322,11 +2320,11 @@ object-assign
 
 /*! export alignSelf [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/@material-ui/system/esm/flexbox.js .alignSelf */
 
-/*! export allFaceColors [provided] [no usage info] [missing usage info prevents renaming] */
-
 /*! export amber [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/@material-ui/core/esm/colors/amber.js .default */
 
 /*! export ariaHidden [provided] [no usage info] [missing usage info prevents renaming] */
+
+/*! export asGlobal [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export bgcolor [provided] [no usage info] [missing usage info prevents renaming] */
 
@@ -2447,8 +2445,6 @@ object-assign
 /*! export css [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/@material-ui/system/esm/css.js .default */
 
 /*! export cssFaceColors [provided] [no usage info] [missing usage info prevents renaming] */
-
-/*! export cubeOrientationAndColors [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export cyan [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/@material-ui/core/esm/colors/cyan.js .default */
 
@@ -2596,8 +2592,6 @@ object-assign
 
 /*! export getContrastRatio [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/@material-ui/core/esm/styles/colorManipulator.js .getContrastRatio */
 
-/*! export getCoordFromIndex [provided] [no usage info] [missing usage info prevents renaming] */
-
 /*! export getCorners [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export getCubeMesh [provided] [no usage info] [missing usage info prevents renaming] */
@@ -2607,8 +2601,6 @@ object-assign
 /*! export getDynamicStyles [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export getFunctionName [provided] [no usage info] [missing usage info prevents renaming] */
-
-/*! export getIndexFromCoord [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export getInitialChildMapping [provided] [no usage info] [missing usage info prevents renaming] */
 
@@ -2925,10 +2917,6 @@ object-assign
 /*! export responsiveFontSizes [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/@material-ui/core/esm/styles/responsiveFontSizes.js .default */
 
 /*! export responsiveProperty [provided] [no usage info] [missing usage info prevents renaming] */
-
-/*! export restoredCubePlaneView [provided] [no usage info] [missing usage info prevents renaming] */
-
-/*! export restoredRubiksCube [provided] [no usage info] [missing usage info prevents renaming] */
 
 /*! export rgbToHex [provided] [no usage info] [missing usage info prevents renaming] */
 
