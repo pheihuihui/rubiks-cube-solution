@@ -105,3 +105,9 @@ export const cssFaceColors: { [T in Exclude<TFaceColor, 'blk'>]: string } = {
     whi: '#ffffff',
     gre: '#5ea66c'
 }
+
+export function asGlobal<T extends { new(...args: any[]): {} }>(className: string) {
+    return (constructor: T) => {
+        Object.assign(window, { [className]: constructor })
+    }
+}

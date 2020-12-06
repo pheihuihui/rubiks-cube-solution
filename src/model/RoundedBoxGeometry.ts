@@ -186,19 +186,13 @@ export class RoundedBoxGeometry extends BufferGeometry {
                     var c = cornerOffset + r2 + u;
                     var d = cornerOffset + r2 + u1;
                     if (!flips[i]) {
-                        this.indices.push(a);
-                        this.indices.push(b);
-                        this.indices.push(c);
-                        this.indices.push(b);
-                        this.indices.push(d);
-                        this.indices.push(c);
+                        [a, b, c, b, d, c].forEach(x => {
+                            this.indices.push(x)
+                        })
                     } else {
-                        this.indices.push(a);
-                        this.indices.push(c);
-                        this.indices.push(b);
-                        this.indices.push(b);
-                        this.indices.push(c);
-                        this.indices.push(d);
+                        [a, c, b, b, c, d].forEach(x => {
+                            this.indices.push(x)
+                        })
                     }
                 }
             }
@@ -208,15 +202,14 @@ export class RoundedBoxGeometry extends BufferGeometry {
                 var b = cornerOffset + lastRowOffset + u + 1;
                 var c = cornerOffset + this.lastVertex;
                 if (!flips[i]) {
-                    this.indices.push(a);
-                    this.indices.push(b);
-                    this.indices.push(c);
+                    [a, b, c].forEach(x => {
+                        this.indices.push(x)
+                    })
                 } else {
-                    this.indices.push(a);
-                    this.indices.push(c);
-                    this.indices.push(b);
+                    [a, c, b].forEach(x => {
+                        this.indices.push(x)
+                    })
                 }
-
             }
 
         }
@@ -230,78 +223,54 @@ export class RoundedBoxGeometry extends BufferGeometry {
         var b = this.lastVertex + this.cornerVertNumber;// * 1;
         var c = this.lastVertex + this.cornerVertNumber * 2;
         var d = this.lastVertex + this.cornerVertNumber * 3;
-
-        this.indices.push(a);
-        this.indices.push(b);
-        this.indices.push(c);
-        this.indices.push(a);
-        this.indices.push(c);
-        this.indices.push(d);
+        [a, b, c, a, c, d].forEach(x => {
+            this.indices.push(x)
+        })
 
         //bottom
         a = this.lastVertex + this.cornerVertNumber * 4;// + cornerVertNumber * 0;
         b = this.lastVertex + this.cornerVertNumber * 5;// * 1;
         c = this.lastVertex + this.cornerVertNumber * 6;
         d = this.lastVertex + this.cornerVertNumber * 7;
-
-        this.indices.push(a);
-        this.indices.push(c);
-        this.indices.push(b);
-        this.indices.push(a);
-        this.indices.push(d);
-        this.indices.push(c);
+        [a, c, b, a, d, c].forEach(x => {
+            this.indices.push(x)
+        })
 
         //left 
         a = 0;
         b = this.cornerVertNumber;
         c = this.cornerVertNumber * 4;
         d = this.cornerVertNumber * 5;
-
-        this.indices.push(a);
-        this.indices.push(c);
-        this.indices.push(b);
-        this.indices.push(b);
-        this.indices.push(c);
-        this.indices.push(d);
+        [a, c, b, b, c, d].forEach(x => {
+            this.indices.push(x)
+        })
 
         //right 
         a = this.cornerVertNumber * 2;
         b = this.cornerVertNumber * 3;
         c = this.cornerVertNumber * 6;
         d = this.cornerVertNumber * 7;
-
-        this.indices.push(a);
-        this.indices.push(c);
-        this.indices.push(b);
-        this.indices.push(b);
-        this.indices.push(c);
-        this.indices.push(d);
+        [a, c, b, b, c, d].forEach(x => {
+            this.indices.push(x)
+        })
 
         //front 
         a = this.radiusSegments;
         b = this.radiusSegments + this.cornerVertNumber * 3;
         c = this.radiusSegments + this.cornerVertNumber * 4;
         d = this.radiusSegments + this.cornerVertNumber * 7;
-
-        this.indices.push(a);
-        this.indices.push(b);
-        this.indices.push(c);
-        this.indices.push(b);
-        this.indices.push(d);
-        this.indices.push(c);
+        [a, b, c, b, d, c].forEach(x => {
+            this.indices.push(x)
+        })
 
         //back 
         a = this.radiusSegments + this.cornerVertNumber;
         b = this.radiusSegments + this.cornerVertNumber * 2;
         c = this.radiusSegments + this.cornerVertNumber * 5;
         d = this.radiusSegments + this.cornerVertNumber * 6;
-
-        this.indices.push(a);
-        this.indices.push(c);
-        this.indices.push(b);
-        this.indices.push(b);
-        this.indices.push(c);
-        this.indices.push(d);
+        [a, c, b, b, c, d].forEach(x => {
+            this.indices.push(x)
+        })
 
     }
 
@@ -317,19 +286,13 @@ export class RoundedBoxGeometry extends BufferGeometry {
                 var c = cRowOffset + u;
                 var d = cRowOffset + u1;
                 if (!needsFlip) {
-                    this.indices.push(a);
-                    this.indices.push(b);
-                    this.indices.push(c);
-                    this.indices.push(b);
-                    this.indices.push(d);
-                    this.indices.push(c);
+                    [a, b, c, b, d, c].forEach(x => {
+                        this.indices.push(x)
+                    })
                 } else {
-                    this.indices.push(a);
-                    this.indices.push(c);
-                    this.indices.push(b);
-                    this.indices.push(b);
-                    this.indices.push(c);
-                    this.indices.push(d);
+                    [a, c, b, b, c, d].forEach(x => {
+                        this.indices.push(x)
+                    })
                 }
             }
         }
@@ -358,23 +321,13 @@ export class RoundedBoxGeometry extends BufferGeometry {
                 var d = cEnd + u1rs1
 
                 if (needsFlip) {
-
-                    this.indices.push(a);
-                    this.indices.push(c);
-                    this.indices.push(b);
-                    this.indices.push(b);
-                    this.indices.push(c);
-                    this.indices.push(d);
-
+                    [a, c, b, b, c, d].forEach(x => {
+                        this.indices.push(x)
+                    })
                 } else {
-
-                    this.indices.push(a);
-                    this.indices.push(b);
-                    this.indices.push(c);
-                    this.indices.push(b);
-                    this.indices.push(d);
-                    this.indices.push(c);
-
+                    [a, b, c, b, d, c].forEach(x => {
+                        this.indices.push(x)
+                    })
                 }
 
             }
@@ -408,24 +361,14 @@ export class RoundedBoxGeometry extends BufferGeometry {
                 var d = cEnd + (u != end ? this.radiusSegments + (u + 1) * this.rs1 : this.cornerVertNumber - 1);
 
                 if (!needsFlip[i]) {
-
-                    this.indices.push(a);
-                    this.indices.push(b);
-                    this.indices.push(c);
-                    this.indices.push(b);
-                    this.indices.push(d);
-                    this.indices.push(c);
-
+                    [a, b, c, b, d, c].forEach(x => {
+                        this.indices.push(x)
+                    })
                 }
                 else {
-
-                    this.indices.push(a);
-                    this.indices.push(c);
-                    this.indices.push(b);
-                    this.indices.push(b);
-                    this.indices.push(c);
-                    this.indices.push(d);
-
+                    [a, c, b, b, c, d].forEach(x => {
+                        this.indices.push(x)
+                    })
                 }
 
             }

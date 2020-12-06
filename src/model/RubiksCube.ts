@@ -1,5 +1,5 @@
 import { TFaceColor, Cubie, TRotationDirection } from "./Cubie"
-import { EventDispatcher } from "../util/utilities"
+import { asGlobal, EventDispatcher } from "../util/utilities"
 
 export type TRubiksCubeOrientation = "L" | "R" | "F" | "B" | "U" | "D"
 export type TPlaneFaceColor = Exclude<TFaceColor, 'blk'>
@@ -72,6 +72,7 @@ declare global {
     }
 }
 
+@asGlobal('RubiksCube')
 export class RubiksCube {
     private cells: TAllCells
     public onDidRestoreDispatcher = new EventDispatcher<void>()
@@ -327,10 +328,3 @@ export class RubiksCube {
 }
 
 export const restoredRubiksCube = new RubiksCube(restoredCubePlaneView)
-
-declare global {
-    interface Window {
-        RubiksCube: any
-        restoredRubiksCube: any
-    }
-}
