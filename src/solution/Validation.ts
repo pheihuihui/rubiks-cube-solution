@@ -1,5 +1,5 @@
 import { TFaceColor } from "../model/Cubie";
-import { allFaceColors, restoredCubePlaneView, TFixedArray, TPlaneCube, TPlaneFaceColor } from "../model/RubiksCube";
+import { allFaceColors, TFixedArray, TPlaneCube, TPlaneFaceColor } from "../model/RubiksCube";
 
 export type TCornerColors = TFixedArray<TPlaneFaceColor, 3>
 export type TCornerPower = 0 | 1 | 2

@@ -1,10 +1,15 @@
 import { RubiksCube, TPlaneFaceColor, TRubiksCubeOrientation } from "../model/RubiksCube"
-import { cube } from ".."
 import { rotationDirections, TRotationDirection } from "../model/Cubie"
+import { cube } from "../util/constants"
 
 export const testSolution = {
     'Phase1': ["B'", "F", "U'", "R", "L", "R", "D'", "U2"] as TRotationDirection[],
     'Phase2': ["B'", "F2", "F", "L2", "L", "B'", "B", "D'", "B2", "R", "L2"] as TRotationDirection[]
+}
+
+export type TSteps = {
+    Phase1: TRotationDirection[],
+    Phase2: TRotationDirection[]
 }
 
 export const getReversedDirection: (val: string) => string = val => {
@@ -55,7 +60,7 @@ export function scrambleCube() {
 
 export const deserializeCube: (rcube: RubiksCube) => string = rcube => {
     let faces = rcube.getAllFaces()
-    return ['yel', 'red', 'blu', 'whi', 'ora', 'gre'].reduce((pre, cur, index) => {
+    return ['yel', 'red', 'blu', 'whi', 'ora', 'gre'].reduce((pre, cur, _) => {
         let clrs = faces[cur as TPlaneFaceColor]
         let str1 = [0, 1, 2, 3].map(x => clrs[x]).map(x => colorToPos(x)).join('')
         let str2 = [4, 5, 6, 7].map(x => clrs[x]).map(x => colorToPos(x)).join('')

@@ -1,67 +1,20 @@
-import { createContext, useState } from "react"
-import { CubeFace, EmptyFace } from "./CubeFace"
+import { createContext, FunctionComponent, useState } from "react"
 import React from "react"
 import { TPlaneCube, RubiksCube } from "../model/RubiksCube"
-import { makeStyles, Theme } from "@material-ui/core"
-import { cube, currentPlaneView } from ".."
-import { SolutionPanel } from "./SolutionPanel"
-import { RestoreButton, ShuffleButton, SolutionButton, ValidateButton } from "./Buttons"
-import { CubeContainer } from "./CubeContainer"
-import { useWindowScale } from "../util/hooks"
-import { TRotationDirection } from "../model/Cubie"
+import { Layer_1, Layer_2 } from "./Layers"
+import { createStyles, makeStyles } from "@material-ui/core"
+import { TSteps } from "../solution/Solution"
+import { cube, currentPlaneView } from "../util/constants"
 
-const useStyle = makeStyles<Theme, { scale: number }>({
-    root: props => ({
-        display: 'flex',
-        width: 1900 * props.scale,
-        flexWrap: 'wrap'
-    }),
-    planeStyle: props => ({
-        display: 'flex',
-        height: 750 * props.scale,
-        width: 1000 * props.scale,
-        flexWrap: 'wrap',
-        borderRadius: 50 * props.scale,
-        margin: 30 * props.scale,
-        background: '#33807b',
-        boxShadow: '18px 18px 19px #225451, -18px -18px 19px #44aca5'
-    }),
-    cubeStyle: props => ({
-        height: 750 * props.scale,
-        width: 750 * props.scale,
-        borderRadius: 50 * props.scale,
-        margin: 30 * props.scale,
-        background: 'silver',
-        boxShadow: '18px 18px 19px #225451, -18px -18px 19px #44aca5',
+const useStyle = makeStyles(createStyles({
+    container: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
-    }),
-    buttonStyle: props => ({
-        height: 250 * props.scale,
-        width: 250 * props.scale,
-        borderRadius: 50 * props.scale,
-        margin: 30 * props.scale,
-        background: '#33807b',
-        boxShadow: '18px 18px 19px #225451, -18px -18px 19px #44aca5',
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        justifyContent: 'center'
-    }),
-    solutionStyle: props => ({
-        height: 250 * props.scale,
-        width: 1500 * props.scale,
-        borderRadius: 50 * props.scale,
-        margin: 30 * props.scale,
-        background: '#33807b',
-        boxShadow: '18px 18px 19px #225451, -18px -18px 19px #44aca5',
+        justifyContent: 'center',
         flexDirection: 'column',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-    })
-})
+        position: 'relative'
+    }
+}))
 
 export type TFacesContext = {
     cubeState: TPlaneCube,
@@ -70,10 +23,6 @@ export type TFacesContext = {
 export type TSolutionContext = {
     solution: string,
     updateSolution: (val: string) => void
-}
-type TSteps = {
-    Phase1: TRotationDirection[],
-    Phase2: TRotationDirection[]
 }
 type TBeginAndFinish = {
     Phase0: 'Begin',
@@ -93,16 +42,23 @@ export type TCubeContext = {
     cube: RubiksCube
 }
 
+export type TComputingContext = {
+    isComputing: boolean,
+    updateComputingState: (b: boolean) => void
+}
+
 export const ContextHub = createContext({} as {
     facesContext: TFacesContext,
-    stepsContext: TStepsContext
+    stepsContext: TStepsContext,
+    computingContext: TComputingContext
 })
 
-const AllFaces = () => {
+const AllFaces: FunctionComponent = () => {
 
-    const sc = useWindowScale()
+    const aclass = useStyle()
     const [curCtxVal, setCurCtxVal] = useState(cube.getAllFaces())
     const [initialState, setInitialState] = useState(cube.getAllFaces())
+    const [computing, setComputing] = useState(false)
     const [steps, setSteps] = useState({
         Phase0: 'Begin',
         Phase1: [],
@@ -110,9 +66,7 @@ const AllFaces = () => {
         Phase3: 'Finish'
     } as TSteps & TBeginAndFinish)
     const [currentIndex, setCurrentIndex] = useState(0)
-    //const [currentStep, setCurrentStep] = useState('')
     const [, setTotalSteps] = useState(0)
-    const aclass = useStyle({ scale: sc })
     const nThStep = (n: number) => {
         let p1 = steps.Phase1.length
         let p2 = steps.Phase2.length
@@ -128,7 +82,7 @@ const AllFaces = () => {
     }
 
     return (
-        <div className={aclass.root}>
+        <div>
             <ContextHub.Provider value={{
                 facesContext: {
                     cubeState: curCtxVal,
@@ -162,31 +116,17 @@ const AllFaces = () => {
                     updateCurrentIndex: (n: number) => {
                         setCurrentIndex(n)
                     }
+                },
+                computingContext: {
+                    isComputing: computing,
+                    updateComputingState: b => {
+                        setComputing(b)
+                    }
                 }
             }}>
-                <div className={aclass.planeStyle}>
-                    <EmptyFace />
-                    <CubeFace faceOrien={"U"} />
-                    <EmptyFace />
-                    <EmptyFace />
-                    <CubeFace faceOrien={"L"} />
-                    <CubeFace faceOrien={"F"} />
-                    <CubeFace faceOrien={"R"} />
-                    <CubeFace faceOrien={"B"} />
-                    <EmptyFace />
-                    <CubeFace faceOrien={"D"} />
-                </div>
-                <div className={aclass.cubeStyle}>
-                    <CubeContainer />
-                </div>
-                <div className={aclass.buttonStyle}>
-                    <RestoreButton />
-                    <ShuffleButton />
-                    <ValidateButton />
-                    <SolutionButton />
-                </div>
-                <div className={aclass.solutionStyle}>
-                    <SolutionPanel />
+                <div className={aclass.container}>
+                    <Layer_1 />
+                    <Layer_2 />
                 </div>
             </ContextHub.Provider>
         </div>

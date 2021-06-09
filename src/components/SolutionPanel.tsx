@@ -1,5 +1,5 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, FunctionComponent } from "react";
 import { ContextHub } from "./AllFaces";
 import { StepPanel } from "./StepPanel";
 import { PlayButton } from "./Buttons";
@@ -7,7 +7,7 @@ import { Theme } from "@material-ui/core";
 import { useWindowScale } from "../util/hooks";
 import { TRotationDirection } from "../model/Cubie";
 
-const useStyle = makeStyles<Theme, { scale: number }>({
+const useStyle = makeStyles<Theme, { scale: number }, 'root' | 'inner' | 'line' | 'text'>({
     root: props => ({
         width: 1400 * props.scale,
         height: 220 * props.scale,
@@ -32,7 +32,7 @@ const useStyle = makeStyles<Theme, { scale: number }>({
     }
 })
 
-export const SolutionPanel = () => {
+export const SolutionPanel: FunctionComponent = () => {
     const sc = useWindowScale()
     const stpCtx = useContext(ContextHub).stepsContext
     const [steps, setSteps] = useState(stpCtx.steps)

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { FunctionComponent, useContext } from 'react'
 import { Grid, makeStyles } from '@material-ui/core'
 import { CubieFace } from './CubieFace'
 import { RotationBar } from './RotationBar'
@@ -7,10 +7,10 @@ import { ContextHub } from './AllFaces'
 import { useWindowScale } from '../util/hooks'
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
 import { cssFaceColors } from '../util/utilities'
-import { cube } from '..'
 import { TRotationDirection } from '../model/Cubie'
+import { cube } from '../util/constants'
 
-const useStyle = makeStyles<Theme, { scale: number }>({
+const useStyle = makeStyles<Theme, { scale: number }, 'root' | 'container' | 'item' | 'buttons' | 'out'>({
     root: props => ({
         width: 200 * props.scale,
         height: 200 * props.scale,
@@ -46,7 +46,7 @@ const useStyle = makeStyles<Theme, { scale: number }>({
     })
 })
 
-export const CubeFace = (props: { faceOrien: TRubiksCubeOrientation }) => {
+export const CubeFace: FunctionComponent<{ faceOrien: TRubiksCubeOrientation }> = props => {
 
     const sc = useWindowScale()
     const curCenterColor = cubeOrientationAndColors[props.faceOrien]
@@ -92,7 +92,7 @@ export const CubeFace = (props: { faceOrien: TRubiksCubeOrientation }) => {
     )
 }
 
-export const EmptyFace = () => {
+export const EmptyFace: FunctionComponent = () => {
     const sc = useWindowScale()
     const bclass = useStyle({ scale: sc })
     return <div className={bclass.out} />

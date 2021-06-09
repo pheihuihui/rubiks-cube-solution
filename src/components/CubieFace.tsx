@@ -1,13 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, FunctionComponent } from 'react'
 import { Button, makeStyles, Menu, MenuItem } from '@material-ui/core'
 import { TRubiksCubeOrientation, cubeOrientationAndColors } from '../model/RubiksCube'
 import { ContextHub } from './AllFaces'
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
 import { useWindowScale } from '../util/hooks'
 import { cssFaceColors } from '../util/utilities'
-import { currentPlaneView } from '..'
+import { currentPlaneView } from '../util/constants'
 
-const useStyle = makeStyles<Theme, { scale: number }>({
+const useStyle = makeStyles<Theme, { scale: number }, 'root'>({
     root: props => ({
         minWidth: 1,
         minHeight: 1,
@@ -18,7 +18,7 @@ const useStyle = makeStyles<Theme, { scale: number }>({
     })
 })
 
-export const CubieFace = (props: { initialColor?: string, disabled?: boolean, orien: TRubiksCubeOrientation, position: number }) => {
+export const CubieFace: FunctionComponent<{ initialColor?: string, disabled?: boolean, orien: TRubiksCubeOrientation, position: number }> = props => {
 
     const sc = useWindowScale()
     const [color, setColor] = useState(props.initialColor ?? 'black')

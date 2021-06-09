@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { makeStyles, Theme } from '@material-ui/core';
 import { ContextHub } from './AllFaces';
-import { cube, globalColors } from '..';
 import { useWindowScale } from '../util/hooks';
+import { globalColors, cube } from '../util/constants';
 
-const useStyle = makeStyles<Theme, { scale: number }>({
+const useStyle = makeStyles<Theme, { scale: number }, 'up' | 'down'>({
     up: props => ({
         width: 50 * props.scale,
         height: 30 * props.scale,
@@ -25,7 +25,8 @@ const useStyle = makeStyles<Theme, { scale: number }>({
     })
 })
 
-export const StepPanel = (props: { text: string, index: number }) => {
+export const StepPanel: FunctionComponent<{ text: string, index: number }> = props => {
+
     const sc = useWindowScale()
     const sUp = useStyle({ scale: sc }).up
     const sDown = useStyle({ scale: sc }).down

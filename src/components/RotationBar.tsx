@@ -1,11 +1,11 @@
 import RotateLeftIcon from '@material-ui/icons/RotateLeft'
 import RotateRightIcon from '@material-ui/icons/RotateRight'
 import { IconButton, makeStyles } from '@material-ui/core'
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
 import { useWindowScale } from '../util/hooks'
 
-const useStyle = makeStyles<Theme, { scale: number }>({
+const useStyle = makeStyles<Theme, { scale: number }, 'root' | 'iconItem' | 'buttonItemL' | 'buttonItemR'>({
     root: props => ({
         height: 30 * props.scale,
         width: 120 * props.scale,
@@ -34,7 +34,7 @@ const useStyle = makeStyles<Theme, { scale: number }>({
     })
 })
 
-export const RotationBar = (props: { clickLeft: () => void, clickRight: () => void }) => {
+export const RotationBar: FunctionComponent<{ clickLeft: () => void, clickRight: () => void }> = props => {
 
     const sc = useWindowScale()
     const sty = useStyle({ scale: sc })
