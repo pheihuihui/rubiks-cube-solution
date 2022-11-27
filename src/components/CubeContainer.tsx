@@ -1,25 +1,13 @@
-import { makeStyles } from "@material-ui/core/styles";
 import React, { useRef, useEffect, FunctionComponent } from "react";
 import { WebGLRenderer, PerspectiveCamera, Scene, Color, AxesHelper, Matrix4, Mesh, Group } from "three";
 import { getCubeMesh } from "../model/Meshes";
 import { useWindowScale } from "../util/hooks";
-import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { TRotationDirection } from "../model/Cubie";
 import { cube } from "../util/constants";
 
-const useStyle = makeStyles<Theme, { scale: number }, 'root'>({
-    root: props => ({
-        width: 750 * props.scale,
-        height: 750 * props.scale,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-    })
-})
-
 export const CubeContainer: FunctionComponent = () => {
+
     const sc = useWindowScale()
-    const cclass = useStyle({ scale: sc })
 
     //////////ANYSCRIPT//////////
     const THREE = require('three')
@@ -187,7 +175,7 @@ export const CubeContainer: FunctionComponent = () => {
     }, [sc])
 
 
-    return <div className={cclass.root} ref={mountRef} />
+    return <div className="cube-container" ref={mountRef} />
 
 }
 

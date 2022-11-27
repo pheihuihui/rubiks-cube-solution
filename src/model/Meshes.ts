@@ -1,5 +1,5 @@
 import { Cubie, TFaceColor } from "./Cubie";
-import { MeshBasicMaterial, Color, Mesh, MeshDepthMaterial, Group, Shape, ShapeBufferGeometry } from "three";
+import { MeshBasicMaterial, Color, Mesh, MeshDepthMaterial, Group, Shape, ShapeGeometry } from "three";
 import { RubiksCube, TCellCoordinate, getCoordFromIndex } from "./RubiksCube";
 import { RoundedBoxGeometry } from "./RoundedBoxGeometry";
 import { cssFaceColors } from "../util/utilities";
@@ -85,6 +85,6 @@ const getRoundedRectangle = (color: Color, scale: number) => {
     roundedRectangleGeo.lineTo(-2 * scale, -3 * scale)
     roundedRectangleGeo.absarc(-2 * scale, -2 * scale, scale, - Math.PI * 0.5, - Math.PI, true)
 
-    let geo = new ShapeBufferGeometry(roundedRectangleGeo)
+    let geo = new ShapeGeometry(roundedRectangleGeo)
     return new Mesh(geo, new MeshBasicMaterial({ color: color }))
 }

@@ -2,19 +2,8 @@ import { createContext, FunctionComponent, useState } from "react"
 import React from "react"
 import { TPlaneCube, RubiksCube } from "../model/RubiksCube"
 import { Layer_1, Layer_2 } from "./Layers"
-import { createStyles, makeStyles } from "@material-ui/core"
 import { TSteps } from "../solution/Solution"
 import { cube, currentPlaneView } from "../util/constants"
-
-const useStyle = makeStyles(createStyles({
-    container: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        position: 'relative'
-    }
-}))
 
 export type TFacesContext = {
     cubeState: TPlaneCube,
@@ -55,7 +44,6 @@ export const ContextHub = createContext({} as {
 
 const AllFaces: FunctionComponent = () => {
 
-    const aclass = useStyle()
     const [curCtxVal, setCurCtxVal] = useState(cube.getAllFaces())
     const [initialState, setInitialState] = useState(cube.getAllFaces())
     const [computing, setComputing] = useState(false)
@@ -124,7 +112,7 @@ const AllFaces: FunctionComponent = () => {
                     }
                 }
             }}>
-                <div className={aclass.container}>
+                <div className="container">
                     <Layer_1 />
                     <Layer_2 />
                 </div>
