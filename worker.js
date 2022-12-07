@@ -1,6 +1,8 @@
+"use strict";
 (() => {
+  var __getOwnPropNames = Object.getOwnPropertyNames;
   var __commonJS = (cb, mod) => function __require() {
-    return mod || (0, cb[Object.keys(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
 
   // node_modules/cubejs/lib/cube.js
@@ -1929,6 +1931,12 @@
 
   // src/model/Cubie.ts
   var Cubie = class {
+    colorL;
+    colorR;
+    colorU;
+    colorD;
+    colorF;
+    colorB;
     constructor(faces) {
       this.colorB = faces.b ?? "blk";
       this.colorD = faces.d ?? "blk";
@@ -1988,9 +1996,7 @@
 
   // src/util/utilities.ts
   var EventDispatcher = class {
-    constructor() {
-      this.handlers = [];
-    }
+    handlers = [];
     excute(event) {
       for (let h of this.handlers)
         h.action(event);
@@ -2095,9 +2101,13 @@
     }).join("");
   };
   var RubiksCube = class {
+    cells;
+    onDidRestoreDispatcher = new EventDispatcher();
+    onDidRotateDispatcher = new EventDispatcher();
+    getAllCells() {
+      return this.cells;
+    }
     constructor(planes) {
-      this.onDidRestoreDispatcher = new EventDispatcher();
-      this.onDidRotateDispatcher = new EventDispatcher();
       this.cells = {};
       for (const xx of [-1, 0, 1]) {
         for (const yy of [-1, 0, 1]) {
@@ -2113,9 +2123,6 @@
       this.setColorsToSide("R", planes["red"], "red");
       this.setColorsToSide("U", planes["yel"], "yel");
       this.setColorsToSide("D", planes["whi"], "whi");
-    }
-    getAllCells() {
-      return this.cells;
     }
     setColorsToSide(side, colors, center) {
       let face = this.getSideCellsWithOrder(side);
