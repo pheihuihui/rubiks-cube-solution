@@ -13,4 +13,3 @@ if (panel) {
 ReactDOM.render(all, panel)
 
 document.body.style.backgroundColor = '#33807b'
-

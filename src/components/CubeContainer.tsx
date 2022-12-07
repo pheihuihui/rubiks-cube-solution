@@ -31,7 +31,7 @@ export const CubeContainer: FunctionComponent = () => {
         const axesHelper = new AxesHelper(10)
 
         //////////ANYSCRIPT//////////
-        const controls = new OrbitControls(camera, renderer.domElement)
+        // const controls = new OrbitControls(camera, renderer.domElement)
         //////////ANYSCRIPT//////////
 
         mountRef.current?.appendChild(renderer.domElement)

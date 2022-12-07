@@ -1,5 +1,12 @@
 const esbuild = require('esbuild')
 const fs = require('fs')
+const sass = require('sass')
+
+if (fs.existsSync('./dist')) {
+    fs.rmSync('./dist', { recursive: true })
+}
+
+fs.mkdirSync('./dist')
 
 esbuild.buildSync({
     entryPoints: ['./src/index.ts'],
@@ -7,8 +14,7 @@ esbuild.buildSync({
     outfile: './dist/bundle.js',
     tsconfig: 'tsconfig.json',
     bundle: true,
-    define: { 'process.env.NODE_ENV': '"production"' },
-    minify: true
+    minify: false
 })
 
 esbuild.buildSync({
@@ -17,9 +23,11 @@ esbuild.buildSync({
     outfile: './dist/worker.js',
     tsconfig: 'tsconfig.json',
     bundle: true,
-    define: { 'process.env.NODE_ENV': '"production"' },
     minify: false
 })
+
+const style = sass.compile('./src/style/index.scss')
+fs.writeFileSync('./dist/index.css', style.css)
 
 fs.copyFileSync('./src/pages/index.html', './dist/index.html')
 
