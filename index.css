@@ -211,3 +211,9 @@
   border: 0;
   box-shadow: inset 4px 4px 8px #143331, inset -4px -4px 8px #52cdc5;
 }
+
+.webgpu-cube-container {
+  text-align: center;
+  position: relative;
+  margin-top: 10px;
+}
