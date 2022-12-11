@@ -1,5 +1,6 @@
-import ReactDOM from "react-dom";
-import { all } from "./components/AllFaces";
+import { createRoot } from 'react-dom/client'
+// import { all } from "./components/AllFaces";
+import { _cube } from './components/WebgpuCube'
 
 document.body.style.display = 'grid'
 document.body.style.height = '100%'
@@ -10,6 +11,9 @@ if (panel) {
     panel.style.placeItems = 'center'
 }
 
-ReactDOM.render(all, panel)
+if (panel) {
+    const root = createRoot(panel)
+    root.render(_cube)
+}
 
 document.body.style.backgroundColor = '#33807b'

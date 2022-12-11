@@ -1,7 +1,8 @@
 import { mat4, vec3 } from "gl-matrix";
 import { cubePositionOffset, cubeUVOffset, cubeVertexArray, cubeVertexCount, cubeVertexSize } from "../meshes/cube";
-import basicVertWGSL from '../../shaders/basic.vert.wgsl';
-import vertexPositionColorWGSL from '../../shaders/vertexPositionColor.frag.wgsl';
+import basicVertWGSL from '../shaders/basic.vert.wgsl';
+import vertexPositionColorWGSL from '../shaders/vertexPositionColor.frag.wgsl';
+import React, { FunctionComponent, useEffect, useRef } from "react";
 
 async function init(canvas: HTMLCanvasElement, pageState: { active: boolean }) {
     const adapter = await navigator.gpu.requestAdapter();
@@ -184,3 +185,38 @@ async function init(canvas: HTMLCanvasElement, pageState: { active: boolean }) {
     requestAnimationFrame(frame);
 };
 
+export const WebgpuCube: FunctionComponent = () => {
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+    useEffect(() => {
+
+        const pageState = {
+            active: true,
+        };
+        const cleanup = () => {
+            pageState.active = false;
+        };
+
+        const canvas = canvasRef.current;
+        if (canvas) {
+            const p = init(canvas, pageState)
+        }
+
+        return cleanup;
+    }, []);
+
+    return (
+        <div className="webgpu-cube-container">
+            <div
+                style={{
+                    position: 'absolute',
+                    right: 10,
+                }}>
+            </div>
+            <canvas ref={canvasRef} width={600} height={600}></canvas>
+        </div>
+    )
+}
+
+
+export const _cube = <WebgpuCube />

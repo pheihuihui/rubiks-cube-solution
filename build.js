@@ -1,6 +1,7 @@
 const esbuild = require('esbuild')
 const fs = require('fs')
 const sass = require('sass')
+const util = require('util')
 
 if (fs.existsSync('./dist')) {
     fs.rmSync('./dist', { recursive: true })
@@ -8,14 +9,34 @@ if (fs.existsSync('./dist')) {
 
 fs.mkdirSync('./dist')
 
-esbuild.buildSync({
+function loadShader() {
+
+    const readFile = util.promisify(fs.readFile);
+
+    return {
+        name: "loadShader",
+        setup(build) {
+            async function onLoad(args) {
+                const source = await readFile(args.path, "utf8");
+                return {
+                    contents: source,
+                    loader: "text"
+                };
+            }
+            build.onLoad({ filter: /\.(?:frag|vert|wgsl)$/ }, onLoad);
+        }
+    };
+}
+
+esbuild.build({
     entryPoints: ['./src/index.ts'],
     treeShaking: true,
     outfile: './dist/bundle.js',
     tsconfig: 'tsconfig.json',
     bundle: true,
-    minify: false
-})
+    minify: false,
+    plugins: [loadShader()]
+}).then(console.log)
 
 esbuild.buildSync({
     entryPoints: ['./src/worker.ts'],
