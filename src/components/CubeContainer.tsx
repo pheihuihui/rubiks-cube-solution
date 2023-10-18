@@ -4,16 +4,12 @@ import { getCubeMesh } from "../model/Meshes";
 import { useWindowScale } from "../util/hooks";
 import { TRotationDirection } from "../model/Cubie";
 import { cube } from "../util/constants";
+import * as THREE from 'three'
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
 export const CubeContainer: FunctionComponent = () => {
 
     const sc = useWindowScale()
-
-    //////////ANYSCRIPT//////////
-    const THREE = require('three')
-    const OrbitControls = require('three-orbit-controls')(THREE)
-    //////////ANYSCRIPT//////////
-
     let realCube = getCubeMesh(cube)
     let animateAction = () => { }
     let animating = false
@@ -29,10 +25,6 @@ export const CubeContainer: FunctionComponent = () => {
         const scene = new Scene()
         scene.background = new Color('silver')
         const axesHelper = new AxesHelper(10)
-
-        //////////ANYSCRIPT//////////
-        // const controls = new OrbitControls(camera, renderer.domElement)
-        //////////ANYSCRIPT//////////
 
         mountRef.current?.appendChild(renderer.domElement)
         scene.add(axesHelper)
