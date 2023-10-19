@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client'
 import { all } from "./components/AllFaces";
-// import { _cube } from './components/WebgpuCube'
+import { cb } from './components/CubeContainer'
 
 document.body.style.display = 'grid'
 document.body.style.height = '100%'
@@ -13,7 +13,7 @@ if (panel) {
 
 if (panel) {
     const root = createRoot(panel)
-    root.render(all)
+    root.render(cb)
 }
 
 document.body.style.backgroundColor = '#33807b'

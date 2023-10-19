@@ -23,12 +23,11 @@
 		"@types/node": "^20.8.7",
 		"@types/react": "^18.2.29",
 		"@types/react-dom": "^18.2.13",
-		"@types/three": "0.154.0",
+		"@types/three": "0.157.0",
 		"@webgpu/types": "^0.1.38",
 		"esbuild": "^0.19.5",
 		"nodemon": "^3.0.1",
 		"sass": "^1.69.4",
-		"ts-node": "10.9.1",
 		"typescript": "^5.2.2"
 	},
 	"dependencies": {
@@ -41,7 +40,7 @@
 		"gl-matrix": "3.4.3",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"three": "0.154.0",
+		"three": "0.157.0",
 		"three-addons": "^1.2.0",
 		"three-orbit-controls": "82.1.0"
 	}

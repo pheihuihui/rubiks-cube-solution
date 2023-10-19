@@ -4,7 +4,6 @@ import { getCubeMesh } from "../model/Meshes";
 import { useWindowScale } from "../util/hooks";
 import { TRotationDirection } from "../model/Cubie";
 import { cube } from "../util/constants";
-import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
 export const CubeContainer: FunctionComponent = () => {
@@ -21,6 +20,7 @@ export const CubeContainer: FunctionComponent = () => {
         const renderer = new WebGLRenderer({ antialias: true, canvas: canvas })
         renderer.setSize(750 * 3.9 * sc / 4.5, 750 * sc)
         const camera = new PerspectiveCamera(75, 3.9 / 4.5, 1, 1000)
+        const orbit = new OrbitControls(camera, renderer.domElement)
         camera.position.z = 5
         const scene = new Scene()
         scene.background = new Color('silver')
@@ -36,6 +36,7 @@ export const CubeContainer: FunctionComponent = () => {
             requestAnimationFrame(animate)
             if (animating) {
                 animateAction()
+                orbit.update()
             }
             renderer.render(scene, camera)
         }
