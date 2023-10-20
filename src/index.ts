@@ -1,6 +1,8 @@
 import { createRoot } from 'react-dom/client'
 import { all } from "./components/AllFaces";
 import { cb } from './components/CubeContainer'
+import { bar } from './components/RotationBar';
+import { bt } from './components/Buttons';
 
 document.body.style.display = 'grid'
 document.body.style.height = '100%'
@@ -13,7 +15,7 @@ if (panel) {
 
 if (panel) {
     const root = createRoot(panel)
-    root.render(cb)
+    root.render(all)
 }
 
 document.body.style.backgroundColor = '#33807b'

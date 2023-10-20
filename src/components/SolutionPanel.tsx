@@ -1,10 +1,10 @@
-import React, { useState, useContext, useEffect, FunctionComponent } from "react";
+import React, { useState, useContext, useEffect, FC } from "react";
 import { ContextHub } from "./AllFaces";
 import { StepPanel } from "./StepPanel";
 import { PlayButton } from "./Buttons";
 import { TRotationDirection } from "../model/Cubie";
 
-export const SolutionPanel: FunctionComponent = () => {
+export const SolutionPanel: FC = () => {
 
     const stpCtx = useContext(ContextHub).stepsContext
     const [steps, setSteps] = useState(stpCtx.steps)

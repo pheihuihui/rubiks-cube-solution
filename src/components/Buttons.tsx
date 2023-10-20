@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, FunctionComponent } from "react";
+import React, { useContext, useState, useEffect, FC } from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { deserializeCube, scrambleCube } from "../solution/Solution";
 import { ContextHub } from "./AllFaces";
@@ -7,7 +7,7 @@ import { cube, currentPlaneView } from "../util/constants";
 import { TMessageEventArgs } from "../worker";
 import { CheckIcon, IdeaIcon, PlayIcon, RestoreIcon, ShuffleIcon } from "./Icons";
 
-export const RestoreButton: FunctionComponent = () => {
+export const RestoreButton: FC = () => {
 
     const allFaces = useContext(ContextHub).facesContext
 
@@ -26,7 +26,7 @@ export const RestoreButton: FunctionComponent = () => {
     )
 }
 
-export const ShuffleButton: FunctionComponent = () => {
+export const ShuffleButton: FC = () => {
 
     const allFaces = useContext(ContextHub).facesContext
 
@@ -45,7 +45,7 @@ export const ShuffleButton: FunctionComponent = () => {
     )
 }
 
-export const SolutionButton: FunctionComponent = () => {
+export const SolutionButton: FC = () => {
 
     const stpCtx = useContext(ContextHub).stepsContext
     const cptCtx = useContext(ContextHub).computingContext
@@ -76,25 +76,25 @@ export const SolutionButton: FunctionComponent = () => {
     )
 }
 
-export const ValidateButton: FunctionComponent = () => {
+export const ValidateButton: FC = () => {
 
     return (
         <div className="button-out" >
             <Tooltip title="validate">
-                <IconButton className="button-item" onClick={() => {
+                <button className="button-item" onClick={() => {
                     let pln = currentPlaneView.getCurrent()
                     cube.restore(pln)
                     let solvable = isSolvable(pln)
                     console.log(solvable)
                 }}>
                     <CheckIcon />
-                </IconButton>
+                </button>
             </Tooltip>
         </div>
     )
 }
 
-export const TestButton: FunctionComponent = () => {
+export const TestButton: FC = () => {
 
     const comCtx = useContext(ContextHub).computingContext
 
@@ -112,7 +112,7 @@ export const TestButton: FunctionComponent = () => {
     )
 }
 
-export const PlayButton: FunctionComponent = () => {
+export const PlayButton: FC = () => {
 
     const stepsCtx = useContext(ContextHub).stepsContext
     const facesCtx = useContext(ContextHub).facesContext
@@ -135,3 +135,4 @@ export const PlayButton: FunctionComponent = () => {
     )
 }
 
+export const bt = <ValidateButton />

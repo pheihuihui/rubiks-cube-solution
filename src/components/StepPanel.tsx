@@ -1,10 +1,9 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { ContextHub } from './AllFaces';
-import { useWindowScale } from '../util/hooks';
 import { cube } from '../util/constants';
 
 
-export const StepPanel: FunctionComponent<{ text: string, index: number }> = props => {
+export const StepPanel: FC<{ text: string, index: number }> = props => {
 
     const index = props.index
     const stepsCtx = useContext(ContextHub).stepsContext

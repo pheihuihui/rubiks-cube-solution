@@ -1,4 +1,4 @@
-import { createContext, FunctionComponent, useState } from "react"
+import { createContext, FC, useState } from "react"
 import React from "react"
 import { TPlaneCube, RubiksCube } from "../model/RubiksCube"
 import { Layer_1, Layer_2 } from "./Layers"
@@ -42,7 +42,7 @@ export const ContextHub = createContext({} as {
     computingContext: TComputingContext
 })
 
-const AllFaces: FunctionComponent = () => {
+const AllFaces: FC = () => {
 
     const [curCtxVal, setCurCtxVal] = useState(cube.getAllFaces())
     const [initialState, setInitialState] = useState(cube.getAllFaces())

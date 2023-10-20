@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect, FunctionComponent } from 'react'
-import { Button, makeStyles, Menu, MenuItem } from '@mui/material'
+import React, { useState, useContext, useEffect, FC, MouseEvent } from 'react'
+import { Button, Menu, MenuItem } from '@mui/material'
 import { TRubiksCubeOrientation, cubeOrientationAndColors } from '../model/RubiksCube'
 import { ContextHub } from './AllFaces'
 import { cssFaceColors } from '../util/utilities'
 import { currentPlaneView } from '../util/constants'
 
-export const CubieFace: FunctionComponent<{ initialColor?: string, disabled?: boolean, orien: TRubiksCubeOrientation, position: number }> = props => {
+export const CubieFace: FC<{ initialColor?: string, disabled?: boolean, orien: TRubiksCubeOrientation, position: number }> = props => {
 
     const [color, setColor] = useState(props.initialColor ?? 'black')
     const [anchor_colorPicker, setAnchor_colorPicker] = useState<null | HTMLElement>(null)
@@ -19,7 +19,7 @@ export const CubieFace: FunctionComponent<{ initialColor?: string, disabled?: bo
         }
     }, [currentColorCtx.cubeState])
 
-    const handlePicker = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handlePicker = (event: MouseEvent<HTMLButtonElement>) => {
         setAnchor_colorPicker(event.currentTarget)
     }
 
@@ -35,7 +35,7 @@ export const CubieFace: FunctionComponent<{ initialColor?: string, disabled?: bo
 
     return (
         <div>
-            <Button disabled={props.disabled} style={{ background: color }} className="cubie-root" onClick={handlePicker}> </Button>
+            <button disabled={props.disabled} style={{ background: color }} className="cubie-root" onClick={handlePicker}> </button>
             <Menu id="color_picker" anchorEl={anchor_colorPicker} open={Boolean(anchor_colorPicker)} onClose={handleClose}>
                 {Object.values(cssFaceColors).map(x => <MenuItem key={'face_' + x} style={{ width: 80, height: 40, background: x }} onClick={() => handleColor(x)} />)}
             </Menu>

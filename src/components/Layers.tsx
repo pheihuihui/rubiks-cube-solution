@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext } from "react"
+import React, { FC, useContext } from "react"
 import { ContextHub } from "./AllFaces"
 import { RestoreButton, ShuffleButton, SolutionButton, TestButton } from "./Buttons"
 import { CircularIndeterminate } from "./CircularIndeterminate"
@@ -6,7 +6,7 @@ import { CubeContainer } from "./CubeContainer"
 import { EmptyFace, CubeFace } from "./CubeFace"
 import { SolutionPanel } from "./SolutionPanel"
 
-export const Layer_1: FunctionComponent = () => {
+export const Layer_1: FC = () => {
 
     const computingCtx = useContext(ContextHub).computingContext
 
@@ -41,7 +41,7 @@ export const Layer_1: FunctionComponent = () => {
     )
 }
 
-export const Layer_2: FunctionComponent = () => {
+export const Layer_2: FC = () => {
 
     const computingCtx = useContext(ContextHub).computingContext
 

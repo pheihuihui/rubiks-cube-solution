@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext } from 'react'
+import React, { FC, useContext } from 'react'
 import { CubieFace } from './CubieFace'
 import { RotationBar } from './RotationBar'
 import { TRubiksCubeOrientation, cubeOrientationAndColors } from '../model/RubiksCube'
@@ -8,7 +8,7 @@ import { TRotationDirection } from '../model/Cubie'
 import { cube } from '../util/constants'
 import { Grid } from '@mui/material'
 
-export const CubeFace: FunctionComponent<{ faceOrien: TRubiksCubeOrientation }> = props => {
+export const CubeFace: FC<{ faceOrien: TRubiksCubeOrientation }> = props => {
 
     const curCenterColor = cubeOrientationAndColors[props.faceOrien]
     const allFaces = useContext(ContextHub).facesContext
@@ -52,4 +52,4 @@ export const CubeFace: FunctionComponent<{ faceOrien: TRubiksCubeOrientation }> 
     )
 }
 
-export const EmptyFace: FunctionComponent = () => <div className="face-out" />
+export const EmptyFace: FC = () => <div className="face-out" />

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, FunctionComponent } from "react";
+import React, { useRef, useEffect, FC } from "react";
 import { WebGLRenderer, PerspectiveCamera, Scene, Color, AxesHelper, Matrix4, Mesh, Group } from "three";
 import { getCubeMesh } from "../model/Meshes";
 import { useWindowScale } from "../util/hooks";
@@ -6,7 +6,7 @@ import { TRotationDirection } from "../model/Cubie";
 import { cube } from "../util/constants";
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
-export const CubeContainer: FunctionComponent = () => {
+export const CubeContainer: FC = () => {
 
     const sc = useWindowScale()
     let realCube = getCubeMesh(cube)

@@ -1,16 +1,14 @@
-import React, { FunctionComponent, useContext } from 'react';
+import React, { FC, useContext } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useWindowScale } from '../util/hooks';
 import { ContextHub } from './AllFaces';
 
-export const CircularIndeterminate: FunctionComponent = () => {
+export const CircularIndeterminate: FC = () => {
 
-    const sc = useWindowScale()
     const isComputing = useContext(ContextHub).computingContext
 
     return (
         <div className="circular-indeterminate">
-            <CircularProgress style={{ height: sc * 300, width: sc * 300 }} />
+            <CircularProgress style={{ height: 100, width: 100 }} />
         </div>
     )
 }
