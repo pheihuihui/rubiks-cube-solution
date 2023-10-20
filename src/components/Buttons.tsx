@@ -1,8 +1,3 @@
-import ShuffleIcon from '@mui/icons-material/Shuffle';
-import RestoreIcon from '@mui/icons-material/Restore';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow'
-import FlareIcon from '@mui/icons-material/Flare';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import React, { useContext, useState, useEffect, FunctionComponent } from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { deserializeCube, scrambleCube } from "../solution/Solution";
@@ -10,6 +5,7 @@ import { ContextHub } from "./AllFaces";
 import { isSolvable } from "../solution/Validation";
 import { cube, currentPlaneView } from "../util/constants";
 import { TMessageEventArgs } from "../worker";
+import { CheckIcon, IdeaIcon, PlayIcon, RestoreIcon, ShuffleIcon } from "./Icons";
 
 export const RestoreButton: FunctionComponent = () => {
 
@@ -23,7 +19,7 @@ export const RestoreButton: FunctionComponent = () => {
                         cube.restore()
                         allFaces.updateCubeState()
                     }}>
-                    <RestoreIcon fontSize={'large'} />
+                    <RestoreIcon />
                 </IconButton>
             </Tooltip>
         </div>
@@ -42,7 +38,7 @@ export const ShuffleButton: FunctionComponent = () => {
                         scrambleCube()
                         allFaces.updateCubeState()
                     }}>
-                    <ShuffleIcon fontSize={'large'} />
+                    <ShuffleIcon />
                 </IconButton>
             </Tooltip>
         </div>
@@ -73,7 +69,7 @@ export const SolutionButton: FunctionComponent = () => {
                         let msg: TMessageEventArgs<'cube'> = { messageType: 'cube', content: dcube }
                         wk.postMessage(msg)
                     }}>
-                    <FlareIcon fontSize={'large'} />
+                    <IdeaIcon />
                 </IconButton>
             </Tooltip>
         </div>
@@ -91,7 +87,7 @@ export const ValidateButton: FunctionComponent = () => {
                     let solvable = isSolvable(pln)
                     console.log(solvable)
                 }}>
-                    <CheckCircleIcon fontSize={'large'} />
+                    <CheckIcon />
                 </IconButton>
             </Tooltip>
         </div>
@@ -109,7 +105,7 @@ export const TestButton: FunctionComponent = () => {
                     () => {
                         comCtx.updateComputingState(!comCtx.isComputing)
                     }}>
-                    <CheckCircleIcon fontSize={'large'} />
+                    <CheckIcon />
                 </IconButton>
             </Tooltip>
         </div>
@@ -134,7 +130,7 @@ export const PlayButton: FunctionComponent = () => {
                 }, i * 1500)
             })
         }}>
-            <PlayArrowIcon className="button-icon" />
+            <PlayIcon />
         </IconButton>
     )
 }
