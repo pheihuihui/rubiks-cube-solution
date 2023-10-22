@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect, FC } from "react";
-import { IconButton, Tooltip } from "@mui/material";
 import { deserializeCube, scrambleCube } from "../solution/Solution";
 import { ContextHub } from "./AllFaces";
 import { isSolvable } from "../solution/Validation";
@@ -13,15 +12,13 @@ export const RestoreButton: FC = () => {
 
     return (
         <div className="button-out" >
-            <Tooltip title="restore" aria-label="RestoreLable">
-                <IconButton className="button-item" onClick={
-                    () => {
-                        cube.restore()
-                        allFaces.updateCubeState()
-                    }}>
-                    <RestoreIcon />
-                </IconButton>
-            </Tooltip>
+            <button className="button-item" onClick={
+                () => {
+                    cube.restore()
+                    allFaces.updateCubeState()
+                }}>
+                <RestoreIcon />
+            </button>
         </div>
     )
 }
@@ -32,15 +29,13 @@ export const ShuffleButton: FC = () => {
 
     return (
         <div className="button-out" >
-            <Tooltip title="scramble" aria-label="ScrambleLable">
-                <IconButton className="button-item" onClick={
-                    () => {
-                        scrambleCube()
-                        allFaces.updateCubeState()
-                    }}>
-                    <ShuffleIcon />
-                </IconButton>
-            </Tooltip>
+            <button className="button-item" onClick={
+                () => {
+                    scrambleCube()
+                    allFaces.updateCubeState()
+                }}>
+                <ShuffleIcon />
+            </button>
         </div>
     )
 }
@@ -52,26 +47,24 @@ export const SolutionButton: FC = () => {
 
     return (
         <div className="button-out" >
-            <Tooltip title="solve">
-                <IconButton className="button-item" onClick={
-                    () => {
-                        cptCtx.updateComputingState(true)
-                        let wk = new Worker('worker.js')
-                        wk.onmessage = function (e: MessageEvent<TMessageEventArgs<'solution'>>) {
-                            if (e.data?.messageType == 'solution') {
-                                console.log(e.data.content)
-                                stpCtx.updateSteps(e.data.content)
-                                cptCtx.updateComputingState(false)
-                                wk.terminate()
-                            }
+            <button className="button-item" onClick={
+                () => {
+                    cptCtx.updateComputingState(true)
+                    let wk = new Worker('worker.js')
+                    wk.onmessage = function (e: MessageEvent<TMessageEventArgs<'solution'>>) {
+                        if (e.data?.messageType == 'solution') {
+                            console.log(e.data.content)
+                            stpCtx.updateSteps(e.data.content)
+                            cptCtx.updateComputingState(false)
+                            wk.terminate()
                         }
-                        let dcube = deserializeCube(cube)
-                        let msg: TMessageEventArgs<'cube'> = { messageType: 'cube', content: dcube }
-                        wk.postMessage(msg)
-                    }}>
-                    <IdeaIcon />
-                </IconButton>
-            </Tooltip>
+                    }
+                    let dcube = deserializeCube(cube)
+                    let msg: TMessageEventArgs<'cube'> = { messageType: 'cube', content: dcube }
+                    wk.postMessage(msg)
+                }}>
+                <IdeaIcon />
+            </button>
         </div>
     )
 }
@@ -80,16 +73,14 @@ export const ValidateButton: FC = () => {
 
     return (
         <div className="button-out" >
-            <Tooltip title="validate">
-                <button className="button-item" onClick={() => {
-                    let pln = currentPlaneView.getCurrent()
-                    cube.restore(pln)
-                    let solvable = isSolvable(pln)
-                    console.log(solvable)
-                }}>
-                    <CheckIcon />
-                </button>
-            </Tooltip>
+            <button className="button-item" onClick={() => {
+                let pln = currentPlaneView.getCurrent()
+                cube.restore(pln)
+                let solvable = isSolvable(pln)
+                console.log(solvable)
+            }}>
+                <CheckIcon />
+            </button>
         </div>
     )
 }
@@ -100,14 +91,12 @@ export const TestButton: FC = () => {
 
     return (
         <div className="button-out" >
-            <Tooltip title="test">
-                <IconButton className="button-item" onClick={
-                    () => {
-                        comCtx.updateComputingState(!comCtx.isComputing)
-                    }}>
-                    <CheckIcon />
-                </IconButton>
-            </Tooltip>
+            <button className="button-item" onClick={
+                () => {
+                    comCtx.updateComputingState(!comCtx.isComputing)
+                }}>
+                <CheckIcon />
+            </button>
         </div>
     )
 }
@@ -122,7 +111,7 @@ export const PlayButton: FC = () => {
     }, [stepsCtx.steps])
 
     return (
-        <IconButton className="button-button" onClick={() => {
+        <button className="button-button" onClick={() => {
             steps.forEach((v, i) => {
                 setTimeout(() => {
                     cube.rotate(v)
@@ -131,7 +120,7 @@ export const PlayButton: FC = () => {
             })
         }}>
             <PlayIcon />
-        </IconButton>
+        </button>
     )
 }
 

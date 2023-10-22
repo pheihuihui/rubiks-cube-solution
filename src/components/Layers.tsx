@@ -30,7 +30,6 @@ export const Layer_1: FC = () => {
             <div className="layer-button">
                 <RestoreButton />
                 <ShuffleButton />
-                {/* <ValidateButton /> */}
                 <TestButton />
                 <SolutionButton />
             </div>

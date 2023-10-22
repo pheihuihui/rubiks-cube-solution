@@ -3,6 +3,7 @@ import { all } from "./components/AllFaces";
 import { cb } from './components/CubeContainer'
 import { bar } from './components/RotationBar';
 import { bt } from './components/Buttons';
+import { ci } from './components/CircularIndeterminate';
 
 document.body.style.display = 'grid'
 document.body.style.height = '100%'
@@ -15,7 +16,7 @@ if (panel) {
 
 if (panel) {
     const root = createRoot(panel)
-    root.render(all)
+    root.render(ci)
 }
 
 document.body.style.backgroundColor = '#33807b'

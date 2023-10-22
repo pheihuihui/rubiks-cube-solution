@@ -42,6 +42,64 @@ $document_body_backgroud_color: #33807b;
 .circular-indeterminate {
     z-index: 10;
     height: 10;
+
+    span {
+        height: 40px;
+        width: 40px;
+        display: inline-block;
+        color: antiquewhite;
+        animation-duration: 1.4s;
+        animation-timing-function: linear;
+        animation-delay: 0s;
+        animation-iteration-count: infinite;
+        animation-direction: normal;
+        animation-fill-mode: none;
+        animation-play-state: running;
+        animation-name: circular-span;
+
+        @keyframes circular-span {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        svg {
+            display: block;
+            color: antiquewhite;
+
+            circle {
+                stroke: currentColor;
+                stroke-dasharray: 80px 200px;
+                stroke-dashoffset: 0;
+                animation-duration: 1.4s;
+                animation-timing-function: ease-in-out;
+                animation-delay: 0s;
+                animation-iteration-count: infinite;
+                animation-name: circular-span-svg-circle;
+
+                @keyframes circular-span-svg-circle {
+                    0% {
+                        stroke-dasharray: 1px, 200px;
+                        stroke-dashoffset: 0;
+                    }
+
+                    50% {
+                        stroke-dasharray: 100px, 200px;
+                        stroke-dashoffset: -15px;
+                    }
+
+                    100% {
+                        stroke-dasharray: 100px, 200px;
+                        stroke-dashoffset: -125px;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .cube-container {
