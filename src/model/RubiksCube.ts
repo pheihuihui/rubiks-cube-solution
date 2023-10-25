@@ -1,5 +1,6 @@
+import { EventDispatcher, __range__ } from "../util/utilities"
 import { TFaceColor, Cubie, TRotationDirection } from "./Cubie"
-import { EventDispatcher } from "../util/utilities"
+// import { EventDispatcher } from "../util/utilities"
 
 export type TRubiksCubeOrientation = "L" | "R" | "F" | "B" | "U" | "D"
 export type TPlaneFaceColor = Exclude<TFaceColor, 'blk'>
@@ -72,7 +73,6 @@ declare global {
     }
 }
 
-// @asGlobal('RubiksCube')
 export class RubiksCube {
     private cells: TAllCells
     public onDidRestoreDispatcher = new EventDispatcher<void>()
@@ -111,7 +111,7 @@ export class RubiksCube {
         }
     }
 
-    private rotateFace(cells: TFixedArray<string, 9>, dir: 'clock' | 'rever') {
+    private rotateFace(cells: TFixedArray<string, 9>, dir: 'clock' | 'rever'): TFixedArray<string, 9> {
         if (dir == 'clock') {
             return [cells[6], cells[3], cells[0], cells[7], cells[4], cells[1], cells[8], cells[5], cells[2]]
         }
@@ -123,29 +123,13 @@ export class RubiksCube {
 
     private _rotate(sideCells: TFixedArray<string, 9>, dirF: 'clock' | 'rever', dirC: TRotationDirection) {
         let oldIndex = sideCells
-        let newIndex = this.rotateFace(oldIndex, dirF) as TFixedArray<string, 9>
+        let newIndex = this.rotateFace(oldIndex, dirF)
 
-        [
-            this.cells[oldIndex[0]],
-            this.cells[oldIndex[1]],
-            this.cells[oldIndex[2]],
-            this.cells[oldIndex[3]],
-            this.cells[oldIndex[4]],
-            this.cells[oldIndex[5]],
-            this.cells[oldIndex[6]],
-            this.cells[oldIndex[7]],
-            this.cells[oldIndex[8]]
-        ] = [
-                this.cells[newIndex[0]],
-                this.cells[newIndex[1]],
-                this.cells[newIndex[2]],
-                this.cells[newIndex[3]],
-                this.cells[newIndex[4]],
-                this.cells[newIndex[5]],
-                this.cells[newIndex[6]],
-                this.cells[newIndex[7]],
-                this.cells[newIndex[8]]
-            ]
+        let tmp = __range__(0, 8, true).map(v => this.cells[newIndex[v]])
+        __range__(0, 8, true).forEach((i, v) => {
+            this.cells[oldIndex[v]] = tmp[i]
+        })
+
         for (const it of sideCells.map(v => this.cells[v])) {
             it.rotate(dirC)
         }
@@ -154,69 +138,69 @@ export class RubiksCube {
     rotate(dir: TRotationDirection) {
         switch (dir) {
             case "F":
-                this._rotate(this.getSideCellsWithOrder("F") as TFixedArray<string, 9>, 'clock', dir)
+                this._rotate(this.getSideCellsWithOrder("F"), 'clock', dir)
                 break
             case "F'":
-                this._rotate(this.getSideCellsWithOrder("F") as TFixedArray<string, 9>, 'rever', dir)
+                this._rotate(this.getSideCellsWithOrder("F"), 'rever', dir)
                 break
             case "F2":
-                this._rotate(this.getSideCellsWithOrder("F") as TFixedArray<string, 9>, 'clock', "F")
-                this._rotate(this.getSideCellsWithOrder("F") as TFixedArray<string, 9>, 'clock', "F")
+                this._rotate(this.getSideCellsWithOrder("F"), 'clock', "F")
+                this._rotate(this.getSideCellsWithOrder("F"), 'clock', "F")
                 break
 
             case "B":
-                this._rotate(this.getSideCellsWithOrder("B") as TFixedArray<string, 9>, 'clock', dir)
+                this._rotate(this.getSideCellsWithOrder("B"), 'clock', dir)
                 break
             case "B'":
-                this._rotate(this.getSideCellsWithOrder("B") as TFixedArray<string, 9>, 'rever', dir)
+                this._rotate(this.getSideCellsWithOrder("B"), 'rever', dir)
                 break
             case "B2":
-                this._rotate(this.getSideCellsWithOrder("B") as TFixedArray<string, 9>, 'clock', "B")
-                this._rotate(this.getSideCellsWithOrder("B") as TFixedArray<string, 9>, 'clock', "B")
+                this._rotate(this.getSideCellsWithOrder("B"), 'clock', "B")
+                this._rotate(this.getSideCellsWithOrder("B"), 'clock', "B")
                 break
 
             case "L":
-                this._rotate(this.getSideCellsWithOrder("L") as TFixedArray<string, 9>, 'clock', dir)
+                this._rotate(this.getSideCellsWithOrder("L"), 'clock', dir)
                 break
             case "L'":
-                this._rotate(this.getSideCellsWithOrder("L") as TFixedArray<string, 9>, 'rever', dir)
+                this._rotate(this.getSideCellsWithOrder("L"), 'rever', dir)
                 break
             case "L2":
-                this._rotate(this.getSideCellsWithOrder("L") as TFixedArray<string, 9>, 'clock', "L")
-                this._rotate(this.getSideCellsWithOrder("L") as TFixedArray<string, 9>, 'clock', "L")
+                this._rotate(this.getSideCellsWithOrder("L"), 'clock', "L")
+                this._rotate(this.getSideCellsWithOrder("L"), 'clock', "L")
                 break
 
             case "R":
-                this._rotate(this.getSideCellsWithOrder("R") as TFixedArray<string, 9>, 'clock', dir)
+                this._rotate(this.getSideCellsWithOrder("R"), 'clock', dir)
                 break
             case "R'":
-                this._rotate(this.getSideCellsWithOrder("R") as TFixedArray<string, 9>, 'rever', dir)
+                this._rotate(this.getSideCellsWithOrder("R"), 'rever', dir)
                 break
             case "R2":
-                this._rotate(this.getSideCellsWithOrder("R") as TFixedArray<string, 9>, 'clock', "R")
-                this._rotate(this.getSideCellsWithOrder("R") as TFixedArray<string, 9>, 'clock', "R")
+                this._rotate(this.getSideCellsWithOrder("R"), 'clock', "R")
+                this._rotate(this.getSideCellsWithOrder("R"), 'clock', "R")
                 break
 
             case "U":
-                this._rotate(this.getSideCellsWithOrder("U") as TFixedArray<string, 9>, 'clock', dir)
+                this._rotate(this.getSideCellsWithOrder("U"), 'clock', dir)
                 break
             case "U'":
-                this._rotate(this.getSideCellsWithOrder("U") as TFixedArray<string, 9>, 'rever', dir)
+                this._rotate(this.getSideCellsWithOrder("U"), 'rever', dir)
                 break
             case "U2":
-                this._rotate(this.getSideCellsWithOrder("U") as TFixedArray<string, 9>, 'clock', "U")
-                this._rotate(this.getSideCellsWithOrder("U") as TFixedArray<string, 9>, 'clock', "U")
+                this._rotate(this.getSideCellsWithOrder("U"), 'clock', "U")
+                this._rotate(this.getSideCellsWithOrder("U"), 'clock', "U")
                 break
 
             case "D":
-                this._rotate(this.getSideCellsWithOrder("D") as TFixedArray<string, 9>, 'clock', dir)
+                this._rotate(this.getSideCellsWithOrder("D"), 'clock', dir)
                 break
             case "D'":
-                this._rotate(this.getSideCellsWithOrder("D") as TFixedArray<string, 9>, 'rever', dir)
+                this._rotate(this.getSideCellsWithOrder("D"), 'rever', dir)
                 break
             case "D2":
-                this._rotate(this.getSideCellsWithOrder("D") as TFixedArray<string, 9>, 'clock', "D")
-                this._rotate(this.getSideCellsWithOrder("D") as TFixedArray<string, 9>, 'clock', "D")
+                this._rotate(this.getSideCellsWithOrder("D"), 'clock', "D")
+                this._rotate(this.getSideCellsWithOrder("D"), 'clock', "D")
                 break
 
             default:
@@ -233,7 +217,7 @@ export class RubiksCube {
         return newCube
     }
 
-    private getSideCellsWithOrder(side: TRubiksCubeOrientation) {
+    private getSideCellsWithOrder(side: TRubiksCubeOrientation): TFixedArray<string, 9> {
         switch (side) {
             case 'F': {
                 return ['-11', '011', '111', '-01', '001', '101', '--1', '0-1', '1-1']
@@ -261,7 +245,7 @@ export class RubiksCube {
 
             default:
                 const checking: never = side
-                return []
+                return checking
         }
     }
 

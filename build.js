@@ -30,6 +30,7 @@ function loadShader() {
 
 esbuild.build({
     entryPoints: ['./src/index.ts'],
+    platform: 'browser',
     treeShaking: true,
     outfile: './dist/bundle.js',
     tsconfig: 'tsconfig.json',
@@ -40,6 +41,7 @@ esbuild.build({
 
 esbuild.buildSync({
     entryPoints: ['./src/worker.ts'],
+    platform: 'browser',
     treeShaking: true,
     outfile: './dist/worker.js',
     tsconfig: 'tsconfig.json',

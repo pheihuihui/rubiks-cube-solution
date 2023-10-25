@@ -121,3 +121,7 @@ export function __range__(left: number, right: number, inclusive: boolean) {
     }
     return range;
 }
+
+export function add1(x: number) {
+    return x + 1
+}
