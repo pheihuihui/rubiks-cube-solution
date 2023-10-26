@@ -1,33 +1,6 @@
 import { TPlaneCube, TRubiksCubeOrientation, cubeOrientationAndColors } from "../model/RubiksCube"
 import { TFaceColor } from "../model/Cubie"
 
-export type Handler<E> = {
-    name: string
-    action: (event?: E) => void
-}
-
-export class EventDispatcher<E> {
-    private handlers: Handler<E>[] = []
-    excute(event?: E) {
-        for (let h of this.handlers)
-            h.action(event);
-    }
-    register(handler: Handler<E>) {
-        let nameIndex = this.handlers.findIndex(x => x.name == handler.name)
-        if (nameIndex == -1) {
-            this.handlers.push(handler);
-        } else {
-            console.log('duplicated handler name')
-        }
-    }
-    remove(name: string) {
-        let index = this.handlers.findIndex(x => x.name == name)
-        if (index != -1) {
-            this.handlers.splice(index, 1)
-        }
-    }
-}
-
 export const getBoxShadow = (scale: number, distance: number, baseColor: [number, number, number], reversed?: boolean) => {
     let num = Math.floor(scale * distance)
     let dark = getColorString(baseColor.map(x => darker(x)) as [number, number, number])

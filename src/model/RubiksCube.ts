@@ -1,6 +1,5 @@
-import { EventDispatcher, __range__ } from "../util/utilities"
+import { __range__ } from "../util/utilities"
 import { TFaceColor, Cubie, TRotationDirection } from "./Cubie"
-// import { EventDispatcher } from "../util/utilities"
 
 export type TRubiksCubeOrientation = "L" | "R" | "F" | "B" | "U" | "D"
 export type TPlaneFaceColor = Exclude<TFaceColor, 'blk'>
@@ -73,10 +72,37 @@ declare global {
     }
 }
 
+type Handler<E> = {
+    name: string
+    action: (event?: E) => void
+}
+
+class REventDispatcher<E> {
+    private handlers: Handler<E>[] = []
+    excute(event?: E) {
+        for (let h of this.handlers)
+            h.action(event);
+    }
+    register(handler: Handler<E>) {
+        let nameIndex = this.handlers.findIndex(x => x.name == handler.name)
+        if (nameIndex == -1) {
+            this.handlers.push(handler);
+        } else {
+            console.log('duplicated handler name')
+        }
+    }
+    remove(name: string) {
+        let index = this.handlers.findIndex(x => x.name == name)
+        if (index != -1) {
+            this.handlers.splice(index, 1)
+        }
+    }
+}
+
 export class RubiksCube {
     private cells: TAllCells
-    public onDidRestoreDispatcher = new EventDispatcher<void>()
-    public onDidRotateDispatcher = new EventDispatcher<TRotationDirection>()
+    public onDidRestoreDispatcher = new REventDispatcher<void>()
+    public onDidRotateDispatcher = new REventDispatcher<TRotationDirection>()
 
     getAllCells() {
         return this.cells

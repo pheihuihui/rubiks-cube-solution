@@ -296,7 +296,7 @@ export class Cube {
 
     ];
 
-    constructor(other) {
+    constructor(other?: Cube) {
         if (other != null) {
             this.init(other);
         } else {
@@ -399,7 +399,7 @@ export class Cube {
             return this;
         };
 
-        return result;
+        return result();
     }
 
     init(state) {
