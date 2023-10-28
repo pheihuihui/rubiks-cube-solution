@@ -1,15 +1,11 @@
-// @ts-nocheck
-
 import { __range__ } from '../util/utilities'
 
 // Centers
-const [U, R, F, D, L, B] = [0, 1, 2, 3, 4, 5];
-
+export const [U, R, F, D, L, B] = [0, 1, 2, 3, 4, 5];
 // Corners
-const [URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB] = [0, 1, 2, 3, 4, 5, 6, 7];
-
+export const [URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB] = [0, 1, 2, 3, 4, 5, 6, 7];
 // Edges
-const [UR, UF, UL, UB, DR, DF, DL, DB, FR, FL, BL, BR] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+export const [UR, UF, UL, UB, DR, DF, DL, DB, FR, FL, BL, BR] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 const _U = (x: number) => x - 1;
 const _R = (x: number) => _U(9) + x;
@@ -19,26 +15,21 @@ const _L = (x: number) => _D(9) + x;
 const _B = (x: number) => _L(9) + x;
 
 const centerFacelet = [4, 13, 22, 31, 40, 49];
-
 const cornerFacelet = [
     [_U(9), _R(1), _F(3)], [_U(7), _F(1), _L(3)],
     [_U(1), _L(1), _B(3)], [_U(3), _B(1), _R(3)],
     [_D(3), _F(9), _R(7)], [_D(1), _L(9), _F(7)],
     [_D(7), _B(9), _L(7)], [_D(9), _R(9), _B(7)]];
-
 const edgeFacelet = [
     [_U(6), _R(2)], [_U(8), _F(2)], [_U(4), _L(2)], [_U(2), _B(2)],
     [_D(6), _R(8)], [_D(2), _F(8)], [_D(4), _L(8)], [_D(8), _B(8)],
     [_F(6), _R(4)], [_F(4), _L(6)], [_B(6), _L(4)], [_B(4), _R(6)],
 ];
-
 const centerColor = ['U', 'R', 'F', 'D', 'L', 'B'];
-
 const cornerColor = [
     ['U', 'R', 'F'], ['U', 'F', 'L'], ['U', 'L', 'B'], ['U', 'B', 'R'],
     ['D', 'F', 'R'], ['D', 'L', 'F'], ['D', 'B', 'L'], ['D', 'R', 'B'],
 ];
-
 const edgeColor = [
     ['U', 'R'], ['U', 'F'], ['U', 'L'], ['U', 'B'], ['D', 'R'], ['D', 'F'],
     ['D', 'L'], ['D', 'B'], ['F', 'R'], ['F', 'L'], ['B', 'L'], ['B', 'R'],
@@ -86,51 +77,50 @@ const faceNames = {
     17: 'b'
 };
 
-function parseAlg(arg: string | string[]) {
-    if (typeof arg === 'string') {
-        // String
-        return (() => {
-            const result = [];
-            for (let part of arg.split(/\s+/)) {
-                let power;
-                if (part.length === 0) {
-                    // First and last can be empty
-                    continue;
-                }
-
-                if (part.length > 2) {
-                    throw new Error(`Invalid move: ${part}`);
-                }
-
-                var move = faceNums[part[0]];
-                if (move === undefined) {
-                    throw new Error(`Invalid move: ${part}`);
-                }
-
-                if (part.length === 1) {
-                    power = 0;
-                } else {
-                    if (part[1] === '2') {
-                        power = 1;
-                    } else if (part[1] === "'") {
-                        power = 2;
-                    } else {
-                        throw new Error(`Invalid move: ${part}`);
-                    }
-                }
-
-                result.push((move * 3) + power);
+function parseAlg(arg: string | number[] | number): number[] {
+    if (typeof arg == 'string') {
+        const result = [];
+        for (const part of arg.split(/\s+/)) {
+            if (part.length == 0) {
+                continue;
             }
-            return result;
-        })();
-    } else if (arg.length != null) {
-        // Already an array
-        return arg;
+            if (part.length > 2) {
+                throw new Error(`Invalid move: ${part}`);
+            }
+            // @ts-ignore
+            const move = faceNums[part[0]];
+            if (move === undefined) {
+                throw new Error(`Invalid move: ${part}`);
+            }
+            let power;
+            if (part.length === 1) {
+                power = 0;
+            } else {
+                if (part[1] === '2') {
+                    power = 1;
+                } else if (part[1] === "'") {
+                    power = 2;
+                } else {
+                    throw new Error(`Invalid move: ${part}`);
+                }
+            }
+            result.push(move * 3 + power);
+        }
+        return result;
+    } else if (typeof arg === 'number') {
+        return [arg]
     } else {
-        // A single move
-        return [arg];
+        return arg
     }
-};
+}
+
+interface CubeFaces {
+    center: number[]
+    cp: number[]
+    co: number[]
+    ep: number[]
+    eo: number[]
+}
 
 export class Cube {
 
@@ -139,6 +129,16 @@ export class Cube {
     private newEp: number[]
     private newCo: number[]
     private newEo: number[]
+    // @ts-ignore
+    private center: number[]
+    // @ts-ignore
+    private cp: number[]
+    // @ts-ignore
+    private ep: number[]
+    // @ts-ignore
+    private co: number[]
+    // @ts-ignore
+    private eo: number[]
 
     static moves = [
         // U
@@ -296,8 +296,8 @@ export class Cube {
 
     ];
 
-    constructor(other?: Cube) {
-        if (other != null) {
+    constructor(other?: CubeFaces) {
+        if (other) {
             this.init(other);
         } else {
             this.identity();
@@ -311,35 +311,35 @@ export class Cube {
     }
 
     randomize() {
-        const randint = (min, max) => min + Math.floor(Math.random() * ((max - min) + 1));
+        const randint = (min: number, max: number) => min + Math.floor(Math.random() * ((max - min) + 1));
 
-        const shuffle = function (array) {
+        const shuffle = function (array: unknown[]) {
             let currentIndex = array.length;
 
             while (currentIndex !== 0) {
-                var randomIndex = randint(0, currentIndex - 1);
+                let randomIndex = randint(0, currentIndex - 1);
                 currentIndex -= 1;
-                var temporaryValue = array[currentIndex];
+                let temporaryValue = array[currentIndex];
                 [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
             }
         };
 
-        const getNumSwaps = function (arr) {
+        const getNumSwaps = function (arr: number[]) {
             let numSwaps = 0;
             const seen = (__range__(0, arr.length - 1, true).map((x) => false));
             // We compute the cycle decomposition
             while (true) {
-                var cur = -1;
-                for (var i = 0, end = arr.length - 1, asc = 0 <= end; asc ? i <= end : i >= end; asc ? i++ : i--) {
+                let cur = -1;
+                for (let i = 0; i <= arr.length - 1; i++) {
                     if (!seen[i]) {
                         cur = i;
                         break;
                     }
                 }
-                if (cur === -1) {
+                if (cur == -1) {
                     break;
                 }
-                var cycleLength = 0;
+                let cycleLength = 0;
                 while (!seen[cur]) {
                     seen[cur] = true;
                     cycleLength++;
@@ -351,12 +351,12 @@ export class Cube {
             return numSwaps;
         };
 
-        const arePermutationsValid = function (cp, ep) {
+        const arePermutationsValid = function (cp: number[], ep: number[]) {
             const numSwaps = getNumSwaps(ep) + getNumSwaps(cp);
             return (numSwaps % 2) === 0;
         };
 
-        const generateValidRandomPermutation = function (cp, ep) {
+        const generateValidRandomPermutation = function (cp: number[], ep: number[]) {
             // Each shuffle only takes around 12 operations and there's a 50%
             // chance of a valid permutation so it'll finish in very good time
             shuffle(ep);
@@ -367,16 +367,16 @@ export class Cube {
             }
         };
 
-        const randomizeOrientation = function (arr, numOrientations) {
+        const randomizeOrientation = function (arr: number[], numOrientations: number) {
             let ori = 0;
-            for (let i = 0, end = arr.length - 1, asc = 0 <= end; asc ? i <= end : i >= end; asc ? i++ : i--) {
+            for (let i = 0; i <= arr.length - 1; i++) {
                 ori += (arr[i] = randint(0, numOrientations - 1));
             }
         };
 
-        const isOrientationValid = (arr, numOrientations) => (arr.reduce((a, b) => a + b) % numOrientations) === 0;
+        const isOrientationValid = (arr: number[], numOrientations: number) => (arr.reduce((a, b) => a + b) % numOrientations) === 0;
 
-        const generateValidRandomOrientation = function (co, eo) {
+        const generateValidRandomOrientation = function (co: number[], eo: number[]) {
             // There is a 1/2 and 1/3 probably respectively of each of these
             // succeeding so the probability of them running 10 times before
             // success is already only 1% and only gets exponentially lower
@@ -393,46 +393,32 @@ export class Cube {
 
         };
 
-        const result = function () {
+        const result = () => {
             generateValidRandomPermutation(this.cp, this.ep);
             generateValidRandomOrientation(this.co, this.eo);
             return this;
         };
 
-        return result();
+        return result;
     }
 
-    init(state) {
+    init(state: CubeFaces) {
         this.center = state.center.slice(0);
         this.co = state.co.slice(0);
         this.ep = state.ep.slice(0);
         this.cp = state.cp.slice(0);
-        return this.eo = state.eo.slice(0);
+        this.eo = state.eo.slice(0);
     }
 
     identity() {
-        // Initialize to the identity cube
-        let x;
         this.center = [0, 1, 2, 3, 4, 5];
         this.cp = [0, 1, 2, 3, 4, 5, 6, 7];
-        this.co = ((() => {
-            const result = [];
-            for (x = 0; x <= 7; x++) {
-                result.push(0);
-            }
-            return result;
-        })());
+        this.co = [0, 0, 0, 0, 0, 0, 0, 0];
         this.ep = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-        return this.eo = ((() => {
-            const result1 = [];
-            for (x = 0; x <= 11; x++) {
-                result1.push(0);
-            }
-            return result1;
-        })());
+        this.eo = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     }
 
-    toJSON() {
+    toJSON(): CubeFaces {
         return {
             center: this.center,
             cp: this.cp,
@@ -451,7 +437,7 @@ export class Cube {
         }
 
         for (i = 0; i <= 7; i++) {
-            var corner = this.cp[i];
+            let corner = this.cp[i];
             ori = this.co[i];
             for (n = 0; n <= 2; n++) {
                 result[cornerFacelet[i][(n + ori) % 3]] = cornerColor[corner][n];
@@ -459,7 +445,7 @@ export class Cube {
         }
 
         for (i = 0; i <= 11; i++) {
-            var edge = this.ep[i];
+            let edge = this.ep[i];
             ori = this.eo[i];
             for (n = 0; n <= 1; n++) {
                 result[edgeFacelet[i][(n + ori) % 2]] = edgeColor[edge][n];
@@ -469,44 +455,45 @@ export class Cube {
         return result.join('');
     }
 
-    static fromString(str) {
-        let i, j;
+    static fromString(str: string) {
         const cube = new Cube;
 
-        for (i = 0; i <= 5; i++) {
-            for (j = 0; j <= 5; j++) {
+        for (let i = 0; i <= 5; i++) {
+            for (let j = 0; j <= 5; j++) {
                 if (str[(9 * i) + 4] === centerColor[j]) {
                     cube.center[i] = j;
                 }
             }
         }
 
-        for (i = 0; i <= 7; i++) {
-            var ori;
+        for (let i = 0; i <= 7; i++) {
+            let ori: number
             for (ori = 0; ori <= 2; ori++) {
-                if (['U', 'D'].includes(str[cornerFacelet[i][ori]])) { break; }
+                if (['U', 'D'].includes(str[cornerFacelet[i][ori]])) {
+                    break;
+                }
             }
-            var col1 = str[cornerFacelet[i][(ori + 1) % 3]];
-            var col2 = str[cornerFacelet[i][(ori + 2) % 3]];
+            let col1 = str[cornerFacelet[i][(ori + 1) % 3]];
+            let col2 = str[cornerFacelet[i][(ori + 2) % 3]];
 
-            for (j = 0; j <= 7; j++) {
-                if ((col1 === cornerColor[j][1]) && (col2 === cornerColor[j][2])) {
+            for (let j = 0; j <= 7; j++) {
+                if ((col1 == cornerColor[j][1]) && (col2 == cornerColor[j][2])) {
                     cube.cp[i] = j;
                     cube.co[i] = ori % 3;
                 }
             }
         }
 
-        for (i = 0; i <= 11; i++) {
-            for (j = 0; j <= 11; j++) {
-                if ((str[edgeFacelet[i][0]] === edgeColor[j][0]) &&
-                    (str[edgeFacelet[i][1]] === edgeColor[j][1])) {
+        for (let i = 0; i <= 11; i++) {
+            for (let j = 0; j <= 11; j++) {
+                if ((str[edgeFacelet[i][0]] == edgeColor[j][0]) &&
+                    (str[edgeFacelet[i][1]] == edgeColor[j][1])) {
                     cube.ep[i] = j;
                     cube.eo[i] = 0;
                     break;
                 }
-                if ((str[edgeFacelet[i][0]] === edgeColor[j][1]) &&
-                    (str[edgeFacelet[i][1]] === edgeColor[j][0])) {
+                if ((str[edgeFacelet[i][0]] == edgeColor[j][1]) &&
+                    (str[edgeFacelet[i][1]] == edgeColor[j][0])) {
                     cube.ep[i] = j;
                     cube.eo[i] = 1;
                     break;
@@ -531,24 +518,34 @@ export class Cube {
         clone.move(clone.upright());
 
         for (let cent = 0; cent <= 5; cent++) {
-            if (clone.center[cent] !== cent) { return false; }
+            if (clone.center[cent] != cent) {
+                return false;
+            }
         }
 
         for (let c = 0; c <= 7; c++) {
-            if (clone.cp[c] !== c) { return false; }
-            if (clone.co[c] !== 0) { return false; }
+            if (clone.cp[c] != c) {
+                return false;
+            }
+            if (clone.co[c] != 0) {
+                return false;
+            }
         }
 
         for (let e = 0; e <= 11; e++) {
-            if (clone.ep[e] !== e) { return false; }
-            if (clone.eo[e] !== 0) { return false; }
+            if (clone.ep[e] != e) {
+                return false;
+            }
+            if (clone.eo[e] != 0) {
+                return false;
+            }
         }
 
         return true;
     }
 
     // Multiply this Cube with another Cube, restricted to centers.
-    centerMultiply(other) {
+    centerMultiply(other: CubeFaces) {
         let from;
         for (let to = 0; to <= 5; to++) {
             from = other.center[to];
@@ -560,7 +557,7 @@ export class Cube {
     }
 
     // Multiply this Cube with another Cube, restricted to corners.
-    cornerMultiply(other) {
+    cornerMultiply(other: CubeFaces) {
         let from;
         for (let to = 0; to <= 7; to++) {
             from = other.cp[to];
@@ -574,7 +571,7 @@ export class Cube {
     }
 
     // Multiply this Cube with another Cube, restricted to edges
-    edgeMultiply(other) {
+    edgeMultiply(other: CubeFaces) {
         let from;
         for (let to = 0; to <= 11; to++) {
             from = other.ep[to];
@@ -588,31 +585,33 @@ export class Cube {
     }
 
     // Multiply this cube with another Cube
-    multiply(other) {
+    multiply(other: CubeFaces) {
         this.centerMultiply(other);
         this.cornerMultiply(other);
         this.edgeMultiply(other);
         return this;
     }
 
-    move(arg) {
+    move(arg: string) {
         for (let _move of parseAlg(arg)) {
             let face = (_move / 3) | 0;
             let power = _move % 3;
             console.log(face)
             console.log(power)
-            for (var x = 0, end = power, asc = 0 <= end; asc ? x <= end : x >= end; asc ? x++ : x--) { this.multiply(Cube.moves[face]); }
+            for (let x = 0; x <= power; x++) {
+                this.multiply(Cube.moves[face]);
+            }
         }
 
         return this;
     }
 
     upright() {
-        let i, j;
+        let i: number, j: number;
         const clone = this.clone();
         const result = [];
         for (i = 0; i <= 5; i++) {
-            if (clone.center[i] === F) { break; }
+            if (clone.center[i] == F) { break; }
         }
         switch (i) {
             case D: result.push("x"); break;
@@ -633,51 +632,34 @@ export class Cube {
         return result.join(' ');
     }
 
-    static inverse(arg) {
+    static inverse(arg: string | number[] | number) {
         let move, face, power;
-        const result = (() => {
-            const result1 = [];
-            for (move of parseAlg(arg)) {
-                face = (move / 3) | 0;
-                power = move % 3;
-                result1.push((face * 3) + -(power - 1) + 1);
-            }
-            return result1;
-        })();
-
+        const result = [];
+        for (move of parseAlg(arg)) {
+            face = (move / 3) | 0;
+            power = move % 3;
+            result.push((face * 3) + -(power - 1) + 1);
+        }
         result.reverse();
-
-        if (typeof arg === 'string') {
+        if (typeof arg == 'string') {
             let str = '';
             for (move of result) {
                 face = (move / 3) | 0;
                 power = move % 3;
+                // @ts-ignore
                 str += faceNames[face];
-                if (power === 1) {
+                if (power == 1) {
                     str += '2';
-                } else if (power === 2) {
+                } else if (power == 2) {
                     str += "'";
                 }
                 str += ' ';
             }
             return str.substring(0, str.length - 1);
-
-        } else if (arg.length != null) {
-            return result;
-
-        } else {
+        } else if (typeof arg == 'number') {
             return result[0];
+        } else {
+            return result;
         }
     }
 };
-
-// const x_cube = new Cube().move("R M' L'").toJSON()
-// const y_cube = new Cube().move("U E' D'").toJSON()
-// const z_cube = new Cube().move("F S B'").toJSON()
-// const u_cube = new Cube().move("U E'").toJSON()
-// const r_cube = new Cube().move("R M'").toJSON()
-// const f_cube = new Cube().move("F S").toJSON()
-// const d_cube = new Cube().move("D E").toJSON()
-// const l_cube = new Cube().move("L M").toJSON()
-// const b_cube = new Cube().move("B S'").toJSON()
-
