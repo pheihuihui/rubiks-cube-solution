@@ -51,10 +51,11 @@ describe("Cube", () => {
         const cube = new Cube();
         assert.strictEqual(cube.isSolved(), true);
     });
-    // it('should return false when the cube is not solved (random cube), and runs without errors in normal time', function () {
-    //     const cube = Cube.random();
-    //     assert.strictEqual(cube.isSolved(), false);
-    // });
+    it('should return false when the cube is not solved (random cube), and runs without errors in normal time', function () {
+        const cube = Cube.random();
+        console.log(cube.asString())
+        assert.strictEqual(cube.isSolved(), false);
+    });
     it('should return inverse moves', function () {
         const moves = Cube.inverse("F B' R");
         assert.strictEqual(moves, "R' B F'");

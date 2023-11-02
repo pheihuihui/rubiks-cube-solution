@@ -1,10 +1,26 @@
 // @ts-nocheck
 
+/*
+ * decaffeinate suggestions:
+ * DS101: Remove unnecessary use of Array.from
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS202: Simplify dynamic range loops
+ * DS205: Consider reworking code to avoid use of IIFEs
+ * DS207: Consider shorter variations of null checks
+ * DS208: Avoid top-level this
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
 import { Cube } from './cube'
 import { __range__ } from '../util/utilities'
-import { U, R, F, D, L, B } from './cube'
-import { URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB } from './cube'
-import { UR, UF, UL, UB, DR, DF, DL, DB, FR, FL, BL, BR } from './cube'
+
+// Centers
+const [U, R, F, D, L, B] = Array.from([0, 1, 2, 3, 4, 5]);
+
+// Corners
+const [URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB] = Array.from([0, 1, 2, 3, 4, 5, 6, 7]);
+
+// Edges
+const [UR, UF, UL, UB, DR, DF, DL, DB, FR, FL, BL, BR] = Array.from([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 
 
 //# Helpers
@@ -44,33 +60,18 @@ const max = function (a, b) {
 };
 
 // Rotate elements between l and r left by one place
-// const rotateLeft = function (array, l, r) {
-//     const tmp = array[l];
-//     for (let i = l, end = r - 1, asc = l <= end; asc ? i <= end : i >= end; asc ? i++ : i--) { array[i] = array[i + 1]; }
-//     return array[r] = tmp;
-// };
-
-function rotateLeft(array: number[], l: number, r: number): void {
+const rotateLeft = function (array, l, r) {
     const tmp = array[l];
-    for (let i = l; i < r; i++) {
-        array[i] = array[i + 1];
-    }
-    array[r] = tmp;
-}
+    for (let i = l, end = r - 1, asc = l <= end; asc ? i <= end : i >= end; asc ? i++ : i--) { array[i] = array[i + 1]; }
+    return array[r] = tmp;
+};
 
 // Rotate elements between l and r right by one place
-// const rotateRight = function (array, l, r) {
-//     const tmp = array[r];
-//     for (let i = r, end = l + 1, asc = r <= end; asc ? i <= end : i >= end; asc ? i++ : i--) { array[i] = array[i - 1]; }
-//     return array[l] = tmp;
-// };
-function rotateRight(array: number[], l: number, r: number) {
+const rotateRight = function (array, l, r) {
     const tmp = array[r];
-    for (let i = r; i > l; i--) {
-        array[i] = array[i - 1];
-    }
-    array[l] = tmp;
-}
+    for (let i = r, end = l + 1, asc = r <= end; asc ? i <= end : i >= end; asc ? i++ : i--) { array[i] = array[i - 1]; }
+    return array[l] = tmp;
+};
 
 
 // Generate a function that computes permutation indices.
@@ -98,17 +99,16 @@ const permutationIndex = function (context, start, end, fromEnd) {
         permName = 'ep';
     }
 
-    // const our = ((() => {
-    //     let asc, end1, j;
-    //     const result = [];
-    //     for (j = 0, i = j, end1 = maxOur, asc = 0 <= end1; asc ? j <= end1 : j >= end1; asc ? j++ : j--, i = j) {
-    //         result.push(0);
-    //     }
-    //     return result;
-    // })());
-    const our = __range__(0, maxOur, true).map(() => 0);
+    const our = ((() => {
+        let asc, end1, j;
+        const result = [];
+        for (j = 0, i = j, end1 = maxOur, asc = 0 <= end1; asc ? j <= end1 : j >= end1; asc ? j++ : j--, i = j) {
+            result.push(0);
+        }
+        return result;
+    })());
 
-    return function (index: number | null) {
+    return function (index) {
         let a, b, j, k, perm, x;
         if (index != null) {
             // Reset our to [start..end]
@@ -116,23 +116,17 @@ const permutationIndex = function (context, start, end, fromEnd) {
             let asc2, end3;
             let asc3, end4;
             let c;
-            // for (i = 0, end2 = maxOur, asc1 = 0 <= end2; asc1 ? i <= end2 : i >= end2; asc1 ? i++ : i--) { our[i] = i + start; }
-            for (let i = 0; i < maxOur; i++) {
-                our[i] = i + start;
-            }
+            for (i = 0, end2 = maxOur, asc1 = 0 <= end2; asc1 ? i <= end2 : i >= end2; asc1 ? i++ : i--) { our[i] = i + start; }
 
             b = index % maxB;      // permutation
             a = (index / maxB) | 0;  // combination
 
             // Invalidate all edges
             perm = this[permName];
-            // for (i = 0, end3 = maxAll, asc2 = 0 <= end3; asc2 ? i <= end3 : i >= end3; asc2 ? i++ : i--) { perm[i] = -1; }
-            for (let i = 0; i <= maxAll; i++) {
-                perm[i] = -1;
-            }
+            for (i = 0, end3 = maxAll, asc2 = 0 <= end3; asc2 ? i <= end3 : i >= end3; asc2 ? i++ : i--) { perm[i] = -1; }
 
             // Generate permutation from index b
-            for (j = 1; j <= maxOur; j++) {
+            for (j = 1, end4 = maxOur, asc3 = 1 <= end4; asc3 ? j <= end4 : j >= end4; asc3 ? j++ : j--) {
                 k = b % (j + 1);
                 b = (b / (j + 1)) | 0;
                 // TODO: Implement rotateRightBy(our, 0, j, k)
@@ -146,7 +140,7 @@ const permutationIndex = function (context, start, end, fromEnd) {
             x = maxOur;
             if (fromEnd) {
                 let asc4, end5;
-                for (j = 0; j <= maxAll; j++) {
+                for (j = 0, end5 = maxAll, asc4 = 0 <= end5; asc4 ? j <= end5 : j >= end5; asc4 ? j++ : j--) {
                     c = Cnk(maxAll - j, x + 1);
                     if ((a - c) >= 0) {
                         perm[j] = our[maxOur - x];
@@ -156,7 +150,7 @@ const permutationIndex = function (context, start, end, fromEnd) {
                 }
             } else {
                 let asc5;
-                for (j = maxAll; j >= 0; j--) {
+                for (j = maxAll, asc5 = maxAll <= 0; asc5 ? j <= 0 : j >= 0; asc5 ? j++ : j--) {
                     c = Cnk(j, x + 1);
                     if ((a - c) >= 0) {
                         perm[j] = our[x];
@@ -172,17 +166,14 @@ const permutationIndex = function (context, start, end, fromEnd) {
             let asc6, end6;
             let asc9;
             perm = this[permName];
-            for (i = 0; i <= maxOur; i++) {
-                our[i] = -1;
-            }
-            x = 0;
-            b = x;
-            a = b;
+            for (i = 0, end6 = maxOur, asc6 = 0 <= end6; asc6 ? i <= end6 : i >= end6; asc6 ? i++ : i--) { our[i] = -1; }
+            a = (b = (x = 0));
+
             // Compute the index a < ((maxAll + 1) choose (maxOur + 1)) and
             // the permutation
             if (fromEnd) {
                 let asc7;
-                for (j = maxAll; j >= 0; j--) {
+                for (j = maxAll, asc7 = maxAll <= 0; asc7 ? j <= 0 : j >= 0; asc7 ? j++ : j--) {
                     if (start <= perm[j] && perm[j] <= end) {
                         a += Cnk(maxAll - j, x + 1);
                         our[maxOur - x] = perm[j];
@@ -191,7 +182,7 @@ const permutationIndex = function (context, start, end, fromEnd) {
                 }
             } else {
                 let asc8, end7;
-                for (j = 0; j <= maxAll; j++) {
+                for (j = 0, end7 = maxAll, asc8 = 0 <= end7; asc8 ? j <= end7 : j >= end7; asc8 ? j++ : j--) {
                     if (start <= perm[j] && perm[j] <= end) {
                         a += Cnk(j, x + 1);
                         our[x] = perm[j];
@@ -201,7 +192,7 @@ const permutationIndex = function (context, start, end, fromEnd) {
             }
 
             // Compute the index b < (maxOur + 1)! for the permutation
-            for (j = maxOur; j >= 0; j--) {
+            for (j = maxOur, asc9 = maxOur <= 0; asc9 ? j <= 0 : j >= 0; asc9 ? j++ : j--) {
                 k = 0;
                 while (our[j] !== (start + j)) {
                     rotateLeft(our, 0, j);
@@ -913,3 +904,5 @@ Cube.prototype.solve = function (maxDepth) {
 };
 
 Cube.scramble = () => Cube.inverse(Cube.random().solve());
+
+window.Cube = Cube

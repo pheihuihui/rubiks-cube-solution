@@ -1,7 +1,7 @@
-const esbuild = require('esbuild')
-const fs = require('fs')
-const sass = require('sass')
-const util = require('util')
+import esbuild from 'esbuild'
+import * as sass from 'sass'
+import util from 'util'
+import fs from 'fs'
 
 if (fs.existsSync('./dist')) {
     fs.rmSync('./dist', { recursive: true })
@@ -44,6 +44,16 @@ esbuild.buildSync({
     platform: 'browser',
     treeShaking: true,
     outfile: './dist/worker.js',
+    tsconfig: 'tsconfig.json',
+    bundle: true,
+    minify: false
+})
+
+esbuild.buildSync({
+    entryPoints: ['./src/solution/solve.ts'],
+    platform: 'browser',
+    treeShaking: true,
+    outfile: './dist/solve.js',
     tsconfig: 'tsconfig.json',
     bundle: true,
     minify: false

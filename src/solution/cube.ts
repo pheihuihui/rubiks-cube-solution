@@ -399,7 +399,7 @@ export class Cube {
             return this;
         };
 
-        return result;
+        return result();
     }
 
     init(state: CubeFaces) {
