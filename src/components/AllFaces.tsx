@@ -2,7 +2,7 @@ import { createContext, FC, useState } from "react"
 import React from "react"
 import { TPlaneCube, RubiksCube } from "../model/RubiksCube"
 import { Layer_1, Layer_2 } from "./Layers"
-import { TSteps } from "../solution/Solution"
+import { TSteps } from "../solution/utils"
 import { cube, currentPlaneView } from "../util/constants"
 
 export type TFacesContext = {

@@ -80,7 +80,6 @@ const colorToPos: (color: TPlaneFaceColor) => TRubiksCubeOrientation = color => 
     }
 }
 
-
 declare global {
     interface Window {
         getNext: any

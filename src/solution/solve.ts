@@ -905,4 +905,10 @@ Cube.prototype.solve = function (maxDepth) {
 
 Cube.scramble = () => Cube.inverse(Cube.random().solve());
 
-window.Cube = Cube
+export const getSolution = (dcube: string) => {
+    let cc = Cube.fromString(dcube)
+    Cube.initSolver()
+    let solstr = cc.solve() as string
+    let sol = solstr.split(' ')
+    return sol
+}

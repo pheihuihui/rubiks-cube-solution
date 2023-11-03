@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, FC } from "react";
-import { deserializeCube, scrambleCube } from "../solution/Solution";
+import { deserializeCube, scrambleCube } from "../solution/utils";
 import { ContextHub } from "./AllFaces";
-import { isSolvable } from "../solution/Validation";
+import { isSolvable } from "../solution/validate";
 import { cube, currentPlaneView } from "../util/constants";
 import { TMessageEventArgs } from "../worker";
 import { CheckIcon, IdeaIcon, PlayIcon, RestoreIcon, ShuffleIcon } from "./Icons";
@@ -54,7 +54,7 @@ export const SolutionButton: FC = () => {
                     wk.onmessage = function (e: MessageEvent<TMessageEventArgs<'solution'>>) {
                         if (e.data?.messageType == 'solution') {
                             console.log(e.data.content)
-                            stpCtx.updateSteps(e.data.content)
+                            // stpCtx.updateSteps(e.data.content)
                             cptCtx.updateComputingState(false)
                             wk.terminate()
                         }

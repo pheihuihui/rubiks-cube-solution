@@ -1,6 +1,5 @@
 import esbuild from 'esbuild'
 import * as sass from 'sass'
-import util from 'util'
 import fs from 'fs'
 
 if (fs.existsSync('./dist')) {
@@ -9,25 +8,6 @@ if (fs.existsSync('./dist')) {
 
 fs.mkdirSync('./dist')
 
-function loadShader() {
-
-    const readFile = util.promisify(fs.readFile);
-
-    return {
-        name: "loadShader",
-        setup(build) {
-            async function onLoad(args) {
-                const source = await readFile(args.path, "utf8");
-                return {
-                    contents: source,
-                    loader: "text"
-                };
-            }
-            build.onLoad({ filter: /\.(?:frag|vert|wgsl)$/ }, onLoad);
-        }
-    };
-}
-
 esbuild.build({
     entryPoints: ['./src/index.ts'],
     platform: 'browser',
@@ -35,8 +15,7 @@ esbuild.build({
     outfile: './dist/bundle.js',
     tsconfig: 'tsconfig.json',
     bundle: true,
-    minify: false,
-    plugins: [loadShader()]
+    minify: false
 }).then(console.log)
 
 esbuild.buildSync({
@@ -49,19 +28,8 @@ esbuild.buildSync({
     minify: false
 })
 
-esbuild.buildSync({
-    entryPoints: ['./src/solution/solve.ts'],
-    platform: 'browser',
-    treeShaking: true,
-    outfile: './dist/solve.js',
-    tsconfig: 'tsconfig.json',
-    bundle: true,
-    minify: false
-})
-
 const style = sass.compile('./src/style/index.scss')
+
 fs.writeFileSync('./dist/index.css', style.css)
-
 fs.copyFileSync('./src/pages/index.html', './dist/index.html')
-
 fs.copyFileSync('./src/pages/cube.ico', './dist/favicon.ico')

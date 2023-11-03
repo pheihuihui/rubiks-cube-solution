@@ -4,7 +4,7 @@ import { getCubeMesh } from "../model/Meshes";
 import { useWindowScale } from "../util/hooks";
 import { TRotationDirection } from "../model/Cubie";
 import { cube } from "../util/constants";
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 export const CubeContainer: FC = () => {
 
@@ -172,6 +172,4 @@ export const CubeContainer: FC = () => {
 
 }
 
-
 export const cb = <CubeContainer />
-

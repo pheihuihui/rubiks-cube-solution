@@ -17,7 +17,7 @@ if (panel) {
 
 if (panel) {
     const root = createRoot(panel)
-    root.render(ci)
+    root.render(all)
 }
 
 document.body.style.backgroundColor = '#33807b'
