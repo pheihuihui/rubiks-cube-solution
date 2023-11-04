@@ -130,6 +130,8 @@ $document_body_backgroud_color: #33807b;
     &-item {
         background-color: silver;
         padding: 4;
+        width: 100;
+        height: 100;
     }
 
     &-button {
@@ -152,12 +154,14 @@ $document_body_backgroud_color: #33807b;
 
 .cubie {
     &-root {
-        min-width: 1;
-        min-height: 1;
-        width: 48;
-        height: 48;
-        border-radius: 10;
-        box-shadow: 2px 2px 6px #6d6d6d, -2px -2px 6px #ffffff;
+        border: none;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
     }
 }
 
@@ -166,7 +170,6 @@ $document_body_backgroud_color: #33807b;
         display: flex;
         width: 1900;
         flex-wrap: wrap;
-        filter: blur(2px);
     }
 
     &-plane {
@@ -307,10 +310,4 @@ $document_body_backgroud_color: #33807b;
         border: 0;
         box-shadow: inset 4px 4px 8px #143331, inset -4px -4px 8px #52cdc5;
     }
-}
-
-.webgpu-cube-container {
-    text-align: center;
-    position: relative;
-    margin-top: 10px;
 }

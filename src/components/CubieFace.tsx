@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, FC, MouseEvent } from 'react'
-import { Button, Menu, MenuItem } from '@mui/material'
+import { Menu, MenuItem } from '@mui/material'
 import { TRubiksCubeOrientation, cubeOrientationAndColors } from '../model/RubiksCube'
 import { ContextHub } from './AllFaces'
 import { cssFaceColors } from '../util/utilities'
@@ -35,7 +35,7 @@ export const CubieFace: FC<{ initialColor?: string, disabled?: boolean, orien: T
 
     return (
         <div>
-            <button disabled={props.disabled} style={{ background: color }} className="cubie-root" onClick={handlePicker}> </button>
+            <button disabled={props.disabled} style={{ background: color }} className="cubie-root" onClick={handlePicker} />
             <Menu id="color_picker" anchorEl={anchor_colorPicker} open={Boolean(anchor_colorPicker)} onClose={handleClose}>
                 {Object.values(cssFaceColors).map(x => <MenuItem key={'face_' + x} style={{ width: 80, height: 40, background: x }} onClick={() => handleColor(x)} />)}
             </Menu>

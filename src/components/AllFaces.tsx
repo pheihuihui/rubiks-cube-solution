@@ -1,7 +1,7 @@
 import { createContext, FC, useState } from "react"
 import React from "react"
 import { TPlaneCube, RubiksCube } from "../model/RubiksCube"
-import { Layer_1, Layer_2 } from "./Layers"
+import { Layer_1 } from "./Layers"
 import { TSteps } from "../solution/utils"
 import { cube, currentPlaneView } from "../util/constants"
 
@@ -114,7 +114,6 @@ const AllFaces: FC = () => {
             }}>
                 <div className="container">
                     <Layer_1 />
-                    <Layer_2 />
                 </div>
             </ContextHub.Provider>
         </div>

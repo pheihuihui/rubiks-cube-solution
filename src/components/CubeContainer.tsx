@@ -1,14 +1,14 @@
 import React, { useRef, useEffect, FC } from "react";
 import { WebGLRenderer, PerspectiveCamera, Scene, Color, AxesHelper, Matrix4, Mesh, Group } from "three";
 import { getCubeMesh } from "../model/Meshes";
-import { useWindowScale } from "../util/hooks";
+import { useWindowSize } from "../util/hooks";
 import { TRotationDirection } from "../model/Cubie";
 import { cube } from "../util/constants";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 export const CubeContainer: FC = () => {
 
-    const sc = useWindowScale()
+    const sz = useWindowSize
     let realCube = getCubeMesh(cube)
     let animateAction = () => { }
     let animating = false
@@ -18,7 +18,8 @@ export const CubeContainer: FC = () => {
     useEffect(() => {
         const canvas = document.createElement('canvas')
         const renderer = new WebGLRenderer({ antialias: true, canvas: canvas })
-        renderer.setSize(750 * 3.9 * sc / 4.5, 750 * sc)
+        // renderer.setSize(750 * 3.9 * sc / 4.5, 750 * sc)
+        renderer.setSize(750 * 3.9 / 4.5, 750)
         const camera = new PerspectiveCamera(75, 3.9 / 4.5, 1, 1000)
         const orbit = new OrbitControls(camera, renderer.domElement)
         camera.position.z = 5
@@ -165,7 +166,7 @@ export const CubeContainer: FC = () => {
             cube.onDidRestoreDispatcher.remove('restore')
             cube.onDidRotateDispatcher.remove('rotate')
         })
-    }, [sc])
+    }, [sz])
 
 
     return <div className="cube-container" ref={mountRef} />

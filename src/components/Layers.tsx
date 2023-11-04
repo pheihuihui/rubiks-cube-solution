@@ -13,18 +13,18 @@ export const Layer_1: FC = () => {
     return (
         <div className="layer-root">
             <div className="layer-plane">
-                <EmptyFace />
+                {/* <EmptyFace /> */}
                 <CubeFace faceOrien={"U"} />
-                <EmptyFace />
+                {/* <EmptyFace />
                 <EmptyFace />
                 <CubeFace faceOrien={"L"} />
                 <CubeFace faceOrien={"F"} />
                 <CubeFace faceOrien={"R"} />
                 <CubeFace faceOrien={"B"} />
                 <EmptyFace />
-                <CubeFace faceOrien={"D"} />
+                <CubeFace faceOrien={"D"} /> */}
             </div>
-            <div className="layer-cube">
+            {/* <div className="layer-cube">
                 <CubeContainer />
             </div>
             <div className="layer-button">
@@ -35,21 +35,21 @@ export const Layer_1: FC = () => {
             </div>
             <div className="layer-solution">
                 <SolutionPanel />
-            </div>
+            </div> */}
         </div>
     )
 }
 
-export const Layer_2: FC = () => {
+// export const Layer_2: FC = () => {
 
-    const computingCtx = useContext(ContextHub).computingContext
+//     const computingCtx = useContext(ContextHub).computingContext
 
-    return (
-        computingCtx.isComputing ?
-            <div className="layer-2-root">
-                <CircularIndeterminate />
-            </div>
-            :
-            null
-    )
-}
+//     return (
+//         computingCtx.isComputing ?
+//             <div className="layer-2-root">
+//                 <CircularIndeterminate />
+//             </div>
+//             :
+//             null
+//     )
+// }
