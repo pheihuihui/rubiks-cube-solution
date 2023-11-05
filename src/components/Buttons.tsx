@@ -5,13 +5,14 @@ import { isSolvable } from "../solution/validate";
 import { cube, currentPlaneView } from "../util/constants";
 import { TMessageEventArgs } from "../worker";
 import { CheckIcon, IdeaIcon, PlayIcon, RestoreIcon, ShuffleIcon } from "./Icons";
+import { CircularIndeterminate } from "./CircularIndeterminate";
 
 export const RestoreButton: FC = () => {
 
     const allFaces = useContext(ContextHub).facesContext
 
     return (
-        <div className="button-out" >
+        <div className="buttons-out" >
             <button className="button-item" onClick={
                 () => {
                     cube.restore()
@@ -28,7 +29,7 @@ export const ShuffleButton: FC = () => {
     const allFaces = useContext(ContextHub).facesContext
 
     return (
-        <div className="button-out" >
+        <div className="buttons-out" >
             <button className="button-item" onClick={
                 () => {
                     scrambleCube()
@@ -46,7 +47,7 @@ export const SolutionButton: FC = () => {
     const cptCtx = useContext(ContextHub).computingContext
 
     return (
-        <div className="button-out" >
+        <div className="buttons-out" >
             <button className="button-item" onClick={
                 () => {
                     cptCtx.updateComputingState(true)
@@ -54,7 +55,7 @@ export const SolutionButton: FC = () => {
                     wk.onmessage = function (e: MessageEvent<TMessageEventArgs<'solution'>>) {
                         if (e.data?.messageType == 'solution') {
                             console.log(e.data.content)
-                            // stpCtx.updateSteps(e.data.content)
+                            stpCtx.updateSteps(e.data.content)
                             cptCtx.updateComputingState(false)
                             wk.terminate()
                         }
@@ -63,7 +64,7 @@ export const SolutionButton: FC = () => {
                     let msg: TMessageEventArgs<'cube'> = { messageType: 'cube', content: dcube }
                     wk.postMessage(msg)
                 }}>
-                <IdeaIcon />
+                {cptCtx.isComputing ? <CircularIndeterminate /> : <IdeaIcon />}
             </button>
         </div>
     )
@@ -72,8 +73,8 @@ export const SolutionButton: FC = () => {
 export const ValidateButton: FC = () => {
 
     return (
-        <div className="button-out" >
-            <button className="button-item" onClick={() => {
+        <div className="buttons-out" >
+            <button className="buttons-item" onClick={() => {
                 let pln = currentPlaneView.getCurrent()
                 cube.restore(pln)
                 let solvable = isSolvable(pln)
@@ -90,8 +91,8 @@ export const TestButton: FC = () => {
     const comCtx = useContext(ContextHub).computingContext
 
     return (
-        <div className="button-out" >
-            <button className="button-item" onClick={
+        <div className="buttons-out" >
+            <button className="buttons-item" onClick={
                 () => {
                     comCtx.updateComputingState(!comCtx.isComputing)
                 }}>

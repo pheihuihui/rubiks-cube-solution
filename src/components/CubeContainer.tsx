@@ -18,9 +18,14 @@ export const CubeContainer: FC = () => {
     useEffect(() => {
         const canvas = document.createElement('canvas')
         const renderer = new WebGLRenderer({ antialias: true, canvas: canvas })
-        // renderer.setSize(750 * 3.9 * sc / 4.5, 750 * sc)
-        renderer.setSize(750 * 3.9 / 4.5, 750)
-        const camera = new PerspectiveCamera(75, 3.9 / 4.5, 1, 1000)
+        let height = mountRef.current?.clientHeight
+        let width = mountRef.current?.clientWidth
+        if (height && width) {
+            renderer.setSize(width, height)
+        } else {
+            renderer.setSize(600, 600)
+        }
+        const camera = new PerspectiveCamera(75, 1, 1, 1000)
         const orbit = new OrbitControls(camera, renderer.domElement)
         camera.position.z = 5
         const scene = new Scene()

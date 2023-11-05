@@ -1,9 +1,12 @@
 import { createContext, FC, useState } from "react"
 import React from "react"
 import { TPlaneCube, RubiksCube } from "../model/RubiksCube"
-import { Layer_1 } from "./Layers"
 import { TSteps } from "../solution/utils"
 import { cube, currentPlaneView } from "../util/constants"
+import { CubeFace, EmptyFace } from "./CubeFace"
+import { CubeContainer } from "./CubeContainer"
+import { RestoreButton, ShuffleButton, SolutionButton, TestButton } from "./Buttons"
+import { SolutionPanel } from "./SolutionPanel"
 
 export type TFacesContext = {
     cubeState: TPlaneCube,
@@ -113,7 +116,30 @@ const AllFaces: FC = () => {
                 }
             }}>
                 <div className="container">
-                    <Layer_1 />
+                    <div className="plane">
+                        <EmptyFace />
+                        <CubeFace faceOrien={"U"} />
+                        <EmptyFace />
+                        <EmptyFace />
+                        <CubeFace faceOrien={"L"} />
+                        <CubeFace faceOrien={"F"} />
+                        <CubeFace faceOrien={"R"} />
+                        <CubeFace faceOrien={"B"} />
+                        <EmptyFace />
+                        <CubeFace faceOrien={"D"} />
+                    </div>
+                    <div className="cube">
+                        <CubeContainer />
+                    </div>
+                    <div className="buttons">
+                        <RestoreButton />
+                        <ShuffleButton />
+                        <TestButton />
+                        <SolutionButton />
+                    </div>
+                    <div className="solution">
+                        <SolutionPanel />
+                    </div>
                 </div>
             </ContextHub.Provider>
         </div>

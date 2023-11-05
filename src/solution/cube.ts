@@ -131,15 +131,11 @@ export class Cube {
     private newEp: number[]
     private newCo: number[]
     private newEo: number[]
-    // @ts-ignore
+
     private center: number[]
-    // @ts-ignore
     private cp: number[]
-    // @ts-ignore
     private ep: number[]
-    // @ts-ignore
     private co: number[]
-    // @ts-ignore
     private eo: number[]
 
     static moves = [
@@ -299,6 +295,13 @@ export class Cube {
     ];
 
     constructor(other?: CubeFaces) {
+
+        this.center = Array(6).fill(0)
+        this.cp = Array(8).fill(0)
+        this.ep = Array(12).fill(0)
+        this.co = Array(8).fill(0)
+        this.eo = Array(12).fill(0)
+
         if (other) {
             this.init(other);
         } else {
