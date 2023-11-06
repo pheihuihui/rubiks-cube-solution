@@ -13,21 +13,32 @@ $document_body_backgroud_color: #33807b;
 
 .container {
     justify-content: center;
-    position: relative;
     display: grid;
-    grid-template-columns: 300px 300px 300px 300px 300px;
-    grid-template-rows: 300px 300px 300px;
+    grid-template-columns: 200px 200px 200px 200px 200px 200px 200px;
+    grid-template-rows: 200px 200px 200px 200px 200px;
     grid-auto-columns: 1fr;
-    gap: 10px 10px;
+    gap: 20px 20px;
     grid-auto-flow: row;
     grid-template-areas:
-        "plane plane plane cube cube"
-        "plane plane plane cube cube"
-        "buttons solution solution solution solution";
+        "plane plane plane plane cube cube cube"
+        "plane plane plane plane cube cube cube"
+        "plane plane plane plane cube cube cube"
+        "buttons buttons solution solution solution solution solution"
+        "buttons buttons solution solution solution solution solution";
 }
 
 .plane {
     grid-area: plane;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 10px 10px;
+    grid-template-areas:
+        ". . . ."
+        ". . . ."
+        ". . . .";
 }
 
 .cube {
@@ -42,6 +53,35 @@ $document_body_backgroud_color: #33807b;
     &-container {
         width: 100%;
         height: 100%;
+    }
+}
+
+.cube-face {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: #18504b;
+
+    .face-container {
+        height: 90%;
+        width: 90%;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        // gap: 1px 1px;
+        grid-template-areas:
+            ". . ."
+            ". . ."
+            ". . .";
+
+        .face-item {
+            background-color: transparent;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
 }
 
@@ -189,146 +229,13 @@ $document_body_backgroud_color: #33807b;
     }
 }
 
-.cubie {
-    &-root {
-        border: none;
-        color: white;
-        padding: 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-    }
-}
-
-.layer {
-    &-root {
-        // display: flex;
-        // width: 1900;
-        // flex-wrap: wrap;
-    }
-
-    &-plane {
-        display: flex;
-        height: 750;
-        width: 1000;
-        flex-wrap: wrap;
-        border-radius: 50;
-        margin: 30;
-        background: #33807b;
-        box-shadow: $box_shadow;
-    }
-
-    &-cube {
-        height: 750;
-        width: 750;
-        border-radius: 50;
-        margin: 30;
-        background: silver;
-        box-shadow: $box_shadow;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    &-button {
-        // 2 x 2 grid for buttons
-        display: grid;
-    }
-
-    &-solution {
-        height: 250;
-        width: 1500;
-        border-radius: 50;
-        margin: 30;
-        background: #33807b;
-        box-shadow: $box_shadow;
-        flex-direction: column;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-}
-
-.bar {
-    &-root {
-        height: 30;
-        width: 120;
-        display: flex;
-        justify-content: center;
-        background: silver;
-        position: relative;
-        bottom: -15;
-        border-radius: 20;
-        box-shadow: 2px 2px 2px #6d6d6d, -2px -2px 2px #44aca5;
-    }
-
-    &-icon-item {
-        height: 30;
-        width: 30;
-        padding-bottom: 0;
-    }
-
-    &-button-item-l {
-        height: 30;
-        width: 30;
-        padding-right: 20;
-    }
-
-    &-button-item-r {
-        height: 30;
-        width: 30;
-        padding-left: 20;
-    }
-}
-
-.sol {
-    &-root {
-        width: 1400;
-        height: 220;
-        display: flex;
-        align-items: center;
-    }
-
-    &-inner {
-        height: 200;
-        display: flex;
-        align-items: column;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    &-line {
-        width: 1200;
-        height: 100;
-        display: flex;
-        align-items: center;
-    }
-
-    &-text {
-        font-family: Georgia, 'Times New Roman', Times, serif;
-    }
-}
-
-.step {
-    &-up {
-        width: 50;
-        height: 30;
-        border-radius: 8;
-        background-color: $document_body_backgroud_color;
-        margin: 5;
-        border: 0;
-        box-shadow: 4px 4px 8px #143331, -4px -4px 8px #52cdc5;
-    }
-
-    &-down {
-        width: 50;
-        height: 30;
-        border-radius: 8;
-        background-color: $document_body_backgroud_color;
-        margin: 5;
-        border: 0;
-        box-shadow: inset 4px 4px 8px #143331, inset -4px -4px 8px #52cdc5;
-    }
+.cubie-face {
+    border: none;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    height: 90%;
+    width: 90%;
 }

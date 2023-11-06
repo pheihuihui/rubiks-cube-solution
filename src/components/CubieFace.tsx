@@ -35,7 +35,7 @@ export const CubieFace: FC<{ initialColor?: string, disabled?: boolean, orien: T
 
     return (
         <div>
-            <button disabled={props.disabled} style={{ background: color }} className="cubie-root" onClick={handlePicker} />
+            <button disabled={props.disabled} style={{ background: color }} className="cubie-face" onClick={handlePicker} />
             <Menu id="color_picker" anchorEl={anchor_colorPicker} open={Boolean(anchor_colorPicker)} onClose={handleClose}>
                 {Object.values(cssFaceColors).map(x => <MenuItem key={'face_' + x} style={{ width: 80, height: 40, background: x }} onClick={() => handleColor(x)} />)}
             </Menu>
