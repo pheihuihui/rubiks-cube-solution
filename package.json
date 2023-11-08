@@ -39,6 +39,7 @@
 		"@mui/material": "5.14.14",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"three": "0.157.0"
+		"three": "0.157.0",
+		"prettier": "3.0.3"
 	}
 }
